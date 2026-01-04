@@ -9,7 +9,7 @@
 </head>
 <body>
 <tw-story><noscript><tw-noscript>JavaScript needs to be enabled to play Escape From Ikea.</tw-noscript></noscript></tw-story>
-<tw-storydata name="Escape From Ikea" startnode="5" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="79A118C2-C78F-48ED-9915-E077B548AD75" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">tw-sidebar {
+<tw-storydata name="Escape From Ikea" startnode="5" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="79A118C2-C78F-48ED-9915-E077B548AD75" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">tw-sidebar {
   display: none; 
 }
 tw-link, .enchantment-link {
@@ -23,18 +23,18 @@ tw-link:hover, .enchantment-link:hover {
 }
 .visited:hover {
     color: lightblue;
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Welcome" tags="" position="575,225" size="100,100">Welcome to Ikea
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Welcome" tags="" position="825,225" size="100,100">Welcome to Ikea
 
 Enter your name here:
 
 {text input for: &#39;name&#39;}
 
-[[ENTER-&gt;Lobby]]</tw-passagedata><tw-passagedata pid="2" name="Cafeteria" tags="" position="700,225" size="100,100">You enter the CAFETERIA.</tw-passagedata><tw-passagedata pid="3" name="Lobby" tags="" position="575,350" size="100,100">You find yourself at the front entrance of Ikea in a lobby.
+[[ENTER-&gt;Lobby]]</tw-passagedata><tw-passagedata pid="2" name="Cafeteria" tags="" position="950,225" size="100,100">You enter the CAFETERIA.</tw-passagedata><tw-passagedata pid="3" name="Lobby" tags="" position="825,350" size="100,100">You find yourself at the front entrance of Ikea in a lobby.
 
 To the left you see the Ikea cafeteria. In front of you, you see the living room area.
 
 [[Go left, to the cafeteria-&gt;Cafeteria]]
-[[Go forward, to the living room area-&gt;Living Room]]</tw-passagedata><tw-passagedata pid="4" name="Living Room" tags="" position="575,475" size="100,100"></tw-passagedata><tw-passagedata pid="5" name="Marketplace Start" tags="" position="250,125" size="100,100">### Marketplace Start
+[[Go forward, to the living room area-&gt;Living Room]]</tw-passagedata><tw-passagedata pid="4" name="Living Room" tags="" position="825,475" size="100,100"></tw-passagedata><tw-passagedata pid="5" name="Marketplace Start" tags="" position="275,125" size="100,100">### Marketplace Start
 
 {(if:visits is 1)[You enter the MARKETPLACE. What lies before you seems to be a giant confusing maze. You recall that you have a map of the marketplace in your catalog]
 (if:visits &gt; 1)[You awake back at the start of the MARKETPLACE maze. You recall that you have a map of the marketplace in your CATALOG]
@@ -45,25 +45,114 @@ Which way should you go?
 [[&gt; Go NORTH-&gt;Marketplace Restart]]
 [[&gt; Go EAST-&gt;Marketplace 1]]
 [[&gt; Go SOUTH-&gt;Marketplace Restart]]
-[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata><tw-passagedata pid="6" name="Marketplace 1" tags="" position="250,250" size="100,100">### Marketplace 1
+[[&gt; Go WEST-&gt;Marketplace Restart]]
+
+&lt;img src=&quot;images/compass.png&quot;&gt;
+
+
+</tw-passagedata><tw-passagedata pid="6" name="Marketplace 1" tags="" position="275,250" size="100,100">### Marketplace 1
+
+Which way should you go?
+
+[[&gt; Go NORTH-&gt;Marketplace 2]]
+[[&gt; Go EAST-&gt;Marketplace Restart]]
+[[&gt; Go SOUTH-&gt;Marketplace Restart]]
+[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata><tw-passagedata pid="7" name="Marketplace Restart" tags="" position="100,500" size="100,100">You continue onward but you suddenly start to feel woozy. You black out.
+
+[[&gt; Continue-&gt;Marketplace Start]]</tw-passagedata><tw-passagedata pid="8" name="Marketplace End" tags="" position="650,425" size="100,100">### Escape
+
+You&#39;ve escaped!</tw-passagedata><tw-passagedata pid="9" name="Marketplace 2" tags="" position="275,375" size="100,100">### Marketplace 2
+
+Which way should you go?
+
+[[&gt; Go NORTH-&gt;Marketplace Restart]]
+[[&gt; Go EAST-&gt;Marketplace 3]]
+[[&gt; Go SOUTH-&gt;Marketplace Restart]]
+[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata><tw-passagedata pid="10" name="Marketplace 3" tags="" position="275,500" size="100,100">### Marketplace 3
 
 Which way should you go?
 
 [[&gt; Go NORTH-&gt;Marketplace Restart]]
 [[&gt; Go EAST-&gt;Marketplace Restart]]
-[[&gt; Go SOUTH-&gt;Marketplace 2]]
-[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata><tw-passagedata pid="7" name="Marketplace Restart" tags="" position="400,250" size="100,100">You continue onward but you suddenly start to feel woozy. You black out.
-
-[[&gt; Continue-&gt;Marketplace Start]]</tw-passagedata><tw-passagedata pid="8" name="Marketplace End" tags="" position="250,500" size="100,100">### Escape
-
-You&#39;ve escaped!</tw-passagedata><tw-passagedata pid="9" name="Marketplace 2" tags="" position="250,375" size="100,100">### Marketplace 2
+[[&gt; Go SOUTH-&gt;Marketplace 4]]
+[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata><tw-passagedata pid="11" name="Marketplace 4" tags="" position="275,625" size="100,100">### Marketplace 4
 
 Which way should you go?
 
 [[&gt; Go NORTH-&gt;Marketplace Restart]]
-[[&gt; Go EAST-&gt;Marketplace End]]
+[[&gt; Go EAST-&gt;Marketplace Restart]]
 [[&gt; Go SOUTH-&gt;Marketplace Restart]]
-[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata></tw-storydata>
+[[&gt; Go WEST-&gt;Marketplace 5]]</tw-passagedata><tw-passagedata pid="12" name="Marketplace 5" tags="" position="275,750" size="100,100">### Marketplace 5
+
+Which way should you go?
+
+[[&gt; Go NORTH-&gt;Marketplace Restart]]
+[[&gt; Go EAST-&gt;Marketplace Restart]]
+[[&gt; Go SOUTH-&gt;Marketplace 6]]
+[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata><tw-passagedata pid="13" name="Marketplace 6" tags="" position="275,875" size="100,100">### Marketplace 6
+
+Which way should you go?
+
+[[&gt; Go NORTH-&gt;Marketplace Restart]]
+[[&gt; Go EAST-&gt;Marketplace 7]]
+[[&gt; Go SOUTH-&gt;Marketplace Restart]]
+[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata><tw-passagedata pid="14" name="Marketplace 7" tags="" position="400,875" size="100,100">### Marketplace 7
+
+Which way should you go?
+
+[[&gt; Go NORTH-&gt;Marketplace 8]]
+[[&gt; Go EAST-&gt;Marketplace Restart]]
+[[&gt; Go SOUTH-&gt;Marketplace Restart]]
+[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata><tw-passagedata pid="15" name="Marketplace 8" tags="" position="400,750" size="100,100">### Marketplace 8
+
+Which way should you go?
+
+[[&gt; Go NORTH-&gt;Marketplace Restart]]
+[[&gt; Go EAST-&gt;Marketplace 9]]
+[[&gt; Go SOUTH-&gt;Marketplace Restart]]
+[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata><tw-passagedata pid="16" name="Marketplace 9" tags="" position="400,625" size="100,100">### Marketplace 9
+
+Which way should you go?
+
+[[&gt; Go NORTH-&gt;Marketplace Restart]]
+[[&gt; Go EAST-&gt;Marketplace Restart]]
+[[&gt; Go SOUTH-&gt;Marketplace 10]]
+[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata><tw-passagedata pid="17" name="Marketplace 10" tags="" position="400,500" size="100,100">### Marketplace 10
+
+Which way should you go?
+
+[[&gt; Go NORTH-&gt;Marketplace Restart]]
+[[&gt; Go EAST-&gt;Marketplace 11]]
+[[&gt; Go SOUTH-&gt;Marketplace Restart]]
+[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata><tw-passagedata pid="18" name="Marketplace 11" tags="" position="400,375" size="100,100">### Marketplace 11
+
+Which way should you go?
+
+[[&gt; Go NORTH-&gt;Marketplace Restart]]
+[[&gt; Go EAST-&gt;Marketplace Restart]]
+[[&gt; Go SOUTH-&gt;Marketplace 12]]
+[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata><tw-passagedata pid="19" name="Marketplace 12" tags="" position="400,250" size="100,100">### Marketplace 12
+
+Which way should you go?
+
+[[&gt; Go NORTH-&gt;Marketplace Restart]]
+[[&gt; Go EAST-&gt;Marketplace Restart]]
+[[&gt; Go SOUTH-&gt;Marketplace Restart]]
+[[&gt; Go WEST-&gt;Marketplace 13]]</tw-passagedata><tw-passagedata pid="20" name="Marketplace 13" tags="" position="400,125" size="100,100">### Marketplace 13
+
+Which way should you go?
+
+[[&gt; Go NORTH-&gt;Marketplace Restart]]
+[[&gt; Go EAST-&gt;Marketplace Restart]]
+[[&gt; Go SOUTH-&gt;Marketplace 14]]
+[[&gt; Go WEST-&gt;Marketplace Restart]]</tw-passagedata><tw-passagedata pid="21" name="Marketplace 14" tags="" position="525,125" size="100,100">### Marketplace 14
+
+Which way should you go?
+
+[[&gt; Go NORTH-&gt;Marketplace Restart]]
+[[&gt; Go EAST-&gt;Marketplace Restart]]
+[[&gt; Go SOUTH-&gt;Marketplace Restart]]
+[[&gt; Go WEST-&gt;Marketplace 15]]</tw-passagedata><tw-passagedata pid="22" name="Marketplace 15" tags="" position="525,250" size="100,100"></tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
  * https://github.com/paulmillr/es6-shim
