@@ -9,7 +9,8 @@
 </head>
 <body>
 <tw-story><noscript><tw-noscript>JavaScript needs to be enabled to play Escape From Ikea.</tw-noscript></noscript></tw-story>
-<tw-storydata name="Escape From Ikea" startnode="5" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="79A118C2-C78F-48ED-9915-E077B548AD75" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">tw-sidebar {
+<tw-storydata name="Escape From Ikea" startnode="5" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="79A118C2-C78F-48ED-9915-E077B548AD75" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* Disable URL link highlighting */
+tw-sidebar {
   display: none; 
 }
 tw-link, .enchantment-link {
@@ -25,32 +26,29 @@ tw-link:hover, .enchantment-link:hover {
     color: lightblue;
 }
 
-.image-container {
-  /* Set up a flexbox container for the image and side text */
-  display: flex;
-  align-items: center; /* Vertically centers the text and image */
-  justify-content: center; /* Horizontally centers the whole block on the page */
-  max-width: 600px; /* Optional: Constrains container width */
-  margin: 20px auto; /* Centers container if max-width is used */
-  flex-wrap: wrap; /* Allows items to wrap for responsiveness if needed */
-}
 
-.above-text, .below-text {
-  /* Style for text above and below the main container */
-  width: 100%;
-  text-align: center;
-  margin: 10px 0;
+/* Format tables to have square cells */
+table {
+  border-collapse: collapse; /* Merges borders of adjacent cells */
+  width: 300px; /* Set a specific width for the table */
+  height: 300px; /* Set an equal height to help make cells square */
 }
-
-.left-text, .right-text {
-  /* Style for text directly next to the image */
-  padding: 10px;
+td {
+  border: 1px solid black; /* Adds a visible border to each cell */
+  text-align: center; /* Centers content horizontally */
+  vertical-align: middle; /* Centers content vertically */
+  width: 100px; /* Equal width for 3 columns */
+  height: 100px; /* Equal height for 3 rows */
 }
-
-.main-image {
-  /* Style for the image itself */
-  max-width: 200px;
-  height: auto;
+.compass-table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%; /* Set a width less than 100% */
+}
+.image-cell img {
+  width: 100%;  /* Image takes up 100% of the cell's width */
+  height: auto; /* Height adjusts automatically to maintain aspect ratio */
+  display: block; /* Helps remove mysterious gaps at the bottom of the image */
 }</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Welcome" tags="" position="825,225" size="100,100">Welcome to Ikea
 
 Enter your name here:
@@ -70,32 +68,25 @@ To the left you see the Ikea cafeteria. In front of you, you see the living room
 
 Which way should you go?
 
-&lt;!-- Text Above --&gt;
-&lt;div class=&quot;above-text&quot;&gt;
-&lt;p&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;image-container&quot;&gt;
-&lt;!-- Text Left --&gt;
-&lt;div class=&quot;left-text&quot;&gt;
-&lt;p&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;!-- The Image --&gt;
-&lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot; class=&quot;main-image&quot;&gt;
-
-&lt;!-- Text Right --&gt;
-&lt;div class=&quot;right-text&quot;&gt;
-&lt;p&gt;[[&gt; Go EAST-&gt;Marketplace 1]]&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;!-- Text Below --&gt;
-&lt;div class=&quot;below-text&quot;&gt;
-&lt;p&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/p&gt;
-&lt;/div&gt;
-
-
+&lt;table class=&quot;compass-table&quot;&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;/td&gt;
+        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td class=&quot;image-cell&quot;&gt;
+           &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
+        &lt;/td&gt;
+        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace 1]]&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;/td&gt;
+        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
 </tw-passagedata><tw-passagedata pid="6" name="Marketplace 1" tags="" position="275,250" size="100,100">### Marketplace 1
 
 Which way should you go?
