@@ -9,7 +9,7 @@
 </head>
 <body>
 <tw-story><noscript><tw-noscript>JavaScript needs to be enabled to play Escape From Ikea.</tw-noscript></noscript></tw-story>
-<tw-storydata name="Escape From Ikea" startnode="5" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="79A118C2-C78F-48ED-9915-E077B548AD75" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* Disable URL link highlighting */
+<tw-storydata name="Escape From Ikea" startnode="1" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="79A118C2-C78F-48ED-9915-E077B548AD75" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* Disable URL link highlighting */
 tw-sidebar {
   display: none; 
 }
@@ -49,18 +49,133 @@ td {
   width: 100%;  /* Image takes up 100% of the cell's width */
   height: auto; /* Height adjusts automatically to maintain aspect ratio */
   display: block; /* Helps remove mysterious gaps at the bottom of the image */
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Welcome" tags="" position="1125,300" size="100,100">Welcome to Ikea
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Welcome" tags="" position="1125,300" size="100,100">### Welcome to IKEA
+{
+&lt;!-- General formatting --&gt;
+(set: $item_format to (text-color: cyan)+(text-style:&quot;emboss&quot;))
+(set: $location_format to (text-color: green)+(text-style:&quot;emboss&quot;))
+(set: $direction_format to (text-style: &quot;bold&quot;))
+(set: $compass to (macro: str-type _north, str-type _west, str-type _east, str-type _south, [
+  (output:)[&lt;table class=&quot;compass-table&quot;&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;/td&gt;
+        &lt;td&gt;_north&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;_west&lt;/td&gt;
+        &lt;td class=&quot;image-cell&quot;&gt;
+           &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
+        &lt;/td&gt;
+        &lt;td&gt;_east&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;/td&gt;
+        &lt;td&gt;_south&lt;/td&gt;
+        &lt;td&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;]
+]))
 
-Enter your name here:
+&lt;!-- Lobby variables --&gt;
+(set: $lobby_looked_around to false)
+(set: $lobby_examined_catalog to false)
+(set: $lobby_examined_pencil to false)
+(set: $lobby_examined_compass to false)
 
-{text input for: &#39;name&#39;}
+&lt;!-- Restaurant variables --&gt;
+(set: $restaurant_looked_around to false)
+(set: $restaurant_examined_food_counter to false)
+(set: $restaurant_examined_cash_register to false)
 
-[[ENTER-&gt;Lobby]]</tw-passagedata><tw-passagedata pid="2" name="Cafeteria" tags="" position="1250,300" size="100,100">You enter the CAFETERIA.</tw-passagedata><tw-passagedata pid="3" name="Lobby" tags="" position="1125,425" size="100,100">You find yourself at the front entrance of Ikea in a lobby.
+}
+[[&gt; Wake up-&gt;Lobby]]
+</tw-passagedata><tw-passagedata pid="2" name="Restaurant &amp; Cafe" tags="" position="1275,425" size="100,100">### Restaurant &amp; Cafe
 
-To the left you see the Ikea cafeteria. In front of you, you see the living room area.
+You enter the $location_format[RESTAURANT &amp; CAFE].
 
-[[Go left, to the cafeteria-&gt;Cafeteria]]
-[[Go forward, to the living room area-&gt;Living Room]]</tw-passagedata><tw-passagedata pid="4" name="Living Room" tags="" position="1125,550" size="100,100"></tw-passagedata><tw-passagedata pid="5" name="Marketplace Start" tags="" position="275,125" size="100,100">### Marketplace Start
+(if: $restaurant_looked_around)[&gt; Look around
+$restaurant_look_around_text
+]
+\(else:)[|look_around&gt;[&gt; Look around]]
+(if: $restaurant_examined_food_counter)[&gt; Examine $item_format[food counter]
+$restaurant_examine_food_counter_text
+]
+\(else:)[|examine_food_counter&gt;[&gt; Examine $item_format[food counter]]]
+(if: $restaurant_examined_cash_register)[&gt; Examine $item_format[cash register]
+$restaurant_examine_cash_register_text
+]
+\(else:)[|examine_cash_register&gt;[&gt; Examine $item_format[cash register]]]
+
+\(set: $restaurant_west_text to &quot;[[Go WEST to the LOBBY-&gt;Lobby]]&quot;)
+\(set: $restaurant_south_text to &quot;[[Go SOUTH-&gt;Showroom]]&quot;)
+($compass: &quot;&quot;, &quot;$restaurant_west_text&quot;, &quot;&quot;, &quot;(if:$restaurant_looked_around)[$restaurant_south_text](else:)|go_south&gt;[]&quot;)
+
+\(set: $restaurant_look_around_text to &quot;You look around. You see a lot of open seating. Not a soul in sight. There&#39;s a $item_format[food counter] but all the menu display screens are dark. You might have to figure out the menu some other way. You also see a $item_format[cash register].
+
+To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM].&quot;)
+\(set: $restaurant_examine_food_counter_text to &quot;You examine the FOOD COUNTER. There&#39;s a lot of food still. So at least you won&#39;t starve. But it doesn&#39;t get you any closer to escaping.&quot;)
+\(set: $restaurant_examine_cash_register_text to &quot;You examine the CASH REGISTER. It&#39;s one of those newer ones that needs a alphanumeric password to open. &quot;)
+\(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+$restaurant_look_around_text
+\(set: $restaurant_looked_around to true)
+\(replace: ?go_south)[$restaurant_south_text]
+]
+\(click-append:?examine_food_counter)+(t8n:&#39;dissolve&#39;)[
+$restaurant_examine_food_counter_text
+\(set: $restaurant_examined_food_counter to true)
+]
+\(click-append:?examine_cash_register)+(t8n:&#39;dissolve&#39;)[
+$restaurant_examine_cash_register_text
+\(set: $restaurant_examined_cash_register to true)
+]</tw-passagedata><tw-passagedata pid="3" name="Lobby" tags="" position="1125,425" size="100,100">### Lobby
+
+(if:visits &gt; 1)[You enter the $location_format[LOBBY].]
+\(else:)[You wake up and find yourself in a large building. You have no idea how you got here. You look up and see a massive sign with the iconic yellow and blue IKEA logo. Looks like you&#39;re somehow stuck in IKEA.]
+
+You look down and see that at your feet you have an IKEA shoping bag. Inside you find a $item_format[catalog], a $item_format[pencil], and a $item_format[compass].
+
+(if: $lobby_looked_around)[&gt; Look around
+$lobby_look_around_text
+]
+\(else:)[|look_around&gt;[&gt; Look around]]
+(if: $lobby_examined_catalog)[&gt; Examine $item_format[catalog]
+$lobby_examine_catalog_text
+]
+\(else:)[|examine_catalog&gt;[&gt; Examine $item_format[catalog]]]
+(if: $lobby_examined_pencil)[&gt; Examine $item_format[pencil]
+$lobby_examine_pencil_text
+]
+\(else:)[|examine_pencil&gt;[&gt; Examine $item_format[pencil]]]
+(if: $lobby_examined_compass)[&gt; Examine $item_format[compass]
+$lobby_examine_compass_text
+]
+\(else:)[|examine_compass&gt;[&gt; Examine $item_format[compass]]]
+($compass: &quot;&quot;, &quot;&quot;, &quot;(if:$lobby_looked_around)[$lobby_east_text](else:)|go_east&gt;[]&quot;, &quot;&quot;)
+
+\(set: $lobby_east_text to &quot;[[Go EAST to the Restaurant &amp; Cafe-&gt;Restaurant &amp; Cafe]]&quot;)
+\(set: $lobby_look_around_text to &quot;You look around. You are currently in the lobby of IKEA. To the $direction_format[EAST] you see the $location_format[RESTAURANT &amp; CAFE].&quot;)
+\(set: $lobby_examine_catalog_text to &quot;You examine the IKEA catalog.
+//`[`You should refer to the physical copy of the IKEA catalog`]`//&quot;)
+\(set: $lobby_examine_pencil_text to &quot;This is just a normal pencil. It&#39;s IKEA branded. Sweet!&quot;)
+\(set: $lobby_examine_compass_text to &quot;This is just a normal compass.&quot;)
+\(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+$lobby_look_around_text
+\(set: $lobby_looked_around to true)
+\(replace: ?go_east)[$lobby_east_text]
+]
+\(click-append:?examine_catalog)+(t8n:&#39;dissolve&#39;)[
+$lobby_examine_catalog_text
+\(set: $lobby_examined_catalog to true)
+]
+\(click-append:?examine_pencil)+(t8n:&#39;dissolve&#39;)[
+$lobby_examine_pencil_text
+\(set: $lobby_examined_pencil to true)
+]
+\(click-append:?examine_compass)+(t8n:&#39;dissolve&#39;)[
+$lobby_examine_compass_text
+\(set: $lobby_examined_compass to true)
+]</tw-passagedata><tw-passagedata pid="4" name="Marketplace Start" tags="" position="275,125" size="100,100">### Marketplace Start
 
 {(if:visits is 1)[You enter the MARKETPLACE. What lies before you seems to be a giant confusing maze. You recall that you have a map of the marketplace in your catalog]
 (if:visits &gt; 1)[You awake back at the start of the MARKETPLACE maze. You recall that you have a map of the marketplace in your CATALOG]
@@ -87,7 +202,7 @@ Which way should you go?
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;
-</tw-passagedata><tw-passagedata pid="6" name="Marketplace 1" tags="" position="275,250" size="100,100">### Marketplace 1
+</tw-passagedata><tw-passagedata pid="5" name="Marketplace 1" tags="" position="275,250" size="100,100">### Marketplace 1
 
 //You enter a new passageway.//
 
@@ -111,11 +226,11 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="7" name="Marketplace Restart" tags="" position="100,500" size="100,100">You continue onward but you suddenly start to feel woozy. You black out.
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="6" name="Marketplace Restart" tags="" position="100,500" size="100,100">You continue onward but you suddenly start to feel woozy. You black out.
 
-[[&gt; Continue-&gt;Marketplace Start]]</tw-passagedata><tw-passagedata pid="8" name="Marketplace End" tags="" position="950,500" size="100,100">### Escape
+[[&gt; Continue-&gt;Marketplace Start]]</tw-passagedata><tw-passagedata pid="7" name="Marketplace End" tags="" position="950,500" size="100,100">### Escape
 
-You&#39;ve escaped!</tw-passagedata><tw-passagedata pid="9" name="Marketplace 2" tags="" position="275,375" size="100,100">### Marketplace 2
+You&#39;ve escaped!</tw-passagedata><tw-passagedata pid="8" name="Marketplace 2" tags="" position="275,375" size="100,100">### Marketplace 2
 
 Which way should you go?
 
@@ -137,7 +252,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="10" name="Marketplace 3" tags="" position="275,500" size="100,100">### Marketplace 3
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="9" name="Marketplace 3" tags="" position="275,500" size="100,100">### Marketplace 3
 
 //Three rooms down. How many more to go?//
 
@@ -161,7 +276,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 4]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="11" name="Marketplace 4" tags="" position="275,625" size="100,100">### Marketplace 4
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="10" name="Marketplace 4" tags="" position="275,625" size="100,100">### Marketplace 4
 
 Which way should you go?
 
@@ -183,7 +298,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="12" name="Marketplace 5" tags="" position="275,750" size="100,100">### Marketplace 5
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="11" name="Marketplace 5" tags="" position="275,750" size="100,100">### Marketplace 5
 
 Which way should you go?
 
@@ -205,7 +320,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 6]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="13" name="Marketplace 6" tags="" position="275,875" size="100,100">### Marketplace 6
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="12" name="Marketplace 6" tags="" position="275,875" size="100,100">### Marketplace 6
 
 //You really hope you can escape and see the light of day again.//
 
@@ -229,7 +344,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="14" name="Marketplace 7" tags="" position="400,875" size="100,100">### Marketplace 7
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="13" name="Marketplace 7" tags="" position="400,875" size="100,100">### Marketplace 7
 
 Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
@@ -250,7 +365,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="15" name="Marketplace 8" tags="" position="400,750" size="100,100">### Marketplace 8
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="14" name="Marketplace 8" tags="" position="400,750" size="100,100">### Marketplace 8
 
 //Who designed IKEA to be such a maze?//
 
@@ -274,7 +389,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="16" name="Marketplace 9" tags="" position="400,625" size="100,100">### Marketplace 9
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="15" name="Marketplace 9" tags="" position="400,625" size="100,100">### Marketplace 9
 
 Which way should you go?
 
@@ -296,7 +411,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 10]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="17" name="Marketplace 10" tags="" position="400,500" size="100,100">### Marketplace 10
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="16" name="Marketplace 10" tags="" position="400,500" size="100,100">### Marketplace 10
 
 Which way should you go?
 
@@ -318,7 +433,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="18" name="Marketplace 11" tags="" position="400,375" size="100,100">### Marketplace 11
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="17" name="Marketplace 11" tags="" position="400,375" size="100,100">### Marketplace 11
 
 //You think to youself, &quot;Should have grabbed a few extra snacks from the Restaurant &amp; Cafe before starting this maze.&quot;//
 
@@ -342,7 +457,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 12]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="19" name="Marketplace 12" tags="" position="400,250" size="100,100">### Marketplace 12
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="18" name="Marketplace 12" tags="" position="400,250" size="100,100">### Marketplace 12
 
 Which way should you go?
 
@@ -364,7 +479,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="20" name="Marketplace 13" tags="" position="400,125" size="100,100">### Marketplace 13
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="19" name="Marketplace 13" tags="" position="400,125" size="100,100">### Marketplace 13
 
 Which way should you go?
 
@@ -386,7 +501,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 14]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="21" name="Marketplace 14" tags="" position="525,125" size="100,100">### Marketplace 14
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="20" name="Marketplace 14" tags="" position="525,125" size="100,100">### Marketplace 14
 
 //Is this the halfway point? You sure hope so...//
 
@@ -410,7 +525,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="22" name="Marketplace 15" tags="" position="525,250" size="100,100">### Marketplace 15
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="21" name="Marketplace 15" tags="" position="525,250" size="100,100">### Marketplace 15
 
 Which way should you go?
 
@@ -432,7 +547,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 16]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="23" name="Marketplace 16" tags="" position="525,375" size="100,100">### Marketplace 16
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="22" name="Marketplace 16" tags="" position="525,375" size="100,100">### Marketplace 16
 
 Which way should you go?
 
@@ -454,7 +569,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="24" name="Marketplace 17" tags="" position="525,500" size="100,100">### Marketplace 17
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="23" name="Marketplace 17" tags="" position="525,500" size="100,100">### Marketplace 17
 
 Which way should you go?
 
@@ -476,7 +591,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 18]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="25" name="Marketplace 18" tags="" position="525,625" size="100,100">### Marketplace 18
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="24" name="Marketplace 18" tags="" position="525,625" size="100,100">### Marketplace 18
 
 Which way should you go?
 
@@ -498,7 +613,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="26" name="Marketplace 19" tags="" position="525,750" size="100,100">### Marketplace 19
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="25" name="Marketplace 19" tags="" position="525,750" size="100,100">### Marketplace 19
 
 //You see a really long hallway to your south.//
 
@@ -522,7 +637,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 20]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="27" name="Marketplace 20" tags="" position="525,875" size="100,100">### Marketplace 20
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="26" name="Marketplace 20" tags="" position="525,875" size="100,100">### Marketplace 20
 
 //You continue down the really long hallway. Your mind starts to drift...//
 
@@ -546,7 +661,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="28" name="Marketplace 21" tags="" position="650,875" size="100,100">### Marketplace 21
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="27" name="Marketplace 21" tags="" position="650,875" size="100,100">### Marketplace 21
 
 //You&#39;ve been here for ages. Is that a talking meatball in the corner or are you just hallucinating?//
 
@@ -570,7 +685,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="29" name="Marketplace 22" tags="" position="650,750" size="100,100">### Marketplace 22
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="28" name="Marketplace 22" tags="" position="650,750" size="100,100">### Marketplace 22
 
 Which way should you go?
 
@@ -592,7 +707,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="30" name="Marketplace 23" tags="" position="650,625" size="100,100">### Marketplace 23
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="29" name="Marketplace 23" tags="" position="650,625" size="100,100">### Marketplace 23
 
 Which way should you go?
 
@@ -614,7 +729,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="31" name="Marketplace 24" tags="" position="650,500" size="100,100">### Marketplace 24
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="30" name="Marketplace 24" tags="" position="650,500" size="100,100">### Marketplace 24
 
 Which way should you go?
 
@@ -636,7 +751,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="32" name="Marketplace 25" tags="" position="650,375" size="100,100">### Marketplace 25
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="31" name="Marketplace 25" tags="" position="650,375" size="100,100">### Marketplace 25
 
 //25 rooms down. You feel like you&#39;re almost there.//
 
@@ -660,7 +775,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="33" name="Marketplace 26" tags="" position="650,250" size="100,100">### Marketplace 26
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="32" name="Marketplace 26" tags="" position="650,250" size="100,100">### Marketplace 26
 
 Which way should you go?
 
@@ -682,7 +797,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="34" name="Marketplace 27" tags="" position="650,125" size="100,100">### Marketplace 27
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="33" name="Marketplace 27" tags="" position="650,125" size="100,100">### Marketplace 27
 
 Which way should you go?
 
@@ -704,7 +819,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 28]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="35" name="Marketplace 28" tags="" position="775,125" size="100,100">### Marketplace 28
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="34" name="Marketplace 28" tags="" position="775,125" size="100,100">### Marketplace 28
 
 Which way should you go?
 
@@ -726,7 +841,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="36" name="Marketplace 29" tags="" position="775,250" size="100,100">### Marketplace 29
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="35" name="Marketplace 29" tags="" position="775,250" size="100,100">### Marketplace 29
 
 Which way should you go?
 
@@ -748,7 +863,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 30]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="37" name="Marketplace 30" tags="" position="775,375" size="100,100">### Marketplace 30
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="36" name="Marketplace 30" tags="" position="775,375" size="100,100">### Marketplace 30
 
 Which way should you go?
 
@@ -770,7 +885,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="38" name="Marketplace 31" tags="" position="775,500" size="100,100">### Marketplace 31
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="37" name="Marketplace 31" tags="" position="775,500" size="100,100">### Marketplace 31
 
 Which way should you go?
 
@@ -792,7 +907,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace End]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata></tw-storydata>
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="38" name="Showroom" tags="" position="1275,550" size="100,100"></tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
  * https://github.com/paulmillr/es6-shim
