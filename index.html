@@ -87,11 +87,10 @@ td {
 (set: $restaurant_examined_food_counter to false)
 (set: $restaurant_examined_cash_register to false)
 (set: $restaurant_cash_register_opened to false)
-}
 
 &lt;!-- Living Room variables --&gt;
 (set: $living_room_looked_around to false)
-
+}
 [[&gt; Wake up-&gt;Lobby]]
 [[&gt; Skip to Living Room-&gt;Living Room]]
 </tw-passagedata><tw-passagedata pid="2" name="Restaurant" tags="" position="1275,425" size="100,100">### Restaurant
@@ -116,7 +115,7 @@ $restaurant_examine_cash_register_text
 \(set: $restaurant_west_text to &quot;[[Go to LOBBY-&gt;Lobby]]&quot;)
 \(set: $restaurant_south_text to &quot;[[Go to SHOWROOM-&gt;Showroom]]&quot;)
 \($compass: &quot;&quot;, &quot;$restaurant_west_text&quot;, &quot;&quot;, &quot;(if:$restaurant_looked_around)[$restaurant_south_text](else:)|go_south&gt;[]&quot;)
-\(set: $restaurant_look_around_text to &quot;You look around. It&#39;s weirdly empty in here today, not a single bickering couple or &lt;a href=\&quot;https://www.theglobeandmail.com/news/toronto/stylish-but-illegal-monkey-found-roaming-toronto-ikea/article6140276/\&quot;&gt;stylish but illegal monkey&lt;/a&gt; in sight. There&#39;s a $item_format[food counter] but all the menu display screens are dark. You might have to figure out the menu some other way. You also see a $item_format[cash register].\
+\(set: $restaurant_look_around_text to &quot;You look around. It&#39;s weirdly empty in here today, not a single bickering couple or &lt;a target=\&quot;_blank\&quot; rel=\&quot;noopener noreferrer\&quot; href=\&quot;https://www.theglobeandmail.com/news/toronto/stylish-but-illegal-monkey-found-roaming-toronto-ikea/article6140276/\&quot;&gt;stylish but illegal monkey&lt;/a&gt; in sight. There&#39;s a $item_format[food counter] but all the menu display screens are dark. You might have to figure out the menu some other way. You also see a $item_format[cash register].\
 &lt;br&gt;
 To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM].&quot;)
 \(set: $restaurant_examine_food_counter_click_text to &quot;|examine_food_counter&gt;[&gt; Examine $item_format[food counter]]&quot;)
