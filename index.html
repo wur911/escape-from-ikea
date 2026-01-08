@@ -39,7 +39,6 @@ td {
   vertical-align: middle; /* Centers content vertically */
   width: 100px; /* Equal width for 3 columns */
   height: 100px; /* Equal height for 3 rows */
-  font-size: 15px;
   line-height: 1em;
 }
 .compass-table {
@@ -87,12 +86,18 @@ td {
 (set: $restaurant_looked_around to false)
 (set: $restaurant_examined_food_counter to false)
 (set: $restaurant_examined_cash_register to false)
-
+(set: $restaurant_cash_register_opened to false)
 }
-[[&gt; Wake up-&gt;Lobby]]
-</tw-passagedata><tw-passagedata pid="2" name="Restaurant &amp; Cafe" tags="" position="1275,425" size="100,100">### Restaurant &amp; Cafe
 
-You enter the $location_format[RESTAURANT &amp; CAFE].
+&lt;!-- Living Room variables --&gt;
+(set: $living_room_looked_around to false)
+
+[[&gt; Wake up-&gt;Lobby]]
+[[&gt; Skip to Living Room-&gt;Living Room]]
+</tw-passagedata><tw-passagedata pid="2" name="Restaurant" tags="" position="1275,425" size="100,100">### Restaurant
+
+(if:visits &gt; 1)[You enter the $location_format[RESTAURANT].]
+\(else:)[Figuring that some food might help jog your memory (or at least tide you over until you find your way out), you enter the $location_format[RESTAURANT].]
 
 (if: $restaurant_looked_around)[&gt; Look around
 $restaurant_look_around_text
@@ -101,25 +106,51 @@ $restaurant_look_around_text
 (if: $restaurant_examined_food_counter)[&gt; Examine $item_format[food counter]
 $restaurant_examine_food_counter_text
 ]
-\(else:)[|examine_food_counter&gt;[&gt; Examine $item_format[food counter]]]
+\(else-if: $restaurant_looked_around)[$restaurant_examine_food_counter_click_text]
+\(else:)[|examine_food_counter_click&gt;[]]
 (if: $restaurant_examined_cash_register)[&gt; Examine $item_format[cash register]
 $restaurant_examine_cash_register_text
 ]
-\(else:)[|examine_cash_register&gt;[&gt; Examine $item_format[cash register]]]
-
-\(set: $restaurant_west_text to &quot;[[Go WEST to the LOBBY-&gt;Lobby]]&quot;)
-\(set: $restaurant_south_text to &quot;[[Go SOUTH-&gt;Showroom]]&quot;)
-($compass: &quot;&quot;, &quot;$restaurant_west_text&quot;, &quot;&quot;, &quot;(if:$restaurant_looked_around)[$restaurant_south_text](else:)|go_south&gt;[]&quot;)
-
-\(set: $restaurant_look_around_text to &quot;You look around. You see a lot of open seating. Not a soul in sight. There&#39;s a $item_format[food counter] but all the menu display screens are dark. You might have to figure out the menu some other way. You also see a $item_format[cash register].
-
+\(else-if: $restaurant_looked_around)[$restaurant_examine_cash_register_click_text]
+\(else:)[|examine_cash_register_click&gt;[]]
+\(set: $restaurant_west_text to &quot;[[Go to LOBBY-&gt;Lobby]]&quot;)
+\(set: $restaurant_south_text to &quot;[[Go to SHOWROOM-&gt;Showroom]]&quot;)
+\($compass: &quot;&quot;, &quot;$restaurant_west_text&quot;, &quot;&quot;, &quot;(if:$restaurant_looked_around)[$restaurant_south_text](else:)|go_south&gt;[]&quot;)
+\(set: $restaurant_look_around_text to &quot;You look around. It&#39;s weirdly empty in here today, not a single bickering couple or &lt;a href=\&quot;https://www.theglobeandmail.com/news/toronto/stylish-but-illegal-monkey-found-roaming-toronto-ikea/article6140276/\&quot;&gt;stylish but illegal monkey&lt;/a&gt; in sight. There&#39;s a $item_format[food counter] but all the menu display screens are dark. You might have to figure out the menu some other way. You also see a $item_format[cash register].\
+&lt;br&gt;
 To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM].&quot;)
-\(set: $restaurant_examine_food_counter_text to &quot;You examine the $item_format[food counter]. There&#39;s a lot of food still. So at least you won&#39;t starve. But it doesn&#39;t get you any closer to escaping.&quot;)
-\(set: $restaurant_examine_cash_register_text to &quot;You examine the $item_format[cash register]. It&#39;s one of those newer ones that needs a alphanumeric password to open. &quot;)
+\(set: $restaurant_examine_food_counter_click_text to &quot;|examine_food_counter&gt;[&gt; Examine $item_format[food counter]]&quot;)
+\(set: $restaurant_examine_cash_register_click_text to &quot;|examine_cash_register&gt;[&gt; Examine $item_format[cash register]]&quot;)
+\(set: $restaurant_examine_food_counter_text to &quot;You examine the $item_format[food counter]. Tentatively, you reach out and pluck a single Swedish meatball from the perfectly stacked pile. It reinvigorates your spirits, but it doesn&#39;t get you any closer to escaping.&quot;)
+\(set: $restaurant_examine_cash_register_text to &quot;{You examine the $item_format[cash register]. It&#39;s one of those newer ones that needs an alphanumeric password to open.
+&lt;br&gt;
+(if: $restaurant_cash_register_opened)[
+  $restaurant_cash_register_already_open_text
+]
+(else:)[
+  (input: bind _password, \&quot;X==\&quot;)
+  (link-repeat: \&quot;&gt; Enter password\&quot;)[
+    (if: (uppercase: _password) is $restaurant_cash_register_answer)[
+      (replace: ?cash_register_guess_result)[$restaurant_cash_register_open_correct_text]
+      (set: $restaurant_cash_register_opened to true)
+    ]
+    (else:)[
+      (replace: ?cash_register_guess_result)[$restaurant_cash_register_open_incorrect_text]
+    ]
+  ]
+  &lt;br&gt;
+  |cash_register_guess_result&gt;[]
+]}&quot;)
+\(set: $restaurant_cash_register_answer to &quot;BASIL&quot;)
+\(set: $restaurant_cash_register_already_open_text to &quot;The cash register is open. You already have the $item_format[showroom key]&quot;)\
+\(set: $restaurant_cash_register_open_correct_text to &quot;Success! The cash register opens and you find an old key. Etched into it is the word SHOWROOM. You take the $item_format[showroom key]&quot;)
+\(set: $restaurant_cash_register_open_incorrect_text to &quot;The $item_format[cash register] screen flashes \&quot;Incorrect Password\&quot;.&quot;)\
 \(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
 $restaurant_look_around_text
 \(set: $restaurant_looked_around to true)
 \(replace: ?go_south)[$restaurant_south_text]
+\(replace: ?examine_food_counter_click)[$restaurant_examine_food_counter_click_text]
+\(replace: ?examine_cash_register_click)[$restaurant_examine_cash_register_click_text]
 ]
 \(click-append:?examine_food_counter)+(t8n:&#39;dissolve&#39;)[
 $restaurant_examine_food_counter_text
@@ -131,9 +162,9 @@ $restaurant_examine_cash_register_text
 ]</tw-passagedata><tw-passagedata pid="3" name="Lobby" tags="" position="1125,425" size="100,100">### Lobby
 
 (if:visits &gt; 1)[You enter the $location_format[LOBBY].]
-\(else:)[You wake up and find yourself in a large building. You have no idea how you got here. You look up and see a massive sign with the iconic yellow and blue IKEA logo. Looks like you&#39;re somehow stuck in IKEA.]
+\(else:)[You wake up and find yourself in a large building. Where are you? Looking up, you see a massive sign with the iconic yellow and blue IKEA logo. The air smells faintly of cinnamon buns, particleboard, and possibility.]
 
-You look down and see that at your feet you have an IKEA shoping bag. Inside you find a $item_format[catalog], a $item_format[pencil], and a $item_format[compass].
+At your feet, you notice an IKEA shoping bag. Inside there&#39;s an $item_format[IKEA catalog], a $item_format[pencil], and a $item_format[compass].
 
 (if: $lobby_looked_around)[&gt; Look around
 $lobby_look_around_text
@@ -153,8 +184,8 @@ $lobby_examine_compass_text
 \(else:)[|examine_compass&gt;[&gt; Examine $item_format[compass]]]
 ($compass: &quot;&quot;, &quot;&quot;, &quot;(if:$lobby_looked_around)[$lobby_east_text](else:)|go_east&gt;[]&quot;, &quot;&quot;)
 
-\(set: $lobby_east_text to &quot;[[Go EAST to the Restaurant &amp; Cafe-&gt;Restaurant &amp; Cafe]]&quot;)
-\(set: $lobby_look_around_text to &quot;You look around. You are currently in the lobby of IKEA. To the $direction_format[EAST] you see the $location_format[RESTAURANT &amp; CAFE].&quot;)
+\(set: $lobby_east_text to &quot;[[Go to RESTAURANT-&gt;Restaurant]]&quot;)
+\(set: $lobby_look_around_text to &quot;You look around and see that you&#39;re currently in the IKEA $location_format[LOBBY]. A single yellow arrow painted on the floor beckons you forward. Turning towards the arrow&#39;s path, to the $direction_format[EAST], you see the $location_format[RESTAURANT].&quot;)
 \(set: $lobby_examine_catalog_text to &quot;You examine the IKEA catalog.
 //`[`You should refer to the physical copy of the IKEA catalog`]`//&quot;)
 \(set: $lobby_examine_pencil_text to &quot;This is just a normal pencil. It&#39;s IKEA branded. Sweet!&quot;)
@@ -907,7 +938,37 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace End]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="38" name="Showroom" tags="" position="1275,550" size="100,100"></tw-passagedata></tw-storydata>
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="38" name="Showroom" tags="" position="1275,550" size="100,100">### Showroom
+
+You go $direction_format[SOUTH] to the $location_format[SHOWROOM]. There&#39;s a door in your way.
+
+(if: $restaurant_cash_register_opened)[You have the $item_format[showroom key].
+|use_showroom_key&gt;[&gt; Use $item_format[showroom key]]
+]
+\(else:)[You reach for the doorknob. Drats! The door is locked. You see a keyhole on the doorknob.
+[[&gt; Back-&gt;Restaurant]]
+]
+
+\(click-append:?use_showroom_key)+(t8n:&#39;dissolve&#39;)[{
+&lt;br&gt;
+You use the $item_format[showroom key] on the door. The key fits perfectly and you slowly twist the doorknob. The door opens...
+&lt;br&gt;
+[[&gt; Enter SHOWROOM-&gt;Living Room]]
+}]</tw-passagedata><tw-passagedata pid="39" name="Living Room" tags="" position="1400,550" size="100,100">### Living Room
+
+You enter the $location_format[LIVING ROOM].
+
+(if: $living_room_looked_around)[&gt; Look around
+$living_room_look_around_text
+]
+\(else:)[|look_around&gt;[&gt; Look around]]
+
+\(set: $living_room_north_text to &quot;[[Go to WORKSPACES-&gt;Workspaces]]&quot;)
+\(set: $living_room_east_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
+\(set: $living_room_south_text to &quot;[[Go to WARDROBE-&gt;Wardrobe]]&quot;)
+\($compass: &quot;$living_room_north_text&quot;, &quot;&quot;, &quot;$living_room_east_text&quot;, &quot;$living_room_south_text&quot;)
+
+\(set: $living_room_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="40" name="Workspaces" tags="" position="1400,425" size="100,100"></tw-passagedata><tw-passagedata pid="41" name="Wardrobe" tags="" position="1400,675" size="100,100"></tw-passagedata><tw-passagedata pid="42" name="Dining" tags="" position="1525,550" size="100,100"></tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
  * https://github.com/paulmillr/es6-shim
