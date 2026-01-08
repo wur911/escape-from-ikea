@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Måla</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --bg-color: #f2f4f3;
+            --text-color: #1f2a2e;
+            --accent-color: #4f6f64;
+            --card-bg: #ffffff;
+            --border-color: #d0d6d4;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0f1a1c;
+                --text-color: #e4ecea;
+                --accent-color: #7fa89c;
+                --card-bg: #162326;
+                --border-color: #2b3a3e;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        main {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 1.5rem 1.25rem 3rem;
+        }
+
+        header {
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 4vw, 2.4rem);
+            margin-bottom: 0.75rem;
+            color: var(--accent-color);
+        }
+
+        p {
+            margin-bottom: 1.25rem;
+            font-size: 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        audio {
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+
+        section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        section h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--accent-color);
+        }
+
+        /* Accessibility improvements */
+        :focus-visible {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 3px;
+        }
+
+        /* Improve touch targets on mobile */
+        audio::-webkit-media-controls-panel {
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <main role="main">
+        <header>
+            <h1>Welcome to Måla</h1>
+            <p>
+                Welcome to Måla, a small fictional town in southern Sweden, surrounded by
+                pine forests, quiet lakes, and long stretches of road where the air feels
+                heavier with memory. Måla is a place shaped by stories, routine, and the
+                subtle presence of what once was. Below, you can listen to an audio tour
+                that guides you through the town and its surroundings.
+            </p>
+        </header>
+
+        <div class="card">
+            <audio controls aria-label="Audio tour of the town of Måla">
+                <source src="path-to-audio-file.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <section aria-labelledby="transcript-heading">
+                <h2 id="transcript-heading">Audio Transcript</h2>
+                <p>
+                    <!-- Transcript text can be added here later -->
+                </p>
+            </section>
+        </div>
+    </main>
+
+</body>
+</html>
