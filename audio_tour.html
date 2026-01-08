@@ -12,6 +12,7 @@
             --accent-color: #4f6f64;
             --card-bg: #ffffff;
             --border-color: #d0d6d4;
+            --active-bg: rgba(79, 111, 100, 0.12);
         }
 
         @media (prefers-color-scheme: dark) {
@@ -21,6 +22,7 @@
                 --accent-color: #7fa89c;
                 --card-bg: #162326;
                 --border-color: #2b3a3e;
+                --active-bg: rgba(127, 168, 156, 0.18);
             }
         }
 
@@ -30,8 +32,7 @@
 
         body {
             margin: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-                         Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.7;
@@ -43,25 +44,16 @@
             padding: 1.5rem 1.25rem 3rem;
         }
 
-        header {
-            margin-bottom: 2rem;
-        }
-
         h1 {
-            font-size: clamp(1.8rem, 4vw, 2.4rem);
-            margin-bottom: 0.75rem;
             color: var(--accent-color);
-        }
-
-        p {
-            margin-bottom: 1.25rem;
-            font-size: 1rem;
+            font-size: clamp(1.8rem, 4vw, 2.4rem);
         }
 
         .card {
             background-color: var(--card-bg);
             border-radius: 8px;
             padding: 1.5rem;
+            margin-top: 1.5rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
@@ -70,58 +62,116 @@
             margin: 1.5rem 0;
         }
 
-        section {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
+        .transcript {
+            margin-top: 1.5rem;
             border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
         }
 
-        section h2 {
-            font-size: 1.2rem;
-            margin-bottom: 0.75rem;
-            color: var(--accent-color);
+        .transcript p {
+            margin: 0 0 0.75rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.4s ease;
         }
 
-        /* Accessibility improvements */
-        :focus-visible {
+        .transcript p.active {
+            background-color: var(--active-bg);
+        }
+
+        .transcript p:focus-visible {
             outline: 3px solid var(--accent-color);
-            outline-offset: 3px;
-        }
-
-        /* Improve touch targets on mobile */
-        audio::-webkit-media-controls-panel {
-            padding: 0.5rem;
+            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
 
-    <main role="main">
-        <header>
-            <h1>Welcome to Måla</h1>
-            <p>
-                Welcome to Måla, a small fictional town in southern Sweden, surrounded by
-                pine forests, quiet lakes, and long stretches of road where the air feels
-                heavier with memory. Måla is a place shaped by stories, routine, and the
-                subtle presence of what once was. Below, you can listen to an audio tour
-                that guides you through the town and its surroundings.
+<main>
+    <h1>Welcome to Måla</h1>
+    <p>
+        Welcome to Måla, a small fictional town in southern Sweden, surrounded by forests,
+        quiet lakes, and roads that seem to remember every footstep. This audio tour will
+        guide you through the town and its subtle history.
+    </p>
+
+    <div class="card">
+        <audio id="audio" controls aria-label="Audio tour of the town of Måla">
+            <source src="audio/placeholder.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+        <section class="transcript" aria-label="Audio transcript">
+            <h2>Audio Transcript</h2>
+
+            <!-- Each paragraph has a data-start time in seconds -->
+            <p tabindex="0" data-start="0">
+                The road into Måla is long and quiet, bordered by pine trees that rarely move.
             </p>
-        </header>
+            <p tabindex="0" data-start="14">
+                On winter mornings, the air carries a stillness that makes every sound feel closer.
+            </p>
+            <p tabindex="0" data-start="29">
+                The bus stop has not changed much in decades, though fewer people wait there now.
+            </p>
+            <p tabindex="0" data-start="45">
+                If you listen carefully, you may notice how the town seems to speak only when no one else does.
+            </p>
+        </section>
+    </div>
+</main>
 
-        <div class="card">
-            <audio controls aria-label="Audio tour of the town of Måla">
-                <source src="path-to-audio-file.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
+<script>
+    const audio = document.getElementById('audio');
+    const transcriptLines = Array.from(document.querySelectorAll('.transcript p'));
 
-            <section aria-labelledby="transcript-heading">
-                <h2 id="transcript-heading">Audio Transcript</h2>
-                <p>
-                    <!-- Transcript text can be added here later -->
-                </p>
-            </section>
-        </div>
-    </main>
+    function updateTranscript() {
+        const currentTime = audio.currentTime;
+
+        let activeLine = null;
+
+        for (let i = 0; i < transcriptLines.length; i++) {
+            const start = parseFloat(transcriptLines[i].dataset.start);
+            const nextStart = transcriptLines[i + 1]
+                ? parseFloat(transcriptLines[i + 1].dataset.start)
+                : Infinity;
+
+            if (currentTime >= start && currentTime < nextStart) {
+                activeLine = transcriptLines[i];
+                break;
+            }
+        }
+
+        transcriptLines.forEach(line => {
+            line.classList.toggle('active', line === activeLine);
+        });
+
+        if (activeLine) {
+            activeLine.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+    }
+
+    audio.addEventListener('timeupdate', updateTranscript);
+
+    transcriptLines.forEach(line => {
+        line.addEventListener('click', () => {
+            audio.currentTime = parseFloat(line.dataset.start);
+            audio.play();
+        });
+
+        line.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                audio.currentTime = parseFloat(line.dataset.start);
+                audio.play();
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
