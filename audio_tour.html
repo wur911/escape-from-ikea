@@ -28,10 +28,6 @@
             }
         }
 
-        * {
-            box-sizing: border-box;
-        }
-
         body {
             margin: 0;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -48,7 +44,6 @@
 
         h1 {
             color: var(--accent-color);
-            font-size: clamp(1.8rem, 4vw, 2.4rem);
         }
 
         .card {
@@ -59,12 +54,11 @@
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
         }
 
-        /* Audio Player */
+        /* Audio player */
         .audio-player {
             background-color: var(--audio-bg);
             border-radius: 8px;
             padding: 1rem 1.25rem 1.25rem;
-            margin: 1.5rem 0;
             border: 1px solid var(--border-color);
         }
 
@@ -81,60 +75,69 @@
             accent-color: var(--accent-color);
         }
 
-        /* Collapsible Transcript */
+        /* Tour navigation */
+        .tour-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            gap: 1rem;
+        }
+
+        .tour-nav button {
+            flex: 1;
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.6rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .tour-nav button:hover,
+        .tour-nav button:focus-visible {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        /* Transcript */
         details.transcript {
             margin-top: 2rem;
             border-top: 1px solid var(--border-color);
             padding-top: 1rem;
         }
 
-        details.transcript summary {
+        summary {
             cursor: pointer;
-            list-style: none;
-            font-size: 1.1rem;
             font-weight: 600;
             color: var(--accent-color);
+            list-style: none;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        /* Hide default marker */
-        details.transcript summary::-webkit-details-marker {
+        summary::-webkit-details-marker {
             display: none;
         }
 
-        /* Custom caret */
-        details.transcript summary::before {
+        summary::before {
             content: "▸";
-            display: inline-block;
             transition: transform 0.3s ease;
         }
 
-        details.transcript[open] summary::before {
+        details[open] summary::before {
             transform: rotate(90deg);
         }
 
-        .transcript-content {
-            margin-top: 1rem;
-        }
-
         .transcript-content p {
-            margin: 0 0 0.75rem;
+            margin: 0.75rem 0;
             padding: 0.5rem 0.75rem;
             border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.4s ease;
         }
 
         .transcript-content p.active {
             background-color: var(--active-bg);
-        }
-
-        .transcript-content p:focus-visible,
-        details summary:focus-visible {
-            outline: 3px solid var(--accent-color);
-            outline-offset: 2px;
         }
     </style>
 </head>
@@ -143,86 +146,143 @@
 <main>
     <h1>Welcome to Måla</h1>
     <p>
-        Welcome to Måla, a small fictional town in southern Sweden, surrounded by pine forests,
-        quiet lakes, and roads that seem to remember every footstep. This audio tour will guide
-        you through the town and its subtle history.
+        This audio tour is divided into several short segments. Move forward or back
+        to explore different parts of the town at your own pace.
     </p>
 
     <div class="card">
-        <div class="audio-player" role="group" aria-labelledby="audio-title">
-            <h2 id="audio-title">Audio Tour</h2>
-            <audio id="audio" controls aria-label="Audio tour of the town of Måla">
-                <source src="audio/01 O_Super x Mag.Lo - CEO Champion [Main Theme of CEO 2015].mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
+        <div class="audio-player">
+            <h2 id="segment-title">Arrival</h2>
+            <audio id="audio" controls></audio>
+
+            <div class="tour-nav">
+                <button id="prevBtn" aria-label="Previous tour segment">← Previous</button>
+                <button id="nextBtn" aria-label="Next tour segment">Next →</button>
+            </div>
         </div>
 
         <details class="transcript">
             <summary>Audio Transcript</summary>
-
-            <div class="transcript-content">
-                <p tabindex="0" data-start="0">
-                    The road into Måla is long and quiet, bordered by pine trees that rarely move.
-                </p>
-                <p tabindex="0" data-start="14">
-                    On winter mornings, the air carries a stillness that makes every sound feel closer.
-                </p>
-                <p tabindex="0" data-start="29">
-                    The bus stop has not changed much in decades, though fewer people wait there now.
-                </p>
-                <p tabindex="0" data-start="45">
-                    If you listen carefully, you may notice how the town seems to speak only when no one else does.
-                </p>
-            </div>
+            <div class="transcript-content" id="transcript"></div>
         </details>
     </div>
 </main>
 
 <script>
     const audio = document.getElementById('audio');
-    const transcriptLines = Array.from(document.querySelectorAll('.transcript-content p'));
+    const transcriptContainer = document.getElementById('transcript');
+    const titleEl = document.getElementById('segment-title');
+
+    const tourSegments = [
+        {
+            title: "Arrival",
+            audioSrc: "audio/01 O_Super x Mag.Lo - CEO Champion [Main Theme of CEO 2015].mp3",
+            transcript: [
+                { start: 0, text: "The road into Måla is long and quiet." },
+                { start: 12, text: "Pine trees line the way, standing still." }
+            ]
+        },
+        {
+            title: "The Bus Stop",
+            audioSrc: "audio/01 O_Super x Mag.Lo - CEO Champion [Main Theme of CEO 2015].mp3",
+            transcript: [
+                { start: 0, text: "The bus stop waits, as it always has." },
+                { start: 15, text: "Few people pass through now." }
+            ]
+        },
+        {
+            title: "Town Center",
+            audioSrc: "audio/01 O_Super x Mag.Lo - CEO Champion [Main Theme of CEO 2015].mp3",
+            transcript: [
+                { start: 0, text: "Måla’s center feels larger than it is." },
+                { start: 18, text: "Shops close early, lights dim sooner." }
+            ]
+        },
+        {
+            title: "The Lake",
+            audioSrc: "audio/01 O_Super x Mag.Lo - CEO Champion [Main Theme of CEO 2015].mp3",
+            transcript: [
+                { start: 0, text: "The lake reflects the sky without comment." },
+                { start: 20, text: "In winter, it listens more than it moves." }
+            ]
+        },
+        {
+            title: "Leaving",
+            audioSrc: "audio/01 O_Super x Mag.Lo - CEO Champion [Main Theme of CEO 2015].mp3",
+            transcript: [
+                { start: 0, text: "Leaving Måla feels quieter than arriving." },
+                { start: 14, text: "The road remembers you." }
+            ]
+        }
+    ];
+
+    let currentIndex = 0;
+    let transcriptLines = [];
+
+    function loadSegment(index) {
+        const segment = tourSegments[index];
+        audio.pause();
+        audio.src = segment.audioSrc;
+        audio.currentTime = 0;
+
+        titleEl.textContent = segment.title;
+        transcriptContainer.innerHTML = "";
+
+        segment.transcript.forEach(line => {
+            const p = document.createElement('p');
+            p.textContent = line.text;
+            p.dataset.start = line.start;
+            p.tabIndex = 0;
+
+            p.addEventListener('click', () => {
+                audio.currentTime = line.start;
+                audio.play();
+            });
+
+            transcriptContainer.appendChild(p);
+        });
+
+        transcriptLines = Array.from(transcriptContainer.querySelectorAll('p'));
+    }
 
     function updateTranscript() {
-        const currentTime = audio.currentTime;
-        let activeLine = null;
+        const time = audio.currentTime;
+        let active = null;
 
         for (let i = 0; i < transcriptLines.length; i++) {
             const start = parseFloat(transcriptLines[i].dataset.start);
-            const nextStart = transcriptLines[i + 1]
+            const next = transcriptLines[i + 1]
                 ? parseFloat(transcriptLines[i + 1].dataset.start)
                 : Infinity;
 
-            if (currentTime >= start && currentTime < nextStart) {
-                activeLine = transcriptLines[i];
+            if (time >= start && time < next) {
+                active = transcriptLines[i];
                 break;
             }
         }
 
-        transcriptLines.forEach(line => {
-            line.classList.toggle('active', line === activeLine);
-        });
-
-        if (activeLine) {
-            activeLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        transcriptLines.forEach(p =>
+            p.classList.toggle('active', p === active)
+        );
     }
+
+    document.getElementById('prevBtn').onclick = () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            loadSegment(currentIndex);
+        }
+    };
+
+    document.getElementById('nextBtn').onclick = () => {
+        if (currentIndex < tourSegments.length - 1) {
+            currentIndex++;
+            loadSegment(currentIndex);
+        }
+    };
 
     audio.addEventListener('timeupdate', updateTranscript);
 
-    transcriptLines.forEach(line => {
-        line.addEventListener('click', () => {
-            audio.currentTime = parseFloat(line.dataset.start);
-            audio.play();
-        });
-
-        line.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                audio.currentTime = parseFloat(line.dataset.start);
-                audio.play();
-            }
-        });
-    });
+    loadSegment(currentIndex);
 </script>
 
 </body>
