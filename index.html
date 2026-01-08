@@ -50,7 +50,7 @@ td {
   width: 100%;  /* Image takes up 100% of the cell's width */
   height: auto; /* Height adjusts automatically to maintain aspect ratio */
   display: block; /* Helps remove mysterious gaps at the bottom of the image */
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Welcome" tags="" position="1125,300" size="100,100">### Welcome to IKEA
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Welcome" tags="" position="1125,275" size="100,100">### Welcome to IKEA
 {
 &lt;!-- General formatting --&gt;
 (set: $item_format to (text-color: cyan)+(text-style:&quot;emboss&quot;))
@@ -91,10 +91,59 @@ td {
 
 &lt;!-- Living Room variables --&gt;
 (set: $living_room_looked_around to false)
+
+&lt;!-- Workspaces variables --&gt;
+(set: $workspaces_looked_around to false)
+
+&lt;!-- Kitchen variables --&gt;
+(set: $kitchen_looked_around to false)
+
+&lt;!-- Dining variables --&gt;
+(set: $dining_looked_around to false)
+
+&lt;!-- Bathroom variables --&gt;
+(set: $bathroom_looked_around to false)
+
+&lt;!-- Bedroom variables --&gt;
+(set: $bedroom_looked_around to false)
+
+&lt;!-- Storage variables --&gt;
+(set: $storage_looked_around to false)
+
+&lt;!-- Children&#39;s variables --&gt;
+(set: $childrens_looked_around to false)
+
+&lt;!-- IKEA relic variables --&gt;
+(set: $inventory to (a:))
+(set: $allen_wrench to false)
+(set: $wooden_peg to false)
+(set: $cam_lock to false)
+(set: $measuring_tape to false)
+(set: $allen_wrench_text to &quot;$item_format[ALLEN WRENCH OF DESTINY]&quot;)
+(set: $wooden_peg_text to &quot;$item_format[TINY WOODEN PEG OF FORTITUDE]&quot;)
+(set: $cam_lock_text to &quot;$item_format[CAM LOCK OF ALIGNMENT]&quot;)
+(set: $measuring_tape_text to &quot;$item_format[MEASURING TAPE OF REVELATION]&quot;)
+(set: $print_inventory to (macro: [(output:)[{\
+(if: $inventory&#39;s length is 0)[\
+    nothing\
+]\
+(else-if: $inventory&#39;s length is 1)[\
+    the (print: (trimmed: $inventory&#39;s 1st))\
+]\
+(else-if: $inventory&#39;s length is 2)[\
+    the (print: $inventory&#39;s 1st) and the (print: $inventory&#39;s last)\
+]\
+(else:)[\
+    (set: _first_part to (subarray: $inventory, 1, $inventory&#39;s length - 1))\
+    the (print: (joined: &quot;, the &quot;, ..._first_part)), and the (print: $inventory&#39;s last)\
+]\
+}]]))
 }
 [[&gt; Wake up-&gt;Lobby]]
 [[&gt; Skip to Living Room-&gt;Living Room]]
+[[&gt; Skip to Stairs-&gt;Stairs]]
 [[&gt; Skip to Marketplace-&gt;Marketplace Start]]
+[[&gt; Skip to Escape!-&gt;Escape!]]
 </tw-passagedata><tw-passagedata pid="2" name="Restaurant" tags="" position="1275,425" size="100,100">### Restaurant
 
 (if:visits &gt; 1)[You enter the $location_format[RESTAURANT].]
@@ -270,9 +319,11 @@ Which way should you go?
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="6" name="Marketplace Restart" tags="" position="100,500" size="100,100">You continue onward but you suddenly start to feel woozy. You black out.
 
-[[&gt; Continue-&gt;Marketplace Start]]</tw-passagedata><tw-passagedata pid="7" name="Escape!" tags="" position="950,500" size="100,100">### Escape
+[[&gt; Continue-&gt;Marketplace Start]]</tw-passagedata><tw-passagedata pid="7" name="Escape!" tags="" position="875,825" size="100,100">### Escape
 
-You&#39;ve escaped!
+At long last, you round one final corner and a beam of light shines down from the heavens. In a flash of revelation, you see the $item_format[PERFECT SIDE TABLE] for your apartment and suddenly remember that was the reason you came to IKEA today. Weary but triumphant, you clutch your hard-earned treasure and ring it up through the self checkout. Stepping through the sliding glass doors out into the cool night, the twilight air is sweet and quiet. For a moment, the rooms you left behind seem almost like a dream. You feel a sudden sense of wonder. 
+ 
+Congrats on escaping IKEA!
 
 &#39;&#39;Your Stats&#39;&#39;
 * You ate $restaurant_meatballs_eaten meatballs</tw-passagedata><tw-passagedata pid="8" name="Marketplace 2" tags="" position="275,375" size="100,100">### Marketplace 2
@@ -952,7 +1003,7 @@ Which way should you go?
         &lt;td&gt;[[&gt; Go SOUTH-&gt;Escape!]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="38" name="Showroom" tags="" position="1275,550" size="100,100">### Showroom
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="38" name="Showroom" tags="" position="1275,575" size="100,100">### Showroom
 
 You go $direction_format[SOUTH] to the $location_format[SHOWROOM]. There&#39;s a door in your way.
 
@@ -968,9 +1019,9 @@ You go $direction_format[SOUTH] to the $location_format[SHOWROOM]. There&#39;s a
 You use the $item_format[showroom key] on the door. The key fits perfectly and you slowly twist the doorknob. The door opens...
 &lt;br&gt;
 [[&gt; Enter SHOWROOM-&gt;Living Room]]
-}]</tw-passagedata><tw-passagedata pid="39" name="Living Room" tags="" position="1400,550" size="100,100">### Living Room
+}]</tw-passagedata><tw-passagedata pid="39" name="Living Room" tags="" position="1450,575" size="100,100">### Living Room
 
-You enter the $location_format[LIVING ROOM].
+You enter the $location_format[LIVING ROOM] area.
 
 (if: $living_room_looked_around)[&gt; Look around
 $living_room_look_around_text
@@ -979,10 +1030,132 @@ $living_room_look_around_text
 
 \(set: $living_room_north_text to &quot;[[Go to WORKSPACES-&gt;Workspaces]]&quot;)
 \(set: $living_room_east_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
-\(set: $living_room_south_text to &quot;[[Go to WARDROBE-&gt;Wardrobe]]&quot;)
+\(set: $living_room_south_text to &quot;[[Go to STORAGE-&gt;Storage]]&quot;)
 \($compass: &quot;$living_room_north_text&quot;, &quot;&quot;, &quot;$living_room_east_text&quot;, &quot;$living_room_south_text&quot;)
 
-\(set: $living_room_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="40" name="Workspaces" tags="" position="1400,425" size="100,100"></tw-passagedata><tw-passagedata pid="41" name="Wardrobe" tags="" position="1400,675" size="100,100"></tw-passagedata><tw-passagedata pid="42" name="Dining" tags="" position="1525,550" size="100,100"></tw-passagedata></tw-storydata>
+\(set: $living_room_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="40" name="Workspaces" tags="" position="1450,425" size="100,100">### Workspaces
+
+You enter the $location_format[WORKSPACES] area.
+
+(if: $workspaces_looked_around)[&gt; Look around
+$workspaces_look_around_text
+]
+\(else:)[|look_around&gt;[&gt; Look around]]
+
+\(set: $workspaces_east_text to &quot;[[Go to KITCHEN-&gt;Kitchen]]&quot;)
+\(set: $workspaces_south_text to &quot;[[Go to LIVING ROOM-&gt;Living Room]]&quot;)
+\($compass: &quot;&quot;, &quot;&quot;, &quot;$workspaces_east_text&quot;, &quot;$workspaces_south_text&quot;)
+
+\(set: $workspaces_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="41" name="Storage" tags="" position="1450,725" size="100,100">### Storage
+
+You enter the $location_format[STORAGE] area.
+
+(if: $storage_looked_around)[&gt; Look around
+$storage_look_around_text
+]
+\(else:)[|look_around&gt;[&gt; Look around]]
+
+\(set: $storage_north_text to &quot;[[Go to LIVING ROOM-&gt;Living Room]]&quot;)
+\(set: $storage_west_text to &quot;[[Go to CHILDREN&#39;S-&gt;Childrens]]&quot;)
+\(set: $storage_east_text to &quot;[[Go to BEDROOM-&gt;Bedroom]]&quot;)
+\($compass: &quot;$storage_north_text&quot;, &quot;$storage_west_text&quot;, &quot;$storage_east_text&quot;, &quot;&quot;)
+
+\(set: $storage_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="42" name="Dining" tags="" position="1625,575" size="100,100">### Dining
+
+You enter the $location_format[DINING] area.
+
+(if: $dining_looked_around)[&gt; Look around
+$dining_look_around_text
+]
+\(else:)[|look_around&gt;[&gt; Look around]]
+
+\(set: $dining_north_text to &quot;[[Go to KITCHEN-&gt;Kitchen]]&quot;)
+\(set: $dining_west_text to &quot;[[Go to LIVING ROOM-&gt;Living Room]]&quot;)
+\(set: $dining_east_text to &quot;[[Go to BATHROOM-&gt;Bathroom]]&quot;)
+\($compass: &quot;$dining_north_text&quot;, &quot;$dining_west_text&quot;, &quot;$dining_east_text&quot;, &quot;&quot;)
+
+\(set: $dining_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="43" name="Kitchen" tags="" position="1625,425" size="100,100">### Kitchen
+
+You enter the $location_format[KITCHEN] area.
+
+(if: $kitchen_looked_around)[&gt; Look around
+$kitchen_look_around_text
+]
+\(else:)[|look_around&gt;[&gt; Look around]]
+
+\(set: $kitchen_west_text to &quot;[[Go to WORKSPACSE-&gt;Workspaces]]&quot;)
+\(set: $kitchen_south_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
+\($compass: &quot;&quot;, &quot;$kitchen_west_text&quot;, &quot;&quot;, &quot;$kitchen_south_text&quot;)
+
+\(set: $kitchen_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="44" name="Bathroom" tags="" position="1775,575" size="100,100">### Bathroom
+
+You enter the $location_format[BATHROOM] area.
+
+(if: $bathroom_looked_around)[&gt; Look around
+$bathroom_look_around_text
+]
+\(else:)[|look_around&gt;[&gt; Look around]]
+
+\(set: $bathroom_west_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
+\(set: $bathroom_south_text to &quot;[[Go to BEDROOM-&gt;Bedroom]]&quot;)
+\($compass: &quot;&quot;, &quot;$bathroom_west_text&quot;, &quot;&quot;, &quot;$bathroom_south_text&quot;)
+
+\(set: $bathroom_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="45" name="Bedroom" tags="" position="1650,725" size="200,100">### Bedroom
+
+You enter the $location_format[BEDROOM] area.
+
+(if: $bedroom_looked_around)[&gt; Look around
+$bedroom_look_around_text
+]
+\(else:)[|look_around&gt;[&gt; Look around]]
+
+\(set: $bedroom_north_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
+\(set: $bedroom_west_text to &quot;[[Go to STORAGE-&gt;Storage]]&quot;)
+\($compass: &quot;$bedroom_north_text&quot;, &quot;$bedroom_west_text&quot;, &quot;&quot;, &quot;&quot;)
+
+\(set: $bedroom_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="46" name="Childrens" tags="" position="1275,725" size="100,100">### Children&#39;s Area
+
+You enter the $location_format[CHILDREN&#39;S AREA].
+
+(if: $childrens_looked_around)[&gt; Look around
+$childrens_look_around_text
+]
+\(else:)[|look_around&gt;[&gt; Look around]]
+
+\(set: $childrens_west_text to &quot;[[Go to STAIRS-&gt;Stairs]]&quot;)
+\(set: $childrens_east_text to &quot;[[Go to STORAGE-&gt;Storage]]&quot;)
+\($compass: &quot;&quot;, &quot;$childrens_west_text&quot;, &quot;$childrens_east_text&quot;, &quot;&quot;)
+
+\(set: $childrens_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="47" name="Stairs" tags="" position="1125,725" size="100,100">### Stairs to MARKETPLACE
+
+You go $direction_format[WEST] to the $location_format[STAIRS].
+
+You see a door labeled &quot;STAIRS TO $location_format[MARKETPLACE]&quot; just ahead of you. A small sign reads &quot;Only those bearing the four arcane $item_format[IKEA relics] may pass&quot;.
+
+{
+&lt;!-- Some stuff for debugging
+(input: bind _input, &quot;X==&quot;)
+(link-repeat: &quot;&gt; Add to inventory&quot;)[
+(set: $inventory to it + (a: _input))
+]
+--&gt;
+
+(if: $inventory&#39;s length &gt;= 4)[
+You present ($print_inventory:). The door hums faintly, as if recalling an instruction manual. Something inside aligns. The lock releases. You may proceed.
+&lt;br&gt;
+[[&gt; Enter the MARKETPLACE-&gt;Marketplace Start]]
+]
+(else-if: $inventory&#39;s length &gt; 0)[
+You present ($print_inventory:). Unfortunately you&#39;re still missing some relics. The door doesn&#39;t budge.
+&lt;br&gt;
+[[&gt; Back-&gt;Childrens]]
+]
+(else:)[
+You tug on the door but it doesn&#39;t budge.
+&lt;br&gt;
+[[&gt; Back-&gt;Childrens]]
+]
+}</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
  * https://github.com/paulmillr/es6-shim
