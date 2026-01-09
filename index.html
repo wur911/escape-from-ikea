@@ -83,6 +83,7 @@ td {
 (set: $item_format to (text-color: cyan)+(text-style:&quot;emboss&quot;))
 (set: $location_format to (text-color: green)+(text-style:&quot;emboss&quot;))
 (set: $direction_format to (text-style: &quot;bold&quot;))
+(set: $answer_format to (font:&#39;Courier New&#39;)+(text-color:cyan)+(text-style:&quot;emboss&quot;))
 (set: $compass to (macro: str-type _north, str-type _west, str-type _east, str-type _south, [
   (output:)[&lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
@@ -120,6 +121,7 @@ td {
 (set: $living_room_looked_around to false)
 (set: $living_room_examined_plaque to false)
 (set: $living_room_examined_chair to false)
+(set: $living_room_chair_assembled to false)
 
 &lt;!-- Workspaces variables --&gt;
 (set: $workspaces_looked_around to false)
@@ -1057,11 +1059,13 @@ $living_room_look_around_text
 ]
 \(else:)[|look_around&gt;[&gt; Look around]]
 \(if: $living_room_examined_plaque)[&lt;br&gt;&gt; Examine $item_format[plaque]
-$living_room_examine_plaque_text
-]
+$living_room_examine_plaque_text]
 \(else-if: $living_room_looked_around)[$living_room_examine_plaque_click_text]
 \(else:)[|examine_plaque_click&gt;[]]
-\(if: $living_room_examined_chair)[&lt;br&gt;&gt; Examine $item_format[chair]
+\(if: $living_room_chair_assembled)[&lt;br&gt;&gt; Examine $item_format[chair]
+$living_room_chair_already_assembled_text
+]
+\(else-if: $living_room_examined_chair)[&lt;br&gt;&gt; Examine $item_format[chair]
 $living_room_examine_chair_text
 ]
 \(else-if: $living_room_looked_around)[$living_room_examine_chair_click_text]
@@ -1078,7 +1082,26 @@ $living_room_examine_chair_text
 \(set: $living_room_examine_plaque_click_text to &quot;&lt;br&gt;|examine_plaque&gt;[&gt; Examine $item_format[plaque]]&quot;)
 \(set: $living_room_examine_chair_click_text to &quot;&lt;br&gt;|examine_chair&gt;[&gt; Examine $item_format[chair]]&quot;)
 \(set: $living_room_examine_plaque_text to &quot;You inspect the $item_format[plaque]. It reads: &lt;div class=\&quot;plaque\&quot;&gt;&lt;blockquote&gt;\&quot;Before I depart, I leave you this catalog. Study every page, question every item, and mind every word; the future of IKEA lives on in your careful hands.\&quot;&lt;/blockquote&gt;&lt;div class=\&quot;author\&quot;&gt;    - Böök Sifer (Chief IKEA designer)&lt;/div&gt;&lt;/div&gt;&quot;)
-\(set: $living_room_examine_chair_text to &quot;Test&quot;)
+\(set: $living_room_examine_chair_text to &quot;{You inspect some pieces that look like they came from an IKEA $item_format[chair]. There seem to be some parts missing, and you can&#39;t find the guide with the cheery little instruction guy for how to put the parts together. You might want to use extra pieces obtained from elsewhere to figure out what to do here...
+&lt;br&gt;
+What do you want to do?
+(input: bind _guess, \&quot;X=\&quot;)
+(link-repeat: \&quot;&gt; Try\&quot;)[
+  (if: (uppercase: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess)) is $living_room_chair_answer)[
+    (replace: ?chair_guess_result)[$living_room_chair_correct_text]
+    (set: $living_room_chair_assembled to true)
+  ]
+  (else:)[
+    (replace: ?chair_guess_result)[$living_room_chair_incorrect_text]
+  ]
+]
+&lt;br&gt;
+|chair_guess_result&gt;[]
+}&quot;)
+\(set: $living_room_chair_answer to &quot;MANUALASSEMBLY&quot;)
+\(set: $living_room_chair_already_assembled_text to &quot;You&#39;ve already assembled the chair with the power of $answer_format[MANUAL ASSEMBLY]. You should check out the ticking in the $location_format[WARDROBE &amp; STORAGE] area.&quot;)
+\(set: $living_room_chair_correct_text to &quot;You use the power of $answer_format[MANUAL ASSEMBLY] to construct the chair. As you put the last piece of the chair in place, you hear a //*kathunk*// sound followed by some ticking. It seems to originate from the $location_format[WARDROBE &amp; STORAGE] area.&quot;)
+\(set: $living_room_chair_incorrect_text to &quot;Nothing seems to happen.&quot;)
 \(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
 $living_room_look_around_text
 \(set: $living_room_looked_around to true)
@@ -1105,9 +1128,9 @@ $workspaces_look_around_text
 \(set: $workspaces_south_text to &quot;[[Go to LIVING ROOM-&gt;Living Room]]&quot;)
 \($compass: &quot;&quot;, &quot;&quot;, &quot;$workspaces_east_text&quot;, &quot;$workspaces_south_text&quot;)
 
-\(set: $workspaces_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="41" name="Storage" tags="" position="1450,725" size="100,100">### Storage
+\(set: $workspaces_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="41" name="Storage" tags="" position="1450,725" size="100,100">### Wardrobe &amp; Storage
 
-You enter the $location_format[STORAGE] area.
+You enter the $location_format[WARDROBE &amp; STORAGE] area.
 
 (if: $storage_looked_around)[&gt; Look around
 $storage_look_around_text
