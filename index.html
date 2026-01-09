@@ -77,6 +77,18 @@ td {
   font-weight: bold;
   letter-spacing: 0.05em;
   color: #4a360f;
+}
+table.plaque_table {
+  margin: auto; /* center table on page */
+  border-collapse: collapse;
+}
+td.plaque_table {
+  text-align: center;
+  padding: 8px 16px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  color: #3a2a0a;
 }</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Welcome" tags="" position="1125,275" size="100,100">### Welcome to IKEA
 {
 &lt;!-- General formatting --&gt;
@@ -1092,7 +1104,15 @@ $living_room_examine_chair_text
 \(set: $living_room_look_around_text to &quot;You look around. To your left, you see lamps of every shape—floor lamps, desk lamps, even a lamp shaped like a bagel—casting a warm, conspiratorial glow. They illuminate a shiny $item_format[plaque] on the wall. To your right is an IKEA $item_format[chair], broken in pieces.&quot;)
 \(set: $living_room_examine_plaque_click_text to &quot;&lt;br&gt;|examine_plaque&gt;[&gt; Examine $item_format[plaque]]&quot;)
 \(set: $living_room_examine_chair_click_text to &quot;&lt;br&gt;|examine_chair&gt;[&gt; Examine $item_format[chair]]&quot;)
-\(set: $living_room_examine_plaque_text to &quot;You inspect the $item_format[plaque]. It reads: &lt;div class=\&quot;plaque\&quot;&gt;&lt;blockquote&gt;\&quot;Before I depart, I leave you this catalog. Study every page, question every item, and mind every word; the future of IKEA lives on in your careful hands.\&quot;&lt;/blockquote&gt;&lt;div class=\&quot;author\&quot;&gt;    - Böök Sifer (Chief IKEA designer)&lt;/div&gt;&lt;/div&gt;&quot;)
+\(set: $living_room_examine_plaque_text to &quot;You inspect the $item_format[plaque]. It reads: &lt;div class=\&quot;plaque\&quot;&gt;&lt;blockquote&gt;\&quot;Before I depart, I leave you this catalog. Study every &lt;u&gt;page&lt;/u&gt;, question every &lt;u&gt;item&lt;/u&gt;, and mind every &lt;u&gt;word&lt;/u&gt;; the future of IKEA lives on in your careful hands.\&quot;&lt;/blockquote&gt;&lt;table class=\&quot;plaque_table\&quot;&gt;
+&lt;tr&gt;&lt;td class=\&quot;plaque_table\&quot;&gt;5, 4, 3&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class=\&quot;plaque_table\&quot;&gt;5, 1, 16&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class=\&quot;plaque_table\&quot;&gt;7, 1, 6&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class=\&quot;plaque_table\&quot;&gt;3, 2, 17&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class=\&quot;plaque_table\&quot;&gt;4, 2, 7&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class=\&quot;plaque_table\&quot;&gt;8, 2, 7&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class=\&quot;plaque_table\&quot;&gt;5, 3, 10&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;&lt;div class=\&quot;author\&quot;&gt;    - Böök Sifer (Chief IKEA designer)&lt;/div&gt;&lt;/div&gt;&quot;)
 \(set: $living_room_examine_chair_text to &quot;{You inspect some pieces that look like they came from an IKEA $item_format[chair]. There seem to be some parts missing, and you can&#39;t find the guide with the cheery little instruction guy for how to put the parts together. You might want to use extra pieces obtained from elsewhere to figure out what to do here...
 &lt;br&gt;
 What do you want to do?
