@@ -83,7 +83,8 @@ td {
 (set: $item_format to (text-color: cyan)+(text-style:&quot;emboss&quot;))
 (set: $location_format to (text-color: green)+(text-style:&quot;emboss&quot;))
 (set: $direction_format to (text-style: &quot;bold&quot;))
-(set: $answer_format to (font:&#39;Courier New&#39;)+(text-color:cyan)+(text-style:&quot;emboss&quot;))
+(set: $answer_format to (font:&#39;Courier New&#39;)+(text-color:orange)+(text-style:&quot;emboss&quot;))
+(set: $relic_format to (text-color:red)+(text-style:&quot;emboss&quot;))
 (set: $compass to (macro: str-type _north, str-type _west, str-type _east, str-type _south, [
   (output:)[&lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
@@ -125,6 +126,12 @@ td {
 
 &lt;!-- Workspaces variables --&gt;
 (set: $workspaces_looked_around to false)
+(set: $workspaces_examined_map to false)
+(set: $workspaces_examined_computer to false)
+(set: $workspaces_number_pins to 10)
+(set: $workspaces_played_minesweeper to false)
+(set: $workspaces_checked_recycling to false)
+(set: $workspaces_push_pin_placed to false)
 
 &lt;!-- Kitchen variables --&gt;
 (set: $kitchen_looked_around to false)
@@ -172,6 +179,7 @@ td {
 }
 [[&gt; Wake up-&gt;Lobby]]
 [[&gt; Skip to Living Room-&gt;Living Room]]
+[[&gt; Skip to Workspaces-&gt;Workspaces]]
 [[&gt; Skip to Stairs-&gt;Stairs]]
 [[&gt; Skip to Marketplace-&gt;Marketplace Start]]
 [[&gt; Skip to Escape!-&gt;Escape!]]
@@ -205,7 +213,7 @@ To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM]
 \(set: $restaurant_examine_food_counter_text to &quot;You examine the $item_format[food counter]. Tentatively, you reach out and pluck a single Swedish meatball from the perfectly stacked pile. It reinvigorates your spirits, but it doesn&#39;t get you any closer to escaping.
 {
 (link-repeat: \&quot;&gt; Eat another meatball\&quot;)[
-  (set: $restaurant_meatballs_eaten to it +1)
+  (set: $restaurant_meatballs_eaten to it + 1)
   (rerun: ?meatballs_eaten_text)\
   (if: $restaurant_meatballs_eaten &gt; 5)[
     (replace: ?meatballs_eaten_text)[You&#39;ve eaten (print: $restaurant_meatballs_eaten) meatballs. (//This is not a puzzle//)]
@@ -357,7 +365,10 @@ At long last, you round one final corner and a beam of light shines down from th
 Congrats on escaping IKEA!
 
 &#39;&#39;Your Stats&#39;&#39;
-* You ate $restaurant_meatballs_eaten meatballs</tw-passagedata><tw-passagedata pid="8" name="Marketplace 2" tags="" position="275,375" size="100,100">### Marketplace 2
+* You ate $restaurant_meatballs_eaten meatballs
+(if: $workspaces_played_minesweeper)[
+* You played minesweeper on the computer
+]</tw-passagedata><tw-passagedata pid="8" name="Marketplace 2" tags="" position="275,375" size="100,100">### Marketplace 2
 
 Which way should you go?
 
@@ -1123,12 +1134,104 @@ You enter the $location_format[WORKSPACES] area.
 $workspaces_look_around_text
 ]
 \(else:)[|look_around&gt;[&gt; Look around]]
+\(if: $workspaces_push_pin_placed)[&lt;br&gt;&gt; Examine $item_format[world map]
+$workspaces_push_pin_placed_text
+]
+\(else-if: $workspaces_examined_map)[&lt;br&gt;&gt; Examine $item_format[world map]
+$workspaces_examine_map_text
+]
+\(else-if: $workspaces_looked_around)[$workspaces_examine_map_click_text]
+\(else:)[|examine_map_click&gt;[]]
+\(if: $workspaces_examined_computer)[&lt;br&gt;&gt; Examine $item_format[computer]
+$workspaces_examine_computer_text
+]
+\(else-if: $workspaces_looked_around)[$workspaces_examine_computer_click_text]
+\(else:)[|examine_computer_click&gt;[]]
 
 \(set: $workspaces_east_text to &quot;[[Go to KITCHEN-&gt;Kitchen]]&quot;)
 \(set: $workspaces_south_text to &quot;[[Go to LIVING ROOM-&gt;Living Room]]&quot;)
 \($compass: &quot;&quot;, &quot;&quot;, &quot;$workspaces_east_text&quot;, &quot;$workspaces_south_text&quot;)
 
-\(set: $workspaces_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="41" name="Storage" tags="" position="1450,725" size="100,100">### Wardrobe &amp; Storage
+\(set: $workspaces_look_around_text to &quot;You look around.You see a ton of desks, chairs, and filing cabinets. You see a $item_format[world map] on the wall. You also see one $item_format[computer] with some light coming from the monitor.&quot;)
+\(set: $workspaces_examine_map_click_text to &quot;&lt;br&gt;|examine_map&gt;[&gt; Examine $item_format[world map]]&quot;)
+\(set: $workspaces_examine_computer_click_text to &quot;&lt;br&gt;|examine_computer&gt;[&gt; Examine $item_format[computer]]&quot;)
+\(set: $workspaces_examine_map_text to &quot;{You inspect the $item_format[world map]. Looks like a normal map of the world made out of paper. Seems like it&#39;s been hung up over a corkboard. Below it is a box of $workspaces_number_pins $item_format[push pins] and a hastily scribbled note:
+\&quot;Where in the world can the secret IKEA treasure be?\&quot;.
+&lt;br&gt;
+Where do you want to put the $item_format[push pin]?
+(input: bind _guess, \&quot;X=\&quot;)
+(link-repeat: \&quot;&gt; Place\&quot;)[
+  (if: (uppercase: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess)) is $workspaces_push_pin_answer)[
+    (rerun: ?push_pin_magic)
+    (replace: ?push_pin_guess_result)[$workspaces_push_pin_correct_text]
+    (set: $workspaces_push_pin_placed to true)
+  ]
+  (else:)[
+    (if: $workspaces_number_pins &gt; 0)[
+      (set: $workspaces_number_pins to it - 1)
+    ]
+    (rerun: ?push_pin_magic)
+    (replace: ?push_pin_guess_result)[$workspaces_push_pin_incorrect_text]
+  ]
+]
+&lt;br&gt;
+|push_pin_magic&gt;[(if: $workspaces_number_pins &lt;= 0)[You ran out of push pins. You are now magically manifesting push pins from thin air. Weirder things have happened in IKEA. ]]
+|push_pin_guess_result&gt;[]
+}&quot;)
+\(set: $workspaces_push_pin_answer to &quot;DUBLIN&quot;)
+\(set: $workspaces_push_pin_placed_text to &quot;You&#39;ve placed a push pin on $answer_format[DUBLIN] and acquired the $relic_format[CAM LOCK OF ALIGNMENT].&quot;)
+\(set: $workspaces_push_pin_correct_text to &quot;You stick a push pin on $answer_format[DUBLIN] on the map. You hear a //*kathunk*// nearby and spot a secret safe door open behind a picture frame. You peer inside and find an IKEA relic - the $relic_format[CAM LOCK OF ALIGNMENT].&quot;)
+\(set: $workspaces_push_pin_incorrect_text to &quot;You stick a push pin on $answer_format[(uppercase: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess))]. Nothing happens. You have $workspaces_number_pins $item_format[push pins] left.&quot;)
+\(set: $workspaces_examine_computer_text to &quot;{You inspect the $item_format[computer]. You see only two icons on the desktop - $item_format[Minesweeper] and the $item_format[recycling bin].
+(if: $workspaces_played_minesweeper)[
+  &lt;br&gt;
+  &gt; Play $item_format[Minesweeper]
+  &lt;br&gt;
+  $workspaces_played_minesweeper_text
+]
+(else:)[
+  |play_minesweeper&gt;[
+    &lt;br&gt;
+    &gt; Play $item_format[Minesweeper]
+  ]
+]
+(if: $workspaces_checked_recycling)[
+  &lt;br&gt;
+  &gt; Check $item_format[recycling bin]
+  &lt;br&gt;
+  $workspaces_checked_recycling_text
+]
+(else:)[
+  |check_recycling&gt;[
+    &lt;br&gt;
+    &gt; Check $item_format[recycling bin]
+  ]
+]}&quot;)
+\(set: $workspaces_played_minesweeper_text to &quot;You play some $item_format[Minesweeper]. Nothing out of the ordinary happens. You should probably stop wasting your time playing $item_format[Minesweeper] and focus on escaping.&quot;)
+\(set: $workspaces_checked_recycling_text to &quot;You check the $item_format[recycling bin]. There&#39;s nothing there.&quot;)
+
+\(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+$workspaces_look_around_text
+\(set: $workspaces_looked_around to true)
+\(replace: ?examine_map_click)[$workspaces_examine_map_click_text]
+\(replace: ?examine_computer_click)[$workspaces_examine_computer_click_text]
+]
+\(click-append:?examine_map)+(t8n:&#39;dissolve&#39;)[
+$workspaces_examine_map_text
+\(set: $workspaces_examined_map to true)
+]
+\(click-append:?examine_computer)+(t8n:&#39;dissolve&#39;)[
+$workspaces_examine_computer_text
+\(set: $workspaces_examined_computer to true)
+\]
+\(click-append:?play_minesweeper)+(t8n:&#39;dissolve&#39;)[
+$workspaces_played_minesweeper_text
+\(set: $workspaces_played_minesweeper to true)
+\]
+\(click-append:?check_recycling)+(t8n:&#39;dissolve&#39;)[
+$workspaces_checked_recycling_text
+\(set: $workspaces_checked_recycling to true)
+\]</tw-passagedata><tw-passagedata pid="41" name="Storage" tags="" position="1450,725" size="100,100">### Wardrobe &amp; Storage
 
 You enter the $location_format[WARDROBE &amp; STORAGE] area.
 
@@ -1165,7 +1268,7 @@ $kitchen_look_around_text
 ]
 \(else:)[|look_around&gt;[&gt; Look around]]
 
-\(set: $kitchen_west_text to &quot;[[Go to WORKSPACSE-&gt;Workspaces]]&quot;)
+\(set: $kitchen_west_text to &quot;[[Go to WORKSPACES-&gt;Workspaces]]&quot;)
 \(set: $kitchen_south_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
 \($compass: &quot;&quot;, &quot;$kitchen_west_text&quot;, &quot;&quot;, &quot;$kitchen_south_text&quot;)
 
