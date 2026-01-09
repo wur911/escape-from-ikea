@@ -50,6 +50,33 @@ td {
   width: 100%;  /* Image takes up 100% of the cell's width */
   height: auto; /* Height adjusts automatically to maintain aspect ratio */
   display: block; /* Helps remove mysterious gaps at the bottom of the image */
+}
+
+/* Include styling for the plaque. */
+.plaque {
+  width: 80%;
+  margin: auto;
+  padding: 3% 8%;
+  background: linear-gradient(0deg, #c9a24d, #e3c36f);
+  border: 4px solid #8b6b2e;
+  border-radius: 12px;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.3),
+    0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.plaque blockquote {
+  margin: 0;
+  line-height: 1.5;
+  color: #3a2a0a;
+}
+
+.plaque .author {
+  margin-top: 5%;
+  margin-left: 10%;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  color: #4a360f;
 }</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Welcome" tags="" position="1125,275" size="100,100">### Welcome to IKEA
 {
 &lt;!-- General formatting --&gt;
@@ -91,6 +118,8 @@ td {
 
 &lt;!-- Living Room variables --&gt;
 (set: $living_room_looked_around to false)
+(set: $living_room_examined_plaque to false)
+(set: $living_room_examined_chair to false)
 
 &lt;!-- Workspaces variables --&gt;
 (set: $workspaces_looked_around to false)
@@ -144,10 +173,10 @@ td {
 [[&gt; Skip to Stairs-&gt;Stairs]]
 [[&gt; Skip to Marketplace-&gt;Marketplace Start]]
 [[&gt; Skip to Escape!-&gt;Escape!]]
-</tw-passagedata><tw-passagedata pid="2" name="Restaurant" tags="" position="1275,425" size="100,100">### Restaurant
+</tw-passagedata><tw-passagedata pid="2" name="Restaurant &amp; Cafe" tags="" position="1275,425" size="100,100">### Restaurant &amp; Cafe
 
-(if:visits &gt; 1)[You enter the $location_format[RESTAURANT].]
-\(else:)[Figuring that some food might help jog your memory (or at least tide you over until you find your way out), you enter the $location_format[RESTAURANT].]
+(if:visits &gt; 1)[You enter the $location_format[RESTAURANT &amp; CAFE].]
+\(else:)[Figuring that some food might help jog your memory (or at least tide you over until you find your way out), you enter the $location_format[RESTAURANT &amp; CAFE].]
 
 (if: $restaurant_looked_around)[&gt; Look around
 $restaurant_look_around_text
@@ -164,7 +193,7 @@ $restaurant_examine_cash_register_text
 \(else-if: $restaurant_looked_around)[$restaurant_examine_cash_register_click_text]
 \(else:)[|examine_cash_register_click&gt;[]]
 \(set: $restaurant_west_text to &quot;[[Go to LOBBY-&gt;Lobby]]&quot;)
-\(set: $restaurant_south_text to &quot;[[Go to SHOWROOM-&gt;Showroom]]&quot;)
+\(set: $restaurant_south_text to &quot;(if:(history: where its name contains \&quot;Living Room\&quot;)&#39;s length &gt;= 1)[[[Go to LIVING ROOM-&gt;Living Room]]](else:)[[[Go to SHOWROOM-&gt;Showroom]]]&quot;)
 \($compass: &quot;&quot;, &quot;$restaurant_west_text&quot;, &quot;&quot;, &quot;(if:$restaurant_looked_around)[$restaurant_south_text](else:)|go_south&gt;[]&quot;)
 \(set: $restaurant_look_around_text to &quot;You look around. It&#39;s weirdly empty in here today, not a single bickering couple or &lt;a target=\&quot;_blank\&quot; rel=\&quot;noopener noreferrer\&quot; href=\&quot;https://www.theglobeandmail.com/news/toronto/stylish-but-illegal-monkey-found-roaming-toronto-ikea/article6140276/\&quot;&gt;stylish but illegal monkey&lt;/a&gt; in sight. There&#39;s a $item_format[food counter] but all the menu display screens are dark. You might have to figure out the menu some other way. You also see a $item_format[cash register].\
 &lt;br&gt;
@@ -188,7 +217,7 @@ To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM]
   $restaurant_cash_register_already_open_text
 ]
 (else:)[
-  (input: bind _password, \&quot;X==\&quot;)
+  (input: bind _password, \&quot;X=\&quot;)
   (link-repeat: \&quot;&gt; Enter password\&quot;)[
     (if: (uppercase: _password) is $restaurant_cash_register_answer)[
       (replace: ?cash_register_guess_result)[$restaurant_cash_register_open_correct_text]
@@ -244,8 +273,8 @@ $lobby_examine_compass_text
 \(else:)[|examine_compass&gt;[&gt; Examine $item_format[compass]]]
 ($compass: &quot;&quot;, &quot;&quot;, &quot;(if:$lobby_looked_around)[$lobby_east_text](else:)|go_east&gt;[]&quot;, &quot;&quot;)
 
-\(set: $lobby_east_text to &quot;[[Go to RESTAURANT-&gt;Restaurant]]&quot;)
-\(set: $lobby_look_around_text to &quot;You look around and see that you&#39;re currently in the IKEA $location_format[LOBBY]. A single yellow arrow painted on the floor beckons you forward. Turning towards the arrow&#39;s path, to the $direction_format[EAST], you see the $location_format[RESTAURANT].&quot;)
+\(set: $lobby_east_text to &quot;[[Go to CAFE-&gt;Restaurant &amp; Cafe]]&quot;)
+\(set: $lobby_look_around_text to &quot;You look around and see that you&#39;re currently in the IKEA $location_format[LOBBY]. A single yellow arrow painted on the floor beckons you forward. Turning towards the arrow&#39;s path, to the $direction_format[EAST], you see the $location_format[RESTAURANT &amp; CAFE].&quot;)
 \(set: $lobby_examine_catalog_text to &quot;You examine the IKEA catalog.
 //`[`You should refer to the physical copy of the IKEA catalog`]`//&quot;)
 \(set: $lobby_examine_pencil_text to &quot;This is just a normal pencil. It&#39;s IKEA branded. Sweet!&quot;)
@@ -1011,7 +1040,7 @@ You go $direction_format[SOUTH] to the $location_format[SHOWROOM]. There&#39;s a
 |use_showroom_key&gt;[&gt; Use $item_format[showroom key]]
 ]
 \(else:)[You reach for the doorknob. Drats! The door is locked. You see a keyhole on the doorknob.
-[[&gt; Back-&gt;Restaurant]]
+[[&gt; Back-&gt;Restaurant &amp; Cafe]]
 ]
 
 \(click-append:?use_showroom_key)+(t8n:&#39;dissolve&#39;)[{
@@ -1027,13 +1056,43 @@ You enter the $location_format[LIVING ROOM] area.
 $living_room_look_around_text
 ]
 \(else:)[|look_around&gt;[&gt; Look around]]
+\(if: $living_room_examined_plaque)[&lt;br&gt;&gt; Examine $item_format[plaque]
+$living_room_examine_plaque_text
+]
+\(else-if: $living_room_looked_around)[$living_room_examine_plaque_click_text]
+\(else:)[|examine_plaque_click&gt;[]]
+\(if: $living_room_examined_chair)[&lt;br&gt;&gt; Examine $item_format[chair]
+$living_room_examine_chair_text
+]
+\(else-if: $living_room_looked_around)[$living_room_examine_chair_click_text]
+\(else:)[|examine_chair_click&gt;[]]
+[[&gt; Return to RESTAURANT &amp; CAFE-&gt;Restaurant &amp; Cafe]]
+&lt;br&gt;
 
 \(set: $living_room_north_text to &quot;[[Go to WORKSPACES-&gt;Workspaces]]&quot;)
 \(set: $living_room_east_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
 \(set: $living_room_south_text to &quot;[[Go to STORAGE-&gt;Storage]]&quot;)
 \($compass: &quot;$living_room_north_text&quot;, &quot;&quot;, &quot;$living_room_east_text&quot;, &quot;$living_room_south_text&quot;)
 
-\(set: $living_room_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="40" name="Workspaces" tags="" position="1450,425" size="100,100">### Workspaces
+\(set: $living_room_look_around_text to &quot;You look around. To your left, you see lamps of every shape—floor lamps, desk lamps, even a lamp shaped like a bagel—casting a warm, conspiratorial glow. They illuminate a shiny $item_format[plaque] on the wall. To your right is an IKEA $item_format[chair], broken in pieces.&quot;)
+\(set: $living_room_examine_plaque_click_text to &quot;&lt;br&gt;|examine_plaque&gt;[&gt; Examine $item_format[plaque]]&quot;)
+\(set: $living_room_examine_chair_click_text to &quot;&lt;br&gt;|examine_chair&gt;[&gt; Examine $item_format[chair]]&quot;)
+\(set: $living_room_examine_plaque_text to &quot;You inspect the $item_format[plaque]. It reads: &lt;div class=\&quot;plaque\&quot;&gt;&lt;blockquote&gt;\&quot;Before I depart, I leave you this catalog. Study every page, question every item, and mind every word; the future of IKEA lives on in your careful hands.\&quot;&lt;/blockquote&gt;&lt;div class=\&quot;author\&quot;&gt;    - Böök Sifer (Chief IKEA designer)&lt;/div&gt;&lt;/div&gt;&quot;)
+\(set: $living_room_examine_chair_text to &quot;Test&quot;)
+\(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+$living_room_look_around_text
+\(set: $living_room_looked_around to true)
+\(replace: ?examine_plaque_click)[$living_room_examine_plaque_click_text]
+\(replace: ?examine_chair_click)[$living_room_examine_chair_click_text]
+]
+\(click-append:?examine_plaque)+(t8n:&#39;dissolve&#39;)[
+$living_room_examine_plaque_text
+\(set: $living_room_examined_plaque to true)
+\]
+\(click-append:?examine_chair)+(t8n:&#39;dissolve&#39;)[
+$living_room_examine_chair_text
+\(set: $living_room_examined_chair to true)
+]</tw-passagedata><tw-passagedata pid="40" name="Workspaces" tags="" position="1450,425" size="100,100">### Workspaces
 
 You enter the $location_format[WORKSPACES] area.
 
