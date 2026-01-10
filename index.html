@@ -277,6 +277,8 @@ td.plaque_table {
 
 &lt;!-- Children&#39;s variables --&gt;
 (set: $childrens_looked_around to false)
+(set: $childrens_search_clicked to false)
+(set: $childrens_search_answer to &quot;BUNKBED&quot;)
 
 &lt;!-- Visit stats variables --&gt;
 (set: $valid_room_stats_array to (a: &quot;Lobby&quot;, &quot;Restaurant &amp; Cafe&quot;, &quot;Living Room&quot;, &quot;Workspaces&quot;, &quot;Kitchen&quot;, &quot;Dining&quot;, &quot;Bathroom&quot;, &quot;Bedroom&quot;, &quot;Storage&quot;, &quot;Childrens&quot;))
@@ -1641,16 +1643,69 @@ $bedroom_take_nap_text
 
 You enter the $location_format[CHILDREN&#39;S AREA].
 
-(if: $childrens_looked_around)[&gt; Look around
-$childrens_look_around_text
+(if: $childrens_looked_around)[\
+  &gt; Look around
+  $childrens_look_around_text\
+]\
+(else:)[\
+  |look_around&gt;[&gt; Look around]\
+]\
+(if: $kitchen_refrigerator_unlocked)[\
+  &lt;br&gt;
+  You&#39;ve pulled the $item_format[large lever] behind the $answer_format[BUNK BED]. It opened something in the $location_format[KITCHEN].
+]\
+(else-if: $childrens_search_clicked)[\
+  &lt;br&gt;
+  &gt; Search
+  $childrens_search_text\
+]\
+(else-if: $childrens_looked_around)[\
+  &lt;br&gt;
+  $childrens_search_click_text\
+]\
+(else:)[\
+  &lt;br&gt;\
+  |search_click&gt;[]\
+]\
+{
+(set: $childrens_west_text to &quot;[[Go to STAIRS-&gt;Stairs]]&quot;)
+(set: $childrens_east_text to &quot;[[Go to STORAGE-&gt;Storage]]&quot;)
+($compass: &quot;&quot;, &quot;$childrens_west_text&quot;, &quot;$childrens_east_text&quot;, &quot;&quot;)
+
+(set: $childrens_look_around_text to &quot;You look around. There are hundreds of stuffed animals scattered across the room, spilling over the tops of bins, peeping out of each child-sized cabinet, piled precariously on every available surface as far as the eye can see. You sense that there might be something hidden in this room.&quot;)
+(set: $childrens_search_click_text to &quot;|search&gt;[&gt; Search]&quot;)
+(set: $childrens_search_text to &quot;Where do you want to search?
+[//You may need to find something in the real world//]
+{
+  (input: bind _guess, \&quot;X=\&quot;)
+  (link-repeat: \&quot;&gt; Search\&quot;)[
+    (if: (uppercase: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess)) is $childrens_search_answer)[
+      (replace: ?search_guess_result)[$childrens_search_correct_text]
+      (set: $kitchen_refrigerator_unlocked to true)
+    ]
+    (else:)[
+      (replace: ?search_guess_result)[$childrens_search_incorrect_text]
+    ]
+  ]
+}
+|search_guess_result&gt;[]&quot;)
+(set: $childrens_search_correct_text to &quot;You search the $answer_format[BUNK BED]. Tucked between the bunk bed and the wall, you find a $item_format[large lever]. You pull it and hear a //*kathunk*// in the distance. You think the sound came from the $location_format[KITCHEN].&quot;)
+(set: $childrens_search_incorrect_text to &quot;You search the $answer_format[(uppercase: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess))]. You don&#39;t find anything there.&quot;)
+}
+{
+(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+  &lt;br&gt;
+  $childrens_look_around_text
+  (set: $childrens_looked_around to true)
+  (replace: ?search_click )[
+    $childrens_search_click_text
+  ]
 ]
-\(else:)[|look_around&gt;[&gt; Look around]]
-
-\(set: $childrens_west_text to &quot;[[Go to STAIRS-&gt;Stairs]]&quot;)
-\(set: $childrens_east_text to &quot;[[Go to STORAGE-&gt;Storage]]&quot;)
-\($compass: &quot;&quot;, &quot;$childrens_west_text&quot;, &quot;$childrens_east_text&quot;, &quot;&quot;)
-
-\(set: $childrens_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="47" name="Stairs" tags="" position="1125,725" size="100,100">### Stairs to MARKETPLACE
+(click-append:?search)+(t8n:&#39;dissolve&#39;)[
+  $childrens_search_text\
+  (set: $childrens_search_clicked to true)\
+]
+}</tw-passagedata><tw-passagedata pid="47" name="Stairs" tags="" position="1125,725" size="100,100">### Stairs to MARKETPLACE
 
 You go $direction_format[WEST] to the $location_format[STAIRS].
 
