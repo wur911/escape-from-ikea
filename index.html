@@ -127,6 +127,7 @@ td.plaque_table {
 (set: $restaurant_looked_around to false)
 (set: $restaurant_examined_food_counter to false)
 (set: $restaurant_examined_cash_register to false)
+(set: $restaurant_cash_register_answer to &quot;BASIL&quot;)
 (set: $restaurant_cash_register_opened to false)
 (set: $restaurant_meatballs_eaten to 1)
 
@@ -134,6 +135,7 @@ td.plaque_table {
 (set: $living_room_looked_around to false)
 (set: $living_room_examined_plaque to false)
 (set: $living_room_examined_chair to false)
+(set: $living_room_chair_answer to &quot;MANUALASSEMBLY&quot;)
 (set: $living_room_chair_assembled to false)
 
 &lt;!-- Workspaces variables --&gt;
@@ -143,16 +145,25 @@ td.plaque_table {
 (set: $workspaces_number_pins to 10)
 (set: $workspaces_played_minesweeper to false)
 (set: $workspaces_checked_recycling to false)
+(set: $workspaces_push_pin_answer to &quot;DUBLIN&quot;)
 (set: $workspaces_push_pin_placed to false)
 
 &lt;!-- Kitchen variables --&gt;
 (set: $kitchen_looked_around to false)
+(set: $kitchen_examined_refrigerator to false)
+(set: $kitchen_refrigerator_unlocked to false)
+(set: $kitchen_refrigerator_unlocked_seen to false)
 
 &lt;!-- Dining variables --&gt;
 (set: $dining_looked_around to false)
+(set: $dining_examined_bar_cart to false)
+(set: $dining_examined_safe to false)
+(set: $dining_safe_answer to &quot;1958&quot;)
+(set: $dining_safe_unlocked to false)
 
 &lt;!-- Bathroom variables --&gt;
 (set: $bathroom_looked_around to false)
+(set: $bathroom_real_world_computer_password to &quot;KREATIV&quot;)
 
 &lt;!-- Bedroom variables --&gt;
 (set: $bedroom_looked_around to false)
@@ -192,6 +203,8 @@ td.plaque_table {
 [[&gt; Wake up-&gt;Lobby]]
 [[&gt; Skip to Living Room-&gt;Living Room]]
 [[&gt; Skip to Workspaces-&gt;Workspaces]]
+[[&gt; Skip to Kitchen-&gt;Kitchen]]
+[[&gt; Skip to Dining-&gt;Dining]]
 [[&gt; Skip to Stairs-&gt;Stairs]]
 [[&gt; Skip to Marketplace-&gt;Marketplace Start]]
 [[&gt; Skip to Escape!-&gt;Escape!]]
@@ -239,9 +252,9 @@ To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM]
   $restaurant_cash_register_already_open_text
 ]
 (else:)[
-  (input: bind _password, \&quot;X=\&quot;)
+  (input: bind _guess, \&quot;X=\&quot;)
   (link-repeat: \&quot;&gt; Enter password\&quot;)[
-    (if: (uppercase: _password) is $restaurant_cash_register_answer)[
+    (if: (uppercase: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess)) is $restaurant_cash_register_answer)[
       (replace: ?cash_register_guess_result)[$restaurant_cash_register_open_correct_text]
       (set: $restaurant_cash_register_opened to true)
     ]
@@ -252,7 +265,6 @@ To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM]
   &lt;br&gt;
   |cash_register_guess_result&gt;[]
 ]}&quot;)
-\(set: $restaurant_cash_register_answer to &quot;BASIL&quot;)
 \(set: $restaurant_cash_register_already_open_text to &quot;The cash register is open. You already have the $item_format[showroom key]&quot;)\
 \(set: $restaurant_cash_register_open_correct_text to &quot;Success! The cash register opens and you find an old key. Etched into it is the word SHOWROOM. You take the $item_format[showroom key]&quot;)
 \(set: $restaurant_cash_register_open_incorrect_text to &quot;The $item_format[cash register] screen flashes \&quot;Incorrect Password\&quot;.&quot;)\
@@ -1129,7 +1141,6 @@ What do you want to do?
 &lt;br&gt;
 |chair_guess_result&gt;[]
 }&quot;)
-\(set: $living_room_chair_answer to &quot;MANUALASSEMBLY&quot;)
 \(set: $living_room_chair_already_assembled_text to &quot;You&#39;ve already assembled the chair with the power of $answer_format[MANUAL ASSEMBLY]. You should check out the ticking in the $location_format[WARDROBE &amp; STORAGE] area.&quot;)
 \(set: $living_room_chair_correct_text to &quot;You use the power of $answer_format[MANUAL ASSEMBLY] to construct the chair. As you put the last piece of the chair in place, you hear a //*kathunk*// sound followed by some ticking. It seems to originate from the $location_format[WARDROBE &amp; STORAGE] area.&quot;)
 \(set: $living_room_chair_incorrect_text to &quot;Nothing seems to happen.&quot;)
@@ -1172,10 +1183,10 @@ $workspaces_examine_computer_text
 \(set: $workspaces_south_text to &quot;[[Go to LIVING ROOM-&gt;Living Room]]&quot;)
 \($compass: &quot;&quot;, &quot;&quot;, &quot;$workspaces_east_text&quot;, &quot;$workspaces_south_text&quot;)
 
-\(set: $workspaces_look_around_text to &quot;You look around.You see a ton of desks, chairs, and filing cabinets. You see a $item_format[world map] on the wall. You also see one $item_format[computer] with some light coming from the monitor.&quot;)
+\(set: $workspaces_look_around_text to &quot;You look around. You try out 76 different ergonomic chairs and your spine feels more aligned already. On the wall is a large $item_format[world map]. You also see one $item_format[computer] whose monitor emits a glowing rectangle of light.&quot;)
 \(set: $workspaces_examine_map_click_text to &quot;&lt;br&gt;|examine_map&gt;[&gt; Examine $item_format[world map]]&quot;)
 \(set: $workspaces_examine_computer_click_text to &quot;&lt;br&gt;|examine_computer&gt;[&gt; Examine $item_format[computer]]&quot;)
-\(set: $workspaces_examine_map_text to &quot;{You inspect the $item_format[world map]. Looks like a normal map of the world made out of paper. Seems like it&#39;s been hung up over a corkboard. Below it is a box of $workspaces_number_pins $item_format[push pins] and a hastily scribbled note:
+\(set: $workspaces_examine_map_text to &quot;{You examine the $item_format[world map]. Looks like a normal map of the world made out of paper. Seems like it&#39;s been hung up over a corkboard. Below it is a box of $workspaces_number_pins $item_format[push pins] and a hastily scribbled note:
 \&quot;Where in the world can the secret IKEA treasure be?\&quot;.
 &lt;br&gt;
 Where do you want to put the $item_format[push pin]?
@@ -1198,11 +1209,10 @@ Where do you want to put the $item_format[push pin]?
 |push_pin_magic&gt;[(if: $workspaces_number_pins &lt;= 0)[You ran out of push pins. You are now magically manifesting push pins from thin air. Weirder things have happened in IKEA. ]]
 |push_pin_guess_result&gt;[]
 }&quot;)
-\(set: $workspaces_push_pin_answer to &quot;DUBLIN&quot;)
 \(set: $workspaces_push_pin_placed_text to &quot;You&#39;ve placed a push pin on $answer_format[DUBLIN] and acquired the $relic_format[CAM LOCK OF ALIGNMENT].&quot;)
-\(set: $workspaces_push_pin_correct_text to &quot;You stick a push pin on $answer_format[DUBLIN] on the map. You hear a //*kathunk*// nearby and spot a secret safe door open behind a picture frame. You peer inside and find an IKEA relic - the $relic_format[CAM LOCK OF ALIGNMENT].&quot;)
+\(set: $workspaces_push_pin_correct_text to &quot;You stick a push pin on $answer_format[DUBLIN] on the map. You hear a //*kathunk*// nearby and spot a secret door open behind a picture frame. You peer inside and find an IKEA relic - the $relic_format[CAM LOCK OF ALIGNMENT].&quot;)
 \(set: $workspaces_push_pin_incorrect_text to &quot;You stick a push pin on $answer_format[(uppercase: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess))]. Nothing happens. You have $workspaces_number_pins $item_format[push pins] left.&quot;)
-\(set: $workspaces_examine_computer_text to &quot;{You inspect the $item_format[computer]. You see only two icons on the desktop - $item_format[Minesweeper] and the $item_format[recycling bin].
+\(set: $workspaces_examine_computer_text to &quot;{You examine the $item_format[computer]. You see only two icons on the desktop - $item_format[Minesweeper] and the $item_format[recycling bin].
 (if: $workspaces_played_minesweeper)[
   &lt;br&gt;
   &gt; Play $item_format[Minesweeper]
@@ -1273,13 +1283,66 @@ You enter the $location_format[DINING] area.
 $dining_look_around_text
 ]
 \(else:)[|look_around&gt;[&gt; Look around]]
+\(if: $dining_examined_bar_cart)[&lt;br&gt;&gt; Examine $item_format[bar cart]
+$dining_examine_bar_cart_text
+]
+\(else-if: $dining_looked_around)[$dining_examine_bar_cart_click_text]
+\(else:)[|examine_bar_cart_click&gt;[]]
+\(if: $dining_safe_unlocked)[&lt;br&gt;&gt; Examine $item_format[safe]
+$dining_safe_unlocked_text
+]
+\(else-if: $dining_examined_safe)[&lt;br&gt;&gt; Examine $item_format[safe]
+$dining_examine_safe_text
+]
+\(else-if: $dining_examined_bar_cart)[$dining_examine_safe_click_text]
+\(else:)[|examine_safe_click&gt;[]]
 
 \(set: $dining_north_text to &quot;[[Go to KITCHEN-&gt;Kitchen]]&quot;)
 \(set: $dining_west_text to &quot;[[Go to LIVING ROOM-&gt;Living Room]]&quot;)
 \(set: $dining_east_text to &quot;[[Go to BATHROOM-&gt;Bathroom]]&quot;)
 \($compass: &quot;$dining_north_text&quot;, &quot;$dining_west_text&quot;, &quot;$dining_east_text&quot;, &quot;&quot;)
 
-\(set: $dining_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="43" name="Kitchen" tags="" position="1625,425" size="100,100">### Kitchen
+\(set: $dining_look_around_text to &quot;You look around. You walk into a model home and see four chairs gathered in earnest anticipation, place mats aligned with hopeful precision, and plates arranged at the ready for an imaginary feast. For a moment, you forget what you&#39;re doing and imagine an aspirational version of yourself who&#39;s coming home to have dinner in this Scandanavian tiny house. Beyond the dining table is a sleek, minimalist $item_format[bar cart].&quot;)
+\(set: $dining_examine_bar_cart_click_text to &quot;&lt;br&gt;|examine_bar_cart&gt;[&gt; Examine $item_format[bar cart]]&quot;)
+\(set: $dining_examine_safe_click_text to &quot;&lt;br&gt;|examine_safe&gt;[&gt; Examine $item_format[safe]]&quot;)
+\(set: $dining_examine_bar_cart_text to &quot;You examine the $item_format[bar cart]. There&#39;s a $item_format[safe] on it.&quot;)
+\(set: $dining_examine_safe_text to &quot;{You examine the $item_format[safe]. Looks like the safe needs a password to open.
+&lt;br&gt;
+(input: bind _guess, \&quot;X=\&quot;)
+(link-repeat: \&quot;&gt; Enter password\&quot;)[
+  (if: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess) is $dining_safe_answer)[
+    (replace: ?safe_guess_result)[$dining_safe_correct_text]
+    (set: $dining_safe_unlocked to true)
+  ]
+  (else-if: (uppercase: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess)) is $bathroom_real_world_computer_password)[
+    (replace: ?safe_guess_result)[$dining_safe_other_password_text]
+  ]
+  (else:)[
+    (replace: ?safe_guess_result)[$dining_safe_incorrect_text]
+  ]
+]
+&lt;br&gt;
+|safe_guess_result&gt;[]
+}&quot;)
+\(set: $dining_safe_unlocked_text to &quot;You&#39;ve opened the $item_format[bar cart safe] and acquired the $relic_format[TINY WOODEN PEG OF FORTITUDE].&quot;)
+\(set: $dining_safe_correct_text to &quot;You enter the 4-digit pin code $answer_format[1958]. The safe door swings open. You peer inside and find an IKEA relic - the $relic_format[TINY WOODEN PEG OF FORTITUDE].&quot;)
+\(set: $dining_safe_other_password_text to &quot;//Try this password somewhere else.//&quot;)
+\(set: $dining_safe_incorrect_text to &quot;Nothing seems to happen. Seems like you have the wrong password for the safe.&quot;)
+
+\(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+$dining_look_around_text
+\(set: $dining_looked_around to true)
+\(replace: ?examine_bar_cart_click)[$dining_examine_bar_cart_click_text]
+]
+\(click-append:?examine_bar_cart)+(t8n:&#39;dissolve&#39;)[
+$dining_examine_bar_cart_text
+\(set: $dining_examined_bar_cart to true)
+\(replace: ?examine_safe_click)[$dining_examine_safe_click_text]
+]
+\(click-append:?examine_safe)+(t8n:&#39;dissolve&#39;)[
+$dining_examine_safe_text
+\(set: $dining_examined_safe to true)
+\]</tw-passagedata><tw-passagedata pid="43" name="Kitchen" tags="" position="1625,425" size="100,100">### Kitchen
 
 You enter the $location_format[KITCHEN] area.
 
@@ -1287,12 +1350,39 @@ You enter the $location_format[KITCHEN] area.
 $kitchen_look_around_text
 ]
 \(else:)[|look_around&gt;[&gt; Look around]]
+\(if: $kitchen_examined_refrigerator)[&lt;br&gt;&gt; Examine $item_format[golden refigerator]
+$kitchen_examine_refrigerator_text
+]
+\(else-if: $kitchen_looked_around)[$kitchen_examine_refrigerator_click_text]
+\(else:)[|examine_refrigerator_click&gt;[]]
 
 \(set: $kitchen_west_text to &quot;[[Go to WORKSPACES-&gt;Workspaces]]&quot;)
 \(set: $kitchen_south_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
 \($compass: &quot;&quot;, &quot;$kitchen_west_text&quot;, &quot;&quot;, &quot;$kitchen_south_text&quot;)
 
-\(set: $kitchen_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="44" name="Bathroom" tags="" position="1775,575" size="100,100">### Bathroom
+\(set: $kitchen_look_around_text to &quot;You look around. You see glistening countertops and an arsenal of faucets. Small signs are affixed to every item with bespoke, vowel-heavy Swedish words you can’t quite pronounce. Further in the room, there are a few refrigerators, and your eye catches on one that seems sparkle - a solid $item_format[golden refrigerator].&quot;)
+\(set: $kitchen_examine_refrigerator_click_text to &quot;&lt;br&gt;|examine_refrigerator&gt;[&gt; Examine $item_format[golden refrigerator]]&quot;)
+\(set: $kitchen_examine_refrigerator_text to &quot;{
+(if: $kitchen_refrigerator_unlocked_seen)[
+  You&#39;ve already taken the $relic_format[MEASURING TAPE OF REVELATION] from the fridge.
+]
+(else-if: $kitchen_refrigerator_unlocked)[
+  You examine the $item_format[golden refrigerator]. The fridge doors open. You peer inside and find an IKEA relic - the $relic_format[MEASURING TAPE OF REVELATION].
+  (set: $kitchen_refrigerator_unlocked_seen to true)
+]
+(else:)[
+  You try to open it up, but the doors don&#39;t seem to budge at all.
+]}&quot;)
+
+\(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+$kitchen_look_around_text
+\(set: $kitchen_looked_around to true)
+\(replace: ?examine_refrigerator_click)[$kitchen_examine_refrigerator_click_text]
+]
+\(click-append:?examine_refrigerator)+(t8n:&#39;dissolve&#39;)[
+$kitchen_examine_refrigerator_text
+\(set: $kitchen_examined_refrigerator to true)
+]</tw-passagedata><tw-passagedata pid="44" name="Bathroom" tags="" position="1775,575" size="100,100">### Bathroom
 
 You enter the $location_format[BATHROOM] area.
 
