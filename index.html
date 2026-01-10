@@ -276,6 +276,9 @@ td.plaque_table {
 &lt;!-- Children&#39;s variables --&gt;
 (set: $childrens_looked_around to false)
 
+&lt;!-- Visit stats variables --&gt;
+(set: $valid_room_stats_array to (a: &quot;Lobby&quot;, &quot;Restaurant &amp; Cafe&quot;, &quot;Living Room&quot;, &quot;Workspaces&quot;, &quot;Kitchen&quot;, &quot;Dining&quot;, &quot;Bathroom&quot;, &quot;Bedroom&quot;, &quot;Storage&quot;, &quot;Childrens&quot;))
+
 &lt;!-- IKEA relic variables --&gt;
 (set: $inventory to (a:))
 (set: $allen_wrench to false)
@@ -309,6 +312,8 @@ td.plaque_table {
 [[&gt; Skip to Dining-&gt;Dining]]
 [[&gt; Skip to Bathroom-&gt;Bathroom]]
 [[&gt; Skip to Bedroom-&gt;Bedroom]]
+[[&gt; Skip to Storage-&gt;Storage]]
+[[&gt; Skip to Childrens-&gt;Childrens]]
 [[&gt; Skip to Stairs-&gt;Stairs]]
 [[&gt; Skip to Marketplace-&gt;Marketplace Start]]
 [[&gt; Skip to Escape!-&gt;Escape!]]
@@ -498,8 +503,18 @@ Congrats on escaping IKEA!
 &lt;li&gt;You ate $restaurant_meatballs_eaten meatballs&lt;/li&gt;
 &lt;li&gt;You took $bedroom_naps_taken naps&lt;/li&gt;
 (if: $workspaces_played_minesweeper)[
-  &lt;li&gt;You played minesweeper on the computer&lt;/li&gt;
+  &lt;li&gt;You played 1 game of minesweeper on the computer&lt;/li&gt;
 ]
+(set: _max_visit_room to &quot;&quot;)
+(set: _max_visit_room_count to 0)
+(for: each _room, ...$valid_room_stats_array)[
+  (if: (count: (history:), _room) &gt; _max_visit_room_count)[
+    (set: _max_visit_room to _room)
+    (set: _max_visit_room_count to (count: (history:), _room))
+  ]
+  &lt;!-- &lt;li&gt;You visited _room (count: (history:), _room) times&lt;/li&gt; --&gt;
+]
+&lt;li&gt;Your most visited room is _max_visit_room, which you visited _max_visit_room_count times&lt;/li&gt;
 }
 &lt;/ul&gt;</tw-passagedata><tw-passagedata pid="8" name="Marketplace 2" tags="" position="275,375" size="100,100">### Marketplace 2
 
