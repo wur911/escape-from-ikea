@@ -242,7 +242,7 @@ td.plaque_table {
 (set: $workspaces_examined_map to false)
 (set: $workspaces_examined_computer to false)
 (set: $workspaces_number_pins to 10)
-(set: $workspaces_played_minesweeper to true)
+(set: $workspaces_played_minesweeper to false)
 (set: $workspaces_checked_recycling to false)
 (set: $workspaces_push_pin_answer to &quot;DUBLIN&quot;)
 (set: $workspaces_push_pin_placed to false)
@@ -282,10 +282,10 @@ td.plaque_table {
 (set: $wooden_peg to false)
 (set: $cam_lock to false)
 (set: $measuring_tape to false)
-(set: $allen_wrench_text to &quot;$item_format[ALLEN WRENCH OF DESTINY]&quot;)
-(set: $wooden_peg_text to &quot;$item_format[TINY WOODEN PEG OF FORTITUDE]&quot;)
-(set: $cam_lock_text to &quot;$item_format[CAM LOCK OF ALIGNMENT]&quot;)
-(set: $measuring_tape_text to &quot;$item_format[MEASURING TAPE OF REVELATION]&quot;)
+(set: $allen_wrench_text to &quot;$relic_format[ALLEN WRENCH OF DESTINY]&quot;)
+(set: $wooden_peg_text to &quot;$relic_format[TINY WOODEN PEG OF FORTITUDE]&quot;)
+(set: $cam_lock_text to &quot;$relic_format[CAM LOCK OF ALIGNMENT]&quot;)
+(set: $measuring_tape_text to &quot;$relic_format[MEASURING TAPE OF REVELATION]&quot;)
 (set: $print_inventory to (macro: [(output:)[{\
 (if: $inventory&#39;s length is 0)[\
     nothing\
@@ -1305,6 +1305,7 @@ Where do you want to put the $item_format[push pin]?
     (rerun: ?push_pin_magic)
     (replace: ?push_pin_guess_result)[$workspaces_push_pin_correct_text]
     (set: $workspaces_push_pin_placed to true)
+    (set: $inventory to it + (a: $cam_lock_text))
   ]
   (else:)[
     (if: $workspaces_number_pins &gt; 0)[
@@ -1318,8 +1319,8 @@ Where do you want to put the $item_format[push pin]?
 |push_pin_magic&gt;[(if: $workspaces_number_pins &lt;= 0)[You ran out of push pins. You are now magically manifesting push pins from thin air. Weirder things have happened in IKEA. ]]
 |push_pin_guess_result&gt;[]
 }&quot;)
-\(set: $workspaces_push_pin_placed_text to &quot;You&#39;ve placed a push pin on $answer_format[DUBLIN] and acquired the $relic_format[CAM LOCK OF ALIGNMENT].&quot;)
-\(set: $workspaces_push_pin_correct_text to &quot;You stick a push pin on $answer_format[DUBLIN] on the map. You hear a //*kathunk*// nearby and spot a secret door open behind a picture frame. You peer inside and find an IKEA relic - the $relic_format[CAM LOCK OF ALIGNMENT].&quot;)
+\(set: $workspaces_push_pin_placed_text to &quot;You&#39;ve placed a push pin on $answer_format[DUBLIN] and acquired the $cam_lock_text.&quot;)
+\(set: $workspaces_push_pin_correct_text to &quot;You stick a push pin on $answer_format[DUBLIN] on the map. You hear a //*kathunk*// nearby and spot a secret door open behind a picture frame. You peer inside and find an IKEA relic - the $cam_lock_text.&quot;)
 \(set: $workspaces_push_pin_incorrect_text to &quot;You stick a push pin on $answer_format[(uppercase: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess))]. Nothing happens. You have $workspaces_number_pins $item_format[push pins] left.&quot;)
 \(set: $workspaces_examine_computer_text to &quot;{You examine the $item_format[computer]. You see only two icons on the desktop - $item_format[Minesweeper] and the $item_format[recycling bin].
 (if: $workspaces_played_minesweeper)[
@@ -1422,6 +1423,7 @@ $dining_examine_safe_text
   (if: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess) is $dining_safe_answer)[
     (replace: ?safe_guess_result)[$dining_safe_correct_text]
     (set: $dining_safe_unlocked to true)
+    (set: $inventory to it + (a: $wooden_peg_text))
   ]
   (else-if: (uppercase: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess)) is $bathroom_real_world_computer_password)[
     (replace: ?safe_guess_result)[$dining_safe_other_password_text]
@@ -1433,8 +1435,8 @@ $dining_examine_safe_text
 &lt;br&gt;
 |safe_guess_result&gt;[]
 }&quot;)
-\(set: $dining_safe_unlocked_text to &quot;You&#39;ve opened the $item_format[bar cart safe] and acquired the $relic_format[TINY WOODEN PEG OF FORTITUDE].&quot;)
-\(set: $dining_safe_correct_text to &quot;You enter the 4-digit pin code $answer_format[1958]. The safe door swings open. You peer inside and find an IKEA relic - the $relic_format[TINY WOODEN PEG OF FORTITUDE].&quot;)
+\(set: $dining_safe_unlocked_text to &quot;You&#39;ve opened the $item_format[bar cart safe] and acquired the $wooden_peg_text.&quot;)
+\(set: $dining_safe_correct_text to &quot;You enter the 4-digit pin code $answer_format[1958]. The safe door swings open. You peer inside and find an IKEA relic - the $wooden_peg_text.&quot;)
 \(set: $dining_safe_other_password_text to &quot;//Try this password somewhere else.//&quot;)
 \(set: $dining_safe_incorrect_text to &quot;Nothing seems to happen. Seems like you have the wrong password for the safe.&quot;)
 
@@ -1473,11 +1475,12 @@ $kitchen_examine_refrigerator_text
 \(set: $kitchen_examine_refrigerator_click_text to &quot;&lt;br&gt;|examine_refrigerator&gt;[&gt; Examine $item_format[golden refrigerator]]&quot;)
 \(set: $kitchen_examine_refrigerator_text to &quot;{
 (if: $kitchen_refrigerator_unlocked_seen)[
-  You&#39;ve already taken the $relic_format[MEASURING TAPE OF REVELATION] from the fridge.
+  You&#39;ve already taken the $measuring_tape_text from the fridge.
 ]
 (else-if: $kitchen_refrigerator_unlocked)[
-  You examine the $item_format[golden refrigerator]. The fridge doors open. You peer inside and find an IKEA relic - the $relic_format[MEASURING TAPE OF REVELATION].
+  You examine the $item_format[golden refrigerator]. The fridge doors open. You peer inside and find an IKEA relic - the $measuring_tape_text.
   (set: $kitchen_refrigerator_unlocked_seen to true)
+  (set: $inventory to it + (a: $measuring_tape_text))
 ]
 (else:)[
   You try to open it up, but the doors don&#39;t seem to budge at all.
