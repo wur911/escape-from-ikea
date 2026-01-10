@@ -272,6 +272,8 @@ td.plaque_table {
 
 &lt;!-- Storage variables --&gt;
 (set: $storage_looked_around to false)
+(set: $storage_bomb_defused to false)
+(set: $storage_bomb_answers to (a: &quot;123&quot;, &quot;456&quot;))
 
 &lt;!-- Children&#39;s variables --&gt;
 (set: $childrens_looked_around to false)
@@ -1221,7 +1223,10 @@ $living_room_look_around_text
 $living_room_examine_plaque_text]
 \(else-if: $living_room_looked_around)[$living_room_examine_plaque_click_text]
 \(else:)[|examine_plaque_click&gt;[]]
-\(if: $living_room_chair_assembled)[&lt;br&gt;&gt; Examine $item_format[chair]
+\(if: $storage_bomb_defused)[&lt;br&gt;&gt; Examine $item_format[chair]
+$living_room_chair_already_assembled_bomb_defused_text
+]
+\(else-if: $living_room_chair_assembled)[&lt;br&gt;&gt; Examine $item_format[chair]
 $living_room_chair_already_assembled_text
 ]
 \(else-if: $living_room_examined_chair)[&lt;br&gt;&gt; Examine $item_format[chair]
@@ -1265,8 +1270,9 @@ What do you want to do?
 &lt;br&gt;
 |chair_guess_result&gt;[]
 }&quot;)
-\(set: $living_room_chair_already_assembled_text to &quot;You&#39;ve already assembled the chair with the power of $answer_format[MANUAL ASSEMBLY]. You should check out the ticking in the $location_format[WARDROBE &amp; STORAGE] area.&quot;)
-\(set: $living_room_chair_correct_text to &quot;You use the power of $answer_format[MANUAL ASSEMBLY] to construct the chair. As you put the last piece of the chair in place, you hear a //*kathunk*// sound followed by some ticking. It seems to originate from the $location_format[WARDROBE &amp; STORAGE] area.&quot;)
+\(set: $living_room_chair_already_assembled_bomb_defused_text to &quot;You&#39;ve already assembled the chair with the power of $answer_format[MANUAL ASSEMBLY].&quot;)
+\(set: $living_room_chair_already_assembled_text to &quot;You&#39;ve already assembled the chair with the power of $answer_format[MANUAL ASSEMBLY]. You should check out the ticking sounds in the $location_format[WARDROBE &amp; STORAGE] area.&quot;)
+\(set: $living_room_chair_correct_text to &quot;You use the power of $answer_format[MANUAL ASSEMBLY] to construct the chair. As you put the last piece of the chair in place, you hear a //*kathunk*// sound followed by some loud ticking sounds. It seems to originate from the $location_format[WARDROBE &amp; STORAGE] area.&quot;)
 \(set: $living_room_chair_incorrect_text to &quot;Nothing seems to happen.&quot;)
 \(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
 $living_room_look_around_text
@@ -1390,17 +1396,55 @@ $workspaces_checked_recycling_text
 
 You enter the $location_format[WARDROBE &amp; STORAGE] area.
 
-(if: $storage_looked_around)[&gt; Look around
-$storage_look_around_text
+(if: $storage_looked_around)[\
+  &gt; Look around
+  $storage_look_around_text\
+]\
+(else:)[\
+  |look_around&gt;[&gt; Look around]\
 ]
-\(else:)[|look_around&gt;[&gt; Look around]]
 
-\(set: $storage_north_text to &quot;[[Go to LIVING ROOM-&gt;Living Room]]&quot;)
-\(set: $storage_west_text to &quot;[[Go to CHILDREN&#39;S-&gt;Childrens]]&quot;)
-\(set: $storage_east_text to &quot;[[Go to BEDROOM-&gt;Bedroom]]&quot;)
-\($compass: &quot;$storage_north_text&quot;, &quot;$storage_west_text&quot;, &quot;$storage_east_text&quot;, &quot;&quot;)
+(if: $storage_bomb_defused)[\
+  $storage_bomb_defused_text\
+]\
+(else-if: $living_room_chair_assembled)[\
+  $storage_found_bomb_text
+  
+  What&#39;s the key to defusing the bomb?
+  {
+  (input: bind _guess, &quot;X=&quot;)
+  (link-repeat: &quot;&gt; Try&quot;)[
+    (if: $storage_bomb_answers contains (uppercase: (str-replaced: &quot; &quot;, &quot;&quot;, _guess)))[
+      (replace: ?bomb_guess_result)[$storage_bomb_correct_text]
+      (set: $storage_bomb_defused to true)
+      (set: $inventory to it + (a: $allen_wrench_text))
+    ]
+    (else:)[
+      (replace: ?bomb_guess_result)[$storage_bomb_incorrect_text]
+    ]
+  ]
+  }
+  |bomb_guess_result&gt;[]
+]\
+{
+(set: $storage_north_text to &quot;[[Go to LIVING ROOM-&gt;Living Room]]&quot;)
+(set: $storage_west_text to &quot;[[Go to CHILDREN&#39;S-&gt;Childrens]]&quot;)
+(set: $storage_east_text to &quot;[[Go to BEDROOM-&gt;Bedroom]]&quot;)
+($compass: &quot;$storage_north_text&quot;, &quot;$storage_west_text&quot;, &quot;$storage_east_text&quot;, &quot;&quot;)
 
-\(set: $storage_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="42" name="Dining" tags="" position="1625,575" size="100,100">### Dining
+(set: $storage_look_around_text to &quot;You look around. There&#39;s a wardrobe that&#39;s definitely bigger on the inside and enough storage cubes to conceal your every mortal possession. If you listen closely you can hear a really faint ticking sound.&quot;)
+(set: $storage_bomb_defused_text to &quot;You&#39;ve successfully defused the $item_format[bomb] and acquired the $allen_wrench_text.&quot;)
+(set: $storage_found_bomb_text to &quot;Oh no - that ticking sound you heard is actually a $item_format[bomb]! Find your nearest IKEA co-worker to learn how you can defuse this $item_format[bomb]&quot;)
+(set: $storage_bomb_correct_text to &quot;You find a keypad attached to the bomb and enter in the pin. Hooray - you&#39;ve successfully defused the bomb. The bomb, now fully disarmed, suddenly opens up. You peer inside and find the $allen_wrench_text.&quot;)
+(set: $storage_bomb_incorrect_text to &quot;That doesn&#39;t seem right. Luckily nothing bad seemed to happen, but time is still ticking down...&quot;)
+}
+{
+(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+  &lt;br&gt;
+  $storage_look_around_text
+  (set: $storage_looked_around to true)
+]
+}</tw-passagedata><tw-passagedata pid="42" name="Dining" tags="" position="1625,575" size="100,100">### Dining
 
 You enter the $location_format[DINING] area.
 
