@@ -395,54 +395,92 @@ $restaurant_examine_food_counter_text
 \(click-append:?examine_cash_register)+(t8n:&#39;dissolve&#39;)[
 $restaurant_examine_cash_register_text
 \(set: $restaurant_examined_cash_register to true)
-]</tw-passagedata><tw-passagedata pid="3" name="Lobby" tags="" position="1125,425" size="100,100">### Lobby
+]</tw-passagedata><tw-passagedata pid="3" name="Lobby" tags="" position="1125,425" size="100,100">{
+(set: $lobby_look_around_text to &quot;You look around and see that you&#39;re currently in the IKEA $location_format[LOBBY]. A single yellow arrow painted on the floor beckons you forward. Turning towards the arrow&#39;s path, to the $direction_format[EAST], you see the $location_format[RESTAURANT &amp; CAFE].&quot;)
+(set: $lobby_examine_catalog_text to &quot;You examine the IKEA catalog.
+//`[`You should refer to the physical copy of the IKEA catalog`]`//&quot;)
+(set: $lobby_examine_pencil_text to &quot;This is just a normal pencil. It&#39;s IKEA branded. Sweet!&quot;)
+(set: $lobby_examine_compass_text to &quot;This is just a normal compass.&quot;)
 
-(if:visits &gt; 1)[You enter the $location_format[LOBBY].]
-\(else:)[You wake up and find yourself in a large building. Where are you? Looking up, you see a massive sign with the iconic yellow and blue IKEA logo. The air smells faintly of cinnamon buns, particleboard, and possibility.]
+### Lobby
+
+(if:visits &gt; 1)[You enter the $location_format[LOBBY].]\
+(else:)[You wake up and find yourself in a large building. Where are you? Looking up, you see a massive sign with the iconic yellow and blue IKEA logo. The air smells faintly of cinnamon buns, particleboard, and possibility.]
+
+&lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
 
 At your feet, you notice an IKEA shoping bag. Inside there&#39;s an $item_format[IKEA catalog], a $item_format[pencil], and a $item_format[compass].
 
-(if: $lobby_looked_around)[&gt; Look around
-$lobby_look_around_text
-]
-\(else:)[|look_around&gt;[&gt; Look around]]
-(if: $lobby_examined_catalog)[&gt; Examine $item_format[catalog]
-$lobby_examine_catalog_text
-]
-\(else:)[|examine_catalog&gt;[&gt; Examine $item_format[catalog]]]
-(if: $lobby_examined_pencil)[&gt; Examine $item_format[pencil]
-$lobby_examine_pencil_text
-]
-\(else:)[|examine_pencil&gt;[&gt; Examine $item_format[pencil]]]
-(if: $lobby_examined_compass)[&gt; Examine $item_format[compass]
-$lobby_examine_compass_text
-]
-\(else:)[|examine_compass&gt;[&gt; Examine $item_format[compass]]]
+&lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+
+(if: $lobby_looked_around)[\
+  &gt; Look around
+  &lt;br&gt;
+  $lobby_look_around_text
+  &lt;br&gt;
+]\
+(else:)[\
+  |look_around&gt;[&gt; Look around]
+]\
+&lt;br&gt;
+(if: $lobby_examined_catalog)[\
+  &gt; Examine $item_format[catalog]
+  &lt;br&gt;
+  $lobby_examine_catalog_text
+  &lt;br&gt;
+]\
+(else:)[\
+  |examine_catalog&gt;[&gt; Examine $item_format[catalog]]
+]\
+&lt;br&gt;
+(if: $lobby_examined_pencil)[\
+  &gt; Examine $item_format[pencil]
+  &lt;br&gt;
+  $lobby_examine_pencil_text
+  &lt;br&gt;
+]\
+(else:)[\
+  |examine_pencil&gt;[&gt; Examine $item_format[pencil]]
+]\
+&lt;br&gt;
+(if: $lobby_examined_compass)[\
+  &gt; Examine $item_format[compass]
+  &lt;br&gt;
+  $lobby_examine_compass_text
+  &lt;br&gt;
+]\
+(else:)[\
+  |examine_compass&gt;[&gt; Examine $item_format[compass]]
+]\
+
+(set: $lobby_east_text to &quot;[[Go to CAFE-&gt;Restaurant &amp; Cafe]]&quot;)
 ($compass: &quot;&quot;, &quot;&quot;, &quot;(if:$lobby_looked_around)[$lobby_east_text](else:)|go_east&gt;[]&quot;, &quot;&quot;)
 
-\(set: $lobby_east_text to &quot;[[Go to CAFE-&gt;Restaurant &amp; Cafe]]&quot;)
-\(set: $lobby_look_around_text to &quot;You look around and see that you&#39;re currently in the IKEA $location_format[LOBBY]. A single yellow arrow painted on the floor beckons you forward. Turning towards the arrow&#39;s path, to the $direction_format[EAST], you see the $location_format[RESTAURANT &amp; CAFE].&quot;)
-\(set: $lobby_examine_catalog_text to &quot;You examine the IKEA catalog.
-//`[`You should refer to the physical copy of the IKEA catalog`]`//&quot;)
-\(set: $lobby_examine_pencil_text to &quot;This is just a normal pencil. It&#39;s IKEA branded. Sweet!&quot;)
-\(set: $lobby_examine_compass_text to &quot;This is just a normal compass.&quot;)
-\(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
-$lobby_look_around_text
-\(set: $lobby_looked_around to true)
-\(replace: ?go_east)[$lobby_east_text]
+(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+  &lt;br&gt;
+  $lobby_look_around_text\
+  (set: $lobby_looked_around to true)\
+  (replace: ?go_east)[$lobby_east_text]\
+  &lt;br&gt;
 ]
-\(click-append:?examine_catalog)+(t8n:&#39;dissolve&#39;)[
-$lobby_examine_catalog_text
-\(set: $lobby_examined_catalog to true)
+(click-append:?examine_catalog)+(t8n:&#39;dissolve&#39;)[
+  &lt;br&gt;
+  $lobby_examine_catalog_text
+  (set: $lobby_examined_catalog to true)
+  &lt;br&gt;
 ]
-\(click-append:?examine_pencil)+(t8n:&#39;dissolve&#39;)[
-$lobby_examine_pencil_text
-\(set: $lobby_examined_pencil to true)
+(click-append:?examine_pencil)+(t8n:&#39;dissolve&#39;)[
+  &lt;br&gt;
+  $lobby_examine_pencil_text
+  (set: $lobby_examined_pencil to true)
+  &lt;br&gt;
 ]
-\(click-append:?examine_compass)+(t8n:&#39;dissolve&#39;)[
-$lobby_examine_compass_text
-\(set: $lobby_examined_compass to true)
-]</tw-passagedata><tw-passagedata pid="4" name="Marketplace Start" tags="" position="275,125" size="100,100">### Marketplace Start
+(click-append:?examine_compass)+(t8n:&#39;dissolve&#39;)[
+  &lt;br&gt;
+  $lobby_examine_compass_text
+  (set: $lobby_examined_compass to true)
+]
+}</tw-passagedata><tw-passagedata pid="4" name="Marketplace Start" tags="" position="275,125" size="100,100">### Marketplace Start
 
 {(if:visits is 1)[You enter the MARKETPLACE. What lies before you seems to be a giant confusing maze. You recall that you have a map of the marketplace in your catalog]
 (if:visits &gt; 1)[You awake back at the start of the MARKETPLACE maze. You recall that you have a map of the marketplace in your CATALOG]
@@ -1394,7 +1432,14 @@ $workspaces_played_minesweeper_text
 \(click-append:?check_recycling)+(t8n:&#39;dissolve&#39;)[
 $workspaces_checked_recycling_text
 \(set: $workspaces_checked_recycling to true)
-\]</tw-passagedata><tw-passagedata pid="41" name="Storage" tags="" position="1450,725" size="100,100">### Wardrobe &amp; Storage
+\]</tw-passagedata><tw-passagedata pid="41" name="Storage" tags="" position="1450,725" size="100,100">{
+(set: $storage_look_around_text to &quot;You look around. There&#39;s a wardrobe that&#39;s definitely bigger on the inside and enough storage cubes to conceal your every mortal possession. If you listen closely you can hear a really faint ticking sound.&quot;)
+(set: $storage_bomb_defused_text to &quot;You&#39;ve successfully defused the $item_format[bomb] and acquired the $allen_wrench_text.&quot;)
+(set: $storage_found_bomb_text to &quot;Oh no - that ticking sound you heard is actually a $item_format[bomb]! Find your nearest IKEA co-worker to learn how you can defuse this $item_format[bomb]&quot;)
+(set: $storage_bomb_correct_text to &quot;You find a keypad attached to the bomb and enter in the pin. Hooray - you&#39;ve successfully defused the bomb. The bomb, now fully disarmed, suddenly opens up. You peer inside and find the $allen_wrench_text.&quot;)
+(set: $storage_bomb_incorrect_text to &quot;That doesn&#39;t seem right. Luckily nothing bad seemed to happen, but time is still ticking down...&quot;)
+}\
+### Wardrobe &amp; Storage
 
 You enter the $location_format[WARDROBE &amp; STORAGE] area.
 
@@ -1433,12 +1478,6 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
 (set: $storage_west_text to &quot;[[Go to CHILDREN&#39;S-&gt;Childrens]]&quot;)
 (set: $storage_east_text to &quot;[[Go to BEDROOM-&gt;Bedroom]]&quot;)
 ($compass: &quot;$storage_north_text&quot;, &quot;$storage_west_text&quot;, &quot;$storage_east_text&quot;, &quot;&quot;)
-
-(set: $storage_look_around_text to &quot;You look around. There&#39;s a wardrobe that&#39;s definitely bigger on the inside and enough storage cubes to conceal your every mortal possession. If you listen closely you can hear a really faint ticking sound.&quot;)
-(set: $storage_bomb_defused_text to &quot;You&#39;ve successfully defused the $item_format[bomb] and acquired the $allen_wrench_text.&quot;)
-(set: $storage_found_bomb_text to &quot;Oh no - that ticking sound you heard is actually a $item_format[bomb]! Find your nearest IKEA co-worker to learn how you can defuse this $item_format[bomb]&quot;)
-(set: $storage_bomb_correct_text to &quot;You find a keypad attached to the bomb and enter in the pin. Hooray - you&#39;ve successfully defused the bomb. The bomb, now fully disarmed, suddenly opens up. You peer inside and find the $allen_wrench_text.&quot;)
-(set: $storage_bomb_incorrect_text to &quot;That doesn&#39;t seem right. Luckily nothing bad seemed to happen, but time is still ticking down...&quot;)
 }
 {
 (click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
