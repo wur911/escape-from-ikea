@@ -52,7 +52,7 @@ td {
   display: block; /* Helps remove mysterious gaps at the bottom of the image */
 }
 
-/* Include styling for the plaque. */
+/* Include styling for the living room plaque. */
 .plaque {
   width: 80%;
   margin: auto;
@@ -89,6 +89,105 @@ td.plaque_table {
   width: 100%;
   height: 100%;
   color: #3a2a0a;
+}
+
+/* Include styling for the bathroom help desk post it note. */
+.postit {
+  width: clamp(14rem, 60vw, 22rem);
+  min-height: clamp(12rem, 50vw, 20rem);
+  margin: auto;
+  background: #fff7a8;
+  padding: 1.5em;
+  box-shadow:
+    0 0.6em 0.8em rgba(0,0,0,0.15),
+    0 1.2em 2em rgba(0,0,0,0.08);
+  transform: rotate(-2deg);
+  border-radius: 0.2em;
+  position: relative;
+  color: #000000
+}
+.postit h3 {
+  margin: 0 0 0.6em 0;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+.postit p {
+  margin: 0;
+  font-family: "Segoe Print", cursive;
+  font-size: 0.7em;
+  line-height: 1.4;
+}
+
+/* Dresser drawer in the bedroom */
+.dresser-drawer {
+  /* Layout & sizing (mobile-first) */
+  max-width: 90vw;
+  padding: clamp(1rem, 4vw, 2rem);
+  margin: 1rem auto;
+
+  /* Wood texture with smaller knots + rotated grain */
+  background:
+    /* Smaller Knot 1 */
+    radial-gradient(
+      circle at 25% 40%,
+      rgba(60, 38, 22, 0.6) 0%,
+      rgba(60, 38, 22, 0.5) 4%,
+      rgba(60, 38, 22, 0.3) 7%,
+      transparent 12%
+    ),
+    /* Smaller Knot 2 */
+    radial-gradient(
+      circle at 70% 65%,
+      rgba(50, 32, 20, 0.55) 0%,
+      rgba(50, 32, 20, 0.4) 5%,
+      rgba(50, 32, 20, 0.25) 8%,
+      transparent 13%
+    ),
+    /* Dark grain lines rotated ~60deg */
+    repeating-linear-gradient(
+      60deg,
+      rgba(0, 0, 0, 0.06) 0px,
+      rgba(0, 0, 0, 0.06) 1px,
+      transparent 2px,
+      transparent 7px
+    ),
+    /* Light grain variation rotated ~60deg */
+    repeating-linear-gradient(
+      60deg,
+      rgba(255, 255, 255, 0.04) 0px,
+      rgba(255, 255, 255, 0.04) 2px,
+      transparent 3px,
+      transparent 11px
+    ),
+    /* Base wood color */
+    linear-gradient(
+      135deg,
+      #7a5536,
+      #6b4a30 40%,
+      #8a6342
+    );
+
+  border-radius: 0.5rem;
+
+  /* Ink text styling */
+  color: #fff;
+  font-family: "Bradley Hand", "Segoe Print", cursive;
+  font-size: clamp(1.1rem, 4.5vw, 1.6rem);
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+
+  /* Handwritten imperfection */
+  transform: rotate(-1.2deg);
+  text-shadow:
+    0.6px 0.6px 0 #00000044,
+    -0.4px 0.4px 0 #00000022;
+
+  /* Depth & age */
+  filter: contrast(1.04) saturate(0.9);
+  box-shadow:
+    inset 0 0 14px #00000055,
+    inset 0 0 3px #00000088,
+    0 2px 6px #00000044;
 }</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Welcome" tags="" position="1125,275" size="100,100">### Welcome to IKEA
 {
 &lt;!-- General formatting --&gt;
@@ -143,7 +242,7 @@ td.plaque_table {
 (set: $workspaces_examined_map to false)
 (set: $workspaces_examined_computer to false)
 (set: $workspaces_number_pins to 10)
-(set: $workspaces_played_minesweeper to false)
+(set: $workspaces_played_minesweeper to true)
 (set: $workspaces_checked_recycling to false)
 (set: $workspaces_push_pin_answer to &quot;DUBLIN&quot;)
 (set: $workspaces_push_pin_placed to false)
@@ -163,10 +262,13 @@ td.plaque_table {
 
 &lt;!-- Bathroom variables --&gt;
 (set: $bathroom_looked_around to false)
+(set: $bathroom_examined_help_desk to false)
 (set: $bathroom_real_world_computer_password to &quot;KREATIV&quot;)
 
 &lt;!-- Bedroom variables --&gt;
 (set: $bedroom_looked_around to false)
+(set: $bedroom_examined_dresser to false)
+(set: $bedroom_naps_taken to 0)
 
 &lt;!-- Storage variables --&gt;
 (set: $storage_looked_around to false)
@@ -205,6 +307,8 @@ td.plaque_table {
 [[&gt; Skip to Workspaces-&gt;Workspaces]]
 [[&gt; Skip to Kitchen-&gt;Kitchen]]
 [[&gt; Skip to Dining-&gt;Dining]]
+[[&gt; Skip to Bathroom-&gt;Bathroom]]
+[[&gt; Skip to Bedroom-&gt;Bedroom]]
 [[&gt; Skip to Stairs-&gt;Stairs]]
 [[&gt; Skip to Marketplace-&gt;Marketplace Start]]
 [[&gt; Skip to Escape!-&gt;Escape!]]
@@ -389,10 +493,15 @@ At long last, you round one final corner and a beam of light shines down from th
 Congrats on escaping IKEA!
 
 &#39;&#39;Your Stats&#39;&#39;
-* You ate $restaurant_meatballs_eaten meatballs
+{
+&lt;ul&gt;
+&lt;li&gt;You ate $restaurant_meatballs_eaten meatballs&lt;/li&gt;
+&lt;li&gt;You took $bedroom_naps_taken naps&lt;/li&gt;
 (if: $workspaces_played_minesweeper)[
-* You played minesweeper on the computer
-]</tw-passagedata><tw-passagedata pid="8" name="Marketplace 2" tags="" position="275,375" size="100,100">### Marketplace 2
+  &lt;li&gt;You played minesweeper on the computer&lt;/li&gt;
+]
+}
+&lt;/ul&gt;</tw-passagedata><tw-passagedata pid="8" name="Marketplace 2" tags="" position="275,375" size="100,100">### Marketplace 2
 
 Which way should you go?
 
@@ -1390,12 +1499,40 @@ You enter the $location_format[BATHROOM] area.
 $bathroom_look_around_text
 ]
 \(else:)[|look_around&gt;[&gt; Look around]]
+\(if: $bathroom_examined_help_desk)[&lt;br&gt;&gt; Examine $item_format[help desk]
+$bathroom_examine_help_desm_text
+]
+\(else-if: $bathroom_looked_around)[$bathroom_examine_help_desk_click_text]
+\(else:)[|examine_help_desk_click&gt;[]]
 
 \(set: $bathroom_west_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
 \(set: $bathroom_south_text to &quot;[[Go to BEDROOM-&gt;Bedroom]]&quot;)
 \($compass: &quot;&quot;, &quot;$bathroom_west_text&quot;, &quot;&quot;, &quot;$bathroom_south_text&quot;)
 
-\(set: $bathroom_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="45" name="Bedroom" tags="" position="1650,725" size="200,100">### Bedroom
+\(set: $bathroom_look_around_text to &quot;You look around. You see modular bathroom furniture. Lights bounce off all of the shiny chrome faucets and stylish mirrors. There&#39;s also a $item_format[help desk] in this area. Unfortunately there doesn&#39;t seem tbe anyone there&quot;)
+\(set: $bathroom_examine_help_desk_click_text to &quot;&lt;br&gt;|examine_help_desk&gt;[&gt; Examine $item_format[help desk]]&quot;)
+\(set: $bathroom_examine_help_desk_text to &quot;{You examine the HELP DESK. There&#39;s a $item_format[Post-it note] on the desk next to a laptop.
+&lt;div class=\&quot;postit\&quot;&gt;
+  &lt;h3&gt;Remember&lt;/h3&gt;
+  &lt;p&gt;
+    My password: $bathroom_real_world_computer_password&lt;br&gt;
+    &lt;br&gt;
+    I hid the bar cart safe password on the laptop
+  &lt;/p&gt;
+&lt;/div&gt;
+&lt;br&gt;
+//[This will be helpful in the real world]//
+}&quot;)
+
+\(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+$bathroom_look_around_text
+\(set: $bathroom_looked_around to true)
+\(replace: ?examine_help_desk_click)[$bathroom_examine_help_desk_click_text]
+]
+\(click-append:?examine_help_desk)+(t8n:&#39;dissolve&#39;)[
+$bathroom_examine_help_desk_text
+\(set: $bathroom_examined_help_desk to true)
+]</tw-passagedata><tw-passagedata pid="45" name="Bedroom" tags="" position="1650,725" size="200,100">### Bedroom
 
 You enter the $location_format[BEDROOM] area.
 
@@ -1403,12 +1540,42 @@ You enter the $location_format[BEDROOM] area.
 $bedroom_look_around_text
 ]
 \(else:)[|look_around&gt;[&gt; Look around]]
+\(if: $bedroom_examined_dresser)[&lt;br&gt;&gt; Examine $item_format[dresser]
+$bedroom_examine_dresser_text
+]
+\(else-if: $bedroom_looked_around)[$bedroom_examine_dresser_click_text]
+\(else:)[|examine_dresser_click&gt;[]]
+\(if: $bedroom_looked_around)[$bedroom_take_nap_click_text]
+\(else:)[|take_nap_click&gt;[]]
 
 \(set: $bedroom_north_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
 \(set: $bedroom_west_text to &quot;[[Go to STORAGE-&gt;Storage]]&quot;)
 \($compass: &quot;$bedroom_north_text&quot;, &quot;$bedroom_west_text&quot;, &quot;&quot;, &quot;&quot;)
 
-\(set: $bedroom_look_around_text to &quot;Test&quot;)</tw-passagedata><tw-passagedata pid="46" name="Childrens" tags="" position="1275,725" size="100,100">### Children&#39;s Area
+\(set: $bedroom_look_around_text to &quot;You look around. You see an endless row of plush looking mattresses atop bedframes of all sizes, colors, and heights. Interestingly, you notice there&#39;s only one $item_format[dresser] in the whole area.&quot;)
+\(set: $bedroom_examine_dresser_click_text to &quot;&lt;br&gt;|examine_dresser&gt;[&gt; Examine $item_format[dresser]]&quot;)
+\(set: $bedroom_take_nap_click_text to &quot;&lt;br&gt;|take_nap&gt;[&gt; Take a nap]&quot;)
+\(set: $bedroom_examine_dresser_text to &quot;{It&#39;s odd that there&#39;s only one dresser. You look inside the drawers. Written in dark ink inside is the following:
+&lt;div class=\&quot;dresser-drawer\&quot;&gt;
+\&quot;I&#39;ve hidden a secret IKEA treasure somewhere in the world. You&#39;ll never be able to guess where it is on the map unless you closely re-examine the beginning of the CATALOG for some directions.\&quot;
+&lt;br&gt;
+- Mark X. Atläs (IKEA marketing strategist)\
+&lt;div&gt;}&quot;)
+\(set: $bedroom_take_nap_text to &quot;You take a quick power nap on one of the beds. Quite comfy. But you should probably get back to escaping now.&quot;)
+
+\(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+$bedroom_look_around_text
+\(set: $bedroom_looked_around to true)
+\(replace: ?examine_dresser_click)[$bedroom_examine_dresser_click_text]
+\(replace: ?take_nap_click)[$bedroom_take_nap_click_text]
+]
+\(click-append:?examine_dresser)+(t8n:&#39;dissolve&#39;)[
+$bedroom_examine_dresser_text
+\(set: $bedroom_examined_dresser to true)]
+\(click-append:?take_nap)+(t8n:&#39;dissolve&#39;)[
+$bedroom_take_nap_text
+\(set: $bedroom_naps_taken to it + 1)
+]</tw-passagedata><tw-passagedata pid="46" name="Childrens" tags="" position="1275,725" size="100,100">### Children&#39;s Area
 
 You enter the $location_format[CHILDREN&#39;S AREA].
 
