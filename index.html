@@ -1642,12 +1642,10 @@ document.querySelectorAll(&#39;tw-story&#39;)[0].classList.add(&#39;dark-mode&#3
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;_west&lt;/td&gt;
-        (if: $darkMode is true)[\
-    		&lt;td class=&quot;image-cell&quot;&gt;&lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;&lt;/td&gt;
-		]\
-      (else:)[\
-           &lt;td class=&quot;image-cell&quot;&gt;&lt;img src=&quot;images/compass.png&quot; alt=&quot;Compass&quot;&gt;&lt;/td&gt;
-      ]\
+        &lt;td class=&quot;image-cell&quot;&gt;
+        (if: $darkMode is true)[&lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;]
+        (else:)[&lt;img src=&quot;images/compass.png&quot; alt=&quot;Compass&quot;&gt;]
+        &lt;/td&gt;
         &lt;td&gt;_east&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
