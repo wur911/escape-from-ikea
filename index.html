@@ -9,7 +9,7 @@
 </head>
 <body>
 <tw-story><noscript><tw-noscript>JavaScript needs to be enabled to play Escape From Ikea.</tw-noscript></noscript></tw-story>
-<tw-storydata name="Escape From Ikea" startnode="46" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="79A118C2-C78F-48ED-9915-E077B548AD75" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* Disable URL link highlighting */
+<tw-storydata name="Escape From Ikea" startnode="47" creator="Twine" creator-version="2.11.1" format="Harlowe" format-version="3.3.9" ifid="79A118C2-C78F-48ED-9915-E077B548AD75" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* Disable URL link highlighting */
 tw-sidebar {
   display: none; 
 }
@@ -198,7 +198,8 @@ td.plaque_table {
     inset 0 0 14px #00000055,
     inset 0 0 3px #00000088,
     0 2px 6px #00000044;
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Bathroom" tags="" position="1775,575" size="100,100">### Bathroom
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Bathroom" tags="" position="1775,575" size="100,100">($render_bg:)\
+### Bathroom
 
 You enter the $location_format[BATHROOM] area.
 
@@ -239,7 +240,8 @@ $bathroom_look_around_text
 \(click-append:?examine_help_desk)+(t8n:&#39;dissolve&#39;)[
 $bathroom_examine_help_desk_text
 \(set: $bathroom_examined_help_desk to true)
-]</tw-passagedata><tw-passagedata pid="2" name="Bedroom" tags="" position="1650,725" size="200,100">### Bedroom
+]</tw-passagedata><tw-passagedata pid="2" name="Bedroom" tags="" position="1650,725" size="200,100">($render_bg:)\
+### Bedroom
 
 You enter the $location_format[BEDROOM] area.
 
@@ -274,8 +276,6 @@ $bedroom_examine_dresser_text
 &lt;div&gt;}&quot;)
 \(set: $bedroom_take_nap_text to &quot;You take a quick power nap on one of the beds. Quite comfy. But you should probably get back to escaping now.&quot;)
 
-
-
 \(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
 $bedroom_look_around_text
 \(set: $bedroom_looked_around to true)
@@ -295,28 +295,28 @@ $bedroom_take_nap_text
   (rerun: ?light_switch)
   (if: $darkMode)[
     (replace: ?switch_mode)[
-    &lt;script&gt;
-    document.querySelectorAll(&#39;tw-story&#39;)[0].classList.replace(&#39;light-mode&#39;, &#39;dark-mode&#39;);
-  &lt;/script&gt;
+      &lt;script&gt;
+      document.querySelectorAll(&#39;tw-story&#39;)[0].classList.replace(&#39;light-mode&#39;, &#39;dark-mode&#39;);
+    &lt;/script&gt;
     ]
     (set: $item_format to (text-color: #51e1ff))
-	(set: $location_format to (text-color: #ff7d7d))
-	(set: $answer_format to (font:&#39;Courier New&#39;)+(text-color:#8a94fc)+(text-style:&quot;bold&quot;))
-	(set: $relic_format to (text-color:#fdcd5a))
-	(rerun: ?Passage)
+    (set: $location_format to (text-color: #ff7d7d))
+    (set: $answer_format to (font:&#39;Courier New&#39;)+(text-color:#8a94fc)+(text-style:&quot;bold&quot;))
+    (set: $relic_format to (text-color:#fdcd5a))
+    (rerun: ?Passage)
   ]
   (else:)[
     &lt;script&gt;
-	document.querySelectorAll(&#39;tw-story&#39;)[0].classList.replace(&#39;dark-mode&#39;, &#39;light-mode&#39;);
+    document.querySelectorAll(&#39;tw-story&#39;)[0].classList.replace(&#39;dark-mode&#39;, &#39;light-mode&#39;);
   &lt;/script&gt;
-  
   (set: $item_format to (text-color: #099bde))
-    (set: $location_format to (text-color: #ce3257))
-	(set: $answer_format to (font:&#39;Courier New&#39;)+(text-color:#7a82da)+(text-style:&quot;bold&quot;))
-	(set: $relic_format to (text-color:#c5a230))
-    (rerun: ?Passage)
-    ]
-]</tw-passagedata><tw-passagedata pid="3" name="Childrens" tags="" position="1275,725" size="100,100">### Children&#39;s Area
+  (set: $location_format to (text-color: #ce3257))
+  (set: $answer_format to (font:&#39;Courier New&#39;)+(text-color:#7a82da)+(text-style:&quot;bold&quot;))
+  (set: $relic_format to (text-color:#c5a230))
+  (rerun: ?Passage)
+  ]
+]</tw-passagedata><tw-passagedata pid="3" name="Childrens" tags="" position="1275,725" size="100,100">($render_bg:)\
+### Children&#39;s Area
 
 You enter the $location_format[CHILDREN&#39;S AREA].
 
@@ -382,7 +382,8 @@ You enter the $location_format[CHILDREN&#39;S AREA].
   $childrens_search_text\
   (set: $childrens_search_clicked to true)\
 ]
-}</tw-passagedata><tw-passagedata pid="4" name="Dining" tags="" position="1625,575" size="100,100">### Dining
+}</tw-passagedata><tw-passagedata pid="4" name="Dining" tags="" position="1625,575" size="100,100">($render_bg:)\
+### Dining
 
 You enter the $location_format[DINING] area.
 
@@ -450,7 +451,8 @@ $dining_examine_bar_cart_text
 \(click-append:?examine_safe)+(t8n:&#39;dissolve&#39;)[
 $dining_examine_safe_text
 \(set: $dining_examined_safe to true)
-\]</tw-passagedata><tw-passagedata pid="5" name="Escape!" tags="" position="875,825" size="100,100">### Escape
+\]</tw-passagedata><tw-passagedata pid="5" name="Escape!" tags="" position="875,825" size="100,100">($render_bg:)\
+### Escape
 
 At long last, you round one final corner and a beam of light shines down from the heavens. In a flash of revelation, you see the $item_format[PERFECT SIDE TABLE] for your apartment and suddenly remember that was the reason you came to IKEA today. Weary but triumphant, you clutch your hard-earned treasure and ring it up through the self checkout. Stepping through the sliding glass doors out into the cool night, the twilight air is sweet and quiet. For a moment, the rooms you left behind seem almost like a dream. You feel a sudden sense of wonder. 
  
@@ -475,7 +477,8 @@ Congrats on escaping IKEA!
 ]
 &lt;li&gt;Your most visited room is _max_visit_room, which you visited _max_visit_room_count times&lt;/li&gt;
 }
-&lt;/ul&gt;</tw-passagedata><tw-passagedata pid="6" name="Kitchen" tags="" position="1625,425" size="100,100">### Kitchen
+&lt;/ul&gt;</tw-passagedata><tw-passagedata pid="6" name="Kitchen" tags="" position="1625,425" size="100,100">($render_bg:)\
+### Kitchen
 
 You enter the $location_format[KITCHEN] area.
 
@@ -516,7 +519,8 @@ $kitchen_look_around_text
 \(click-append:?examine_refrigerator)+(t8n:&#39;dissolve&#39;)[
 $kitchen_examine_refrigerator_text
 \(set: $kitchen_examined_refrigerator to true)
-]</tw-passagedata><tw-passagedata pid="7" name="Living Room" tags="" position="1450,575" size="100,100">### Living Room
+]</tw-passagedata><tw-passagedata pid="7" name="Living Room" tags="" position="1450,575" size="100,100">($render_bg:)\
+### Living Room
 
 You enter the $location_format[LIVING ROOM] area.
 
@@ -544,7 +548,7 @@ $living_room_examine_chair_text
 
 \(set: $living_room_north_text to &quot;[[Go to WORK SPACES-&gt;Workspaces]]&quot;)
 \(set: $living_room_east_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
-\(set: $living_room_south_text to &quot;[[Go to STORAGE-&gt;Storage]]&quot;)
+\(set: $living_room_south_text to &quot;(if: $storage_shortcut_unlocked)[[[Go to STORAGE-&gt;Storage]]]&quot;)
 \($compass: &quot;$living_room_north_text&quot;, &quot;&quot;, &quot;$living_room_east_text&quot;, &quot;$living_room_south_text&quot;)
 
 \(set: $living_room_look_around_text to &quot;You look around. To your left, you see lamps of every shape—floor lamps, desk lamps, even a lamp shaped like a bagel—casting a warm, conspiratorial glow. They illuminate a shiny $item_format[plaque] on the wall. To your right is an IKEA $item_format[chair], broken in pieces.&quot;)
@@ -593,11 +597,13 @@ $living_room_examine_plaque_text
 $living_room_examine_chair_text
 \(set: $living_room_examined_chair to true)
 ]</tw-passagedata><tw-passagedata pid="8" name="Lobby" tags="" position="1125,425" size="100,100">{
+($render_bg:)
 (set: $lobby_look_around_text to &quot;You look around and see that you&#39;re currently in the IKEA $location_format[LOBBY]. A single yellow arrow painted on the floor beckons you forward. Turning towards the arrow&#39;s path, to the $direction_format[EAST], you see the $location_format[RESTAURANT &amp; CAFE].&quot;)
 (set: $lobby_examine_catalog_text to &quot;You examine the IKEA catalog.
 //`[`You should refer to the physical copy of the IKEA catalog`]`//&quot;)
 (set: $lobby_examine_pencil_text to &quot;This is just a normal pencil. It&#39;s IKEA branded. Sweet!&quot;)
 (set: $lobby_examine_compass_text to &quot;This is just a normal compass.&quot;)
+($render_bg:)\
 
 ### Lobby
 
@@ -684,7 +690,8 @@ At your feet, you notice an IKEA shoping bag. Inside there&#39;s an $item_format
   $lobby_examine_compass_text
   (set: $lobby_examined_compass to true)
 ]
-}</tw-passagedata><tw-passagedata pid="9" name="Marketplace 1" tags="" position="275,250" size="100,100">### Marketplace 1
+}</tw-passagedata><tw-passagedata pid="9" name="Marketplace 1" tags="" position="275,250" size="100,100">($render_bg:)\
+### Marketplace 1
 
 //You enter a new passageway.//
 
@@ -708,7 +715,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="10" name="Marketplace 10" tags="" position="400,500" size="100,100">### Marketplace 10
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="10" name="Marketplace 10" tags="" position="400,500" size="100,100">($render_bg:)\
+### Marketplace 10
 
 Which way should you go?
 
@@ -730,7 +738,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="11" name="Marketplace 11" tags="" position="400,375" size="100,100">### Marketplace 11
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="11" name="Marketplace 11" tags="" position="400,375" size="100,100">($render_bg:)\
+### Marketplace 11
 
 //You think to youself, &quot;Should have grabbed a few extra snacks from the Restaurant &amp; Cafe before starting this maze.&quot;//
 
@@ -754,7 +763,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace 12]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="12" name="Marketplace 12" tags="" position="400,250" size="100,100">### Marketplace 12
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="12" name="Marketplace 12" tags="" position="400,250" size="100,100">($render_bg:)\
+### Marketplace 12
 
 Which way should you go?
 
@@ -776,7 +786,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="13" name="Marketplace 13" tags="" position="400,125" size="100,100">### Marketplace 13
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="13" name="Marketplace 13" tags="" position="400,125" size="100,100">($render_bg:)\
+### Marketplace 13
 
 Which way should you go?
 
@@ -798,7 +809,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace 14]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="14" name="Marketplace 14" tags="" position="525,125" size="100,100">### Marketplace 14
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="14" name="Marketplace 14" tags="" position="525,125" size="100,100">($render_bg:)\
+### Marketplace 14
 
 //Is this the halfway point? You sure hope so...//
 
@@ -822,7 +834,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="15" name="Marketplace 15" tags="" position="525,250" size="100,100">### Marketplace 15
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="15" name="Marketplace 15" tags="" position="525,250" size="100,100">($render_bg:)\
+### Marketplace 15
 
 Which way should you go?
 
@@ -844,7 +857,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace 16]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="16" name="Marketplace 16" tags="" position="525,375" size="100,100">### Marketplace 16
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="16" name="Marketplace 16" tags="" position="525,375" size="100,100">($render_bg:)\
+### Marketplace 16
 
 Which way should you go?
 
@@ -866,7 +880,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="17" name="Marketplace 17" tags="" position="525,500" size="100,100">### Marketplace 17
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="17" name="Marketplace 17" tags="" position="525,500" size="100,100">($render_bg:)\
+### Marketplace 17
 
 Which way should you go?
 
@@ -888,7 +903,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace 18]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="18" name="Marketplace 18" tags="" position="525,625" size="100,100">### Marketplace 18
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="18" name="Marketplace 18" tags="" position="525,625" size="100,100">($render_bg:)\
+### Marketplace 18
 
 Which way should you go?
 
@@ -910,7 +926,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="19" name="Marketplace 19" tags="" position="525,750" size="100,100">### Marketplace 19
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="19" name="Marketplace 19" tags="" position="525,750" size="100,100">($render_bg:)\
+### Marketplace 19
 
 //You see a really long hallway to your south.//
 
@@ -934,7 +951,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace 20]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="20" name="Marketplace 2" tags="" position="275,375" size="100,100">### Marketplace 2
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="20" name="Marketplace 2" tags="" position="275,375" size="100,100">($render_bg:)\
+### Marketplace 2
 
 Which way should you go?
 
@@ -956,7 +974,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="21" name="Marketplace 20" tags="" position="525,875" size="100,100">### Marketplace 20
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="21" name="Marketplace 20" tags="" position="525,875" size="100,100">($render_bg:)\
+### Marketplace 20
 
 //You continue down the really long hallway. Your mind starts to drift...//
 
@@ -980,7 +999,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="22" name="Marketplace 21" tags="" position="650,875" size="100,100">### Marketplace 21
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="22" name="Marketplace 21" tags="" position="650,875" size="100,100">($render_bg:)\
+### Marketplace 21
 
 //You&#39;ve been here for ages. Is that a talking meatball in the corner or are you just hallucinating?//
 
@@ -1004,7 +1024,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="23" name="Marketplace 22" tags="" position="650,750" size="100,100">### Marketplace 22
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="23" name="Marketplace 22" tags="" position="650,750" size="100,100">($render_bg:)\
+### Marketplace 22
 
 Which way should you go?
 
@@ -1026,7 +1047,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="24" name="Marketplace 23" tags="" position="650,625" size="100,100">### Marketplace 23
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="24" name="Marketplace 23" tags="" position="650,625" size="100,100">($render_bg:)\
+### Marketplace 23
 
 Which way should you go?
 
@@ -1048,7 +1070,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="25" name="Marketplace 24" tags="" position="650,500" size="100,100">### Marketplace 24
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="25" name="Marketplace 24" tags="" position="650,500" size="100,100">($render_bg:)\
+### Marketplace 24
 
 Which way should you go?
 
@@ -1070,7 +1093,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="26" name="Marketplace 25" tags="" position="650,375" size="100,100">### Marketplace 25
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="26" name="Marketplace 25" tags="" position="650,375" size="100,100">($render_bg:)\
+### Marketplace 25
 
 //25 rooms down. You feel like you&#39;re almost there.//
 
@@ -1094,7 +1118,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="27" name="Marketplace 26" tags="" position="650,250" size="100,100">### Marketplace 26
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="27" name="Marketplace 26" tags="" position="650,250" size="100,100">($render_bg:)\
+### Marketplace 26
 
 Which way should you go?
 
@@ -1116,7 +1141,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="28" name="Marketplace 27" tags="" position="650,125" size="100,100">### Marketplace 27
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="28" name="Marketplace 27" tags="" position="650,125" size="100,100">($render_bg:)\
+### Marketplace 27
 
 Which way should you go?
 
@@ -1138,7 +1164,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace 28]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="29" name="Marketplace 28" tags="" position="775,125" size="100,100">### Marketplace 28
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="29" name="Marketplace 28" tags="" position="775,125" size="100,100">($render_bg:)\
+### Marketplace 28
 
 Which way should you go?
 
@@ -1160,7 +1187,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="30" name="Marketplace 29" tags="" position="775,250" size="100,100">### Marketplace 29
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="30" name="Marketplace 29" tags="" position="775,250" size="100,100">($render_bg:)\
+### Marketplace 29
 
 Which way should you go?
 
@@ -1182,7 +1210,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace 30]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="31" name="Marketplace 3" tags="" position="275,500" size="100,100">### Marketplace 3
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="31" name="Marketplace 3" tags="" position="275,500" size="100,100">($render_bg:)\
+### Marketplace 3
 
 //Three rooms down. How many more to go?//
 
@@ -1206,7 +1235,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace 4]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="32" name="Marketplace 30" tags="" position="775,375" size="100,100">### Marketplace 30
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="32" name="Marketplace 30" tags="" position="775,375" size="100,100">($render_bg:)\
+### Marketplace 30
 
 Which way should you go?
 
@@ -1228,7 +1258,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="33" name="Marketplace 31" tags="" position="775,500" size="100,100">### Marketplace 31
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="33" name="Marketplace 31" tags="" position="775,500" size="100,100">($render_bg:)\
+### Marketplace 31
 
 Which way should you go?
 
@@ -1250,7 +1281,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Escape!]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="34" name="Marketplace 4" tags="" position="275,625" size="100,100">### Marketplace 4
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="34" name="Marketplace 4" tags="" position="275,625" size="100,100">($render_bg:)\
+### Marketplace 4
 
 Which way should you go?
 
@@ -1272,7 +1304,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="35" name="Marketplace 5" tags="" position="275,750" size="100,100">### Marketplace 5
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="35" name="Marketplace 5" tags="" position="275,750" size="100,100">($render_bg:)\
+### Marketplace 5
 
 Which way should you go?
 
@@ -1294,7 +1327,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace 6]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="36" name="Marketplace 6" tags="" position="275,875" size="100,100">### Marketplace 6
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="36" name="Marketplace 6" tags="" position="275,875" size="100,100">($render_bg:)\
+### Marketplace 6
 
 //You really hope you can escape and see the light of day again.//
 
@@ -1318,7 +1352,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="37" name="Marketplace 7" tags="" position="400,875" size="100,100">### Marketplace 7
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="37" name="Marketplace 7" tags="" position="400,875" size="100,100">($render_bg:)\
+### Marketplace 7
 
 Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
@@ -1339,7 +1374,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="38" name="Marketplace 8" tags="" position="400,750" size="100,100">### Marketplace 8
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="38" name="Marketplace 8" tags="" position="400,750" size="100,100">($render_bg:)\
+### Marketplace 8
 
 //Who designed IKEA to be such a maze?//
 
@@ -1363,7 +1399,8 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="39" name="Marketplace 9" tags="" position="400,625" size="100,100">### Marketplace 9
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="39" name="Marketplace 9" tags="" position="400,625" size="100,100">($render_bg:)\
+### Marketplace 9
 
 Which way should you go?
 
@@ -1385,9 +1422,11 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace 10]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="40" name="Marketplace Restart" tags="" position="100,500" size="100,100">You continue onward but you suddenly start to feel woozy. You black out.
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="40" name="Marketplace Restart" tags="" position="100,500" size="100,100">($render_bg:)\
+You continue onward but you suddenly start to feel woozy. You black out.
 
-[[&gt; Continue-&gt;Marketplace Start]]</tw-passagedata><tw-passagedata pid="41" name="Marketplace Start" tags="" position="275,125" size="100,100">### Marketplace Start
+[[&gt; Continue-&gt;Marketplace Start]]</tw-passagedata><tw-passagedata pid="41" name="Marketplace Start" tags="" position="275,125" size="100,100">($render_bg:)\
+### Marketplace Start
 
 {(if:visits is 1)[You enter the MARKETPLACE. What lies before you seems to be a giant confusing maze. You recall that you have a map of the marketplace in your catalog]
 (if:visits &gt; 1)[You awake back at the start of the MARKETPLACE maze. You recall that you have a map of the marketplace in your CATALOG]
@@ -1414,6 +1453,7 @@ Which way should you go?
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="42" name="Restaurant &amp; Cafe" tags="" position="1275,425" size="100,100">{
+($render_bg:)
 (set: $restaurant_look_around_text to &quot;You look around. It&#39;s weirdly empty in here today, not a single bickering couple or &lt;a target=\&quot;_blank\&quot; rel=\&quot;noopener noreferrer\&quot; href=\&quot;https://www.theglobeandmail.com/news/toronto/stylish-but-illegal-monkey-found-roaming-toronto-ikea/article6140276/\&quot;&gt;stylish but illegal monkey&lt;/a&gt; in sight. There&#39;s a $item_format[food counter] but all the menu display screens are dark. You might have to figure out the menu some other way. You also see a $item_format[cash register].\
 &lt;br&gt;
 To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM].&quot;)
@@ -1519,7 +1559,23 @@ To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM]
   $restaurant_examine_cash_register_text
   (set: $restaurant_examined_cash_register to true)\
 ]
-}</tw-passagedata><tw-passagedata pid="43" name="Showroom" tags="" position="1275,575" size="100,100">### Showroom
+}</tw-passagedata><tw-passagedata pid="43" name="Shortcut" tags="" position="1450,725" size="100,100">{
+($render_bg:)
+
+### Shortcut
+
+You enter the $location_format[SHORTCUT]. It&#39;s a narrow hallway connecting from the $location_format[WARDROBE &amp; STORAGE] area to the $location_format[LIVING ROOM] area to the $direction_format[NORTH]. As you walk through, you notice a Keurig coffee machine. Sweet!
+
+&lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+
+[//Find your nearest co-worker to grab a coffee hint//]
+
+&lt;br&gt;
+
+[[&gt; Continue NORTH to LIVING ROOM-&gt;Living Room]]
+
+}</tw-passagedata><tw-passagedata pid="44" name="Showroom" tags="" position="1275,575" size="100,100">($render_bg:)\
+### Showroom
 
 You go $direction_format[SOUTH] to the $location_format[SHOWROOM]. There&#39;s a door in your way.
 
@@ -1535,7 +1591,8 @@ You go $direction_format[SOUTH] to the $location_format[SHOWROOM]. There&#39;s a
 You use the $item_format[showroom key] on the door. The key fits perfectly and you slowly twist the doorknob. The door opens...
 &lt;br&gt;
 [[&gt; Enter SHOWROOM-&gt;Living Room]]
-}]</tw-passagedata><tw-passagedata pid="44" name="Stairs" tags="" position="1125,725" size="100,100">### Stairs to MARKETPLACE
+}]</tw-passagedata><tw-passagedata pid="45" name="Stairs" tags="" position="1125,725" size="100,100">($render_bg:)\
+### Stairs to MARKETPLACE
 
 You go $direction_format[WEST] to the $location_format[STAIRS].
 
@@ -1564,10 +1621,11 @@ You tug on the door but it doesn&#39;t budge.
 &lt;br&gt;
 [[&gt; Back-&gt;Childrens]]
 ]
-}</tw-passagedata><tw-passagedata pid="45" name="Storage" tags="" position="1450,875" size="100,100">{
-(set: $storage_look_around_text to &quot;You look around. There&#39;s a wardrobe that&#39;s definitely bigger on the inside and enough storage cubes to conceal your every mortal possession. If you listen closely you can hear a really faint ticking sound.&quot;)
+}</tw-passagedata><tw-passagedata pid="46" name="Storage" tags="" position="1450,875" size="100,100">{
+($render_bg:)
+(set: $storage_look_around_text to &quot;You look around. There&#39;s a wardrobe that&#39;s definitely bigger on the inside and enough storage cubes to conceal your every mortal possession. There&#39;s a $item_format[big yellow button] on the north wall. &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt; If you listen closely you can hear a really faint ticking sound.&quot;)
 (set: $shortcut_unlock_click_text to &quot;|unlock_shortcut&gt;[&gt; Push the big yellow button]&quot;)
-(set: $shortcut_unlock_text to &quot;You push the big yellow button and open a $location_format[SHORTCUT] back to the $location_format[LIVING_ROOM].&quot;)
+(set: $shortcut_unlock_text to &quot;You push the big yellow button and open a $location_format[SHORTCUT] back to the $location_format[LIVING ROOM].&quot;)
 (set: $storage_bomb_defused_text to &quot;You&#39;ve successfully defused the $item_format[bomb] and acquired the $allen_wrench_text.&quot;)
 (set: $storage_found_bomb_text to &quot;Oh no - that ticking sound you heard is actually a $item_format[bomb]! Find your nearest IKEA co-worker to learn how you can defuse this $item_format[bomb].&quot;)
 (set: $storage_bomb_correct_text to &quot;You find a keypad attached to the bomb and enter in the pin. Hooray - you&#39;ve successfully defused the bomb. The bomb, now fully disarmed, suddenly opens up. You peer inside and find the $allen_wrench_text.&quot;)
@@ -1580,13 +1638,23 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
 (if: $storage_looked_around)[\
   &gt; Look around
   $storage_look_around_text\
-  &lt;br&gt;
-  $shortcut_unlock_click_text\
 ]\
 (else:)[\
   |look_around&gt;[&gt; Look around]\
 ]
-
+(if:(history: where its name contains &quot;Shortcut&quot;)&#39;s length &gt;= 1)[\
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;\
+  The $location_format[SHORTCUT] has been unlocked already. `[`//Grab a coffee hint from a coworker if you haven&#39;t already.//`]`\
+]\
+(else-if: $storage_shortcut_unlocked)[\
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;\
+  &gt; Push the big yellow button
+  $shortcut_unlock_text
+]\
+(else-if: $storage_looked_around)[\
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;\
+  $shortcut_unlock_click_text\
+]\
 (if: $storage_bomb_defused)[\
   $storage_bomb_defused_text\
 ]\
@@ -1611,25 +1679,39 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
 ]\
 {
 
+(set: $storage_north_text to &quot;(if:(history: where its name contains \&quot;Shortcut\&quot;)&#39;s length &gt;= 1)[[[Go to LIVING ROOM-&gt;Living Room]]](else-if: $storage_shortcut_unlocked)[[[Go to SHORTCUT-&gt;Shortcut]]](else:)[|compass_shortcut&gt;[]]&quot;)
 (set: $storage_west_text to &quot;[[Go to CHILDREN&#39;S-&gt;Childrens]]&quot;)
 (set: $storage_east_text to &quot;[[Go to BEDROOM-&gt;Bedroom]]&quot;)
-($compass: &quot;&quot;, &quot;$storage_west_text&quot;, &quot;$storage_east_text&quot;, &quot;&quot;)
+($compass: &quot;$storage_north_text&quot;, &quot;$storage_west_text&quot;, &quot;$storage_east_text&quot;, &quot;&quot;)
 }
 {
 (click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
   &lt;br&gt;
   $storage_look_around_text
-  &lt;br&gt;
-  $shortcut_unlock_click_text
-  (set: $storage_looked_around to true)
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+  $shortcut_unlock_click_text\
+  (set: $storage_looked_around to true)\
 ]
-}</tw-passagedata><tw-passagedata pid="46" name="Welcome" tags="" position="1125,275" size="100,100">### Welcome to IKEA
+(click-append:?unlock_shortcut)+(t8n:&#39;dissolve&#39;)[
+  $shortcut_unlock_text\
+  (set: $storage_shortcut_unlocked to true)\
+  (replace: ?compass-shortcut)[[[Go to SHORTCUT-&gt;Shortcut]]]\
+]
+}</tw-passagedata><tw-passagedata pid="47" name="Welcome" tags="" position="1125,275" size="100,100">### Welcome to IKEA
 {
 &lt;!-- Background and font colors --&gt;
 (set: $darkMode to true)
- &lt;script&gt;
-document.querySelectorAll(&#39;tw-story&#39;)[0].classList.add(&#39;dark-mode&#39;);
-&lt;/script&gt;
+(set: $render_bg to (macro: [\
+  (output:)[\
+    (if: $darkMode)[\
+      &lt;script&gt;document.querySelectorAll(&#39;tw-story&#39;)[0].classList.add(&#39;dark-mode&#39;);&lt;/script&gt;\
+    ]\
+    (else:)[\
+      &lt;script&gt;document.querySelectorAll(&#39;tw-story&#39;)[0].classList.add(&#39;light-mode&#39;);&lt;/script&gt;\
+    ]\
+  ]\
+]))\
+($render_bg:)\
 
 &lt;!-- Text formatting and colors --&gt;
 (set: $item_format to (text-color: #51e1ff))
@@ -1720,6 +1802,7 @@ document.querySelectorAll(&#39;tw-story&#39;)[0].classList.add(&#39;dark-mode&#3
 (set: $storage_looked_around to false)
 (set: $storage_bomb_defused to false)
 (set: $storage_bomb_answers to (a: &quot;123&quot;, &quot;456&quot;))
+(set: $storage_shortcut_unlocked to false)
 
 &lt;!-- Children&#39;s variables --&gt;
 (set: $childrens_looked_around to false)
@@ -1765,10 +1848,12 @@ document.querySelectorAll(&#39;tw-story&#39;)[0].classList.add(&#39;dark-mode&#3
 [[&gt; Skip to Bathroom-&gt;Bathroom]]
 [[&gt; Skip to Bedroom-&gt;Bedroom]]
 [[&gt; Skip to Storage-&gt;Storage]]
+[[&gt; Skip to Shortcut-&gt;Shortcut]]
 [[&gt; Skip to Childrens-&gt;Childrens]]
 [[&gt; Skip to Stairs-&gt;Stairs]]
 [[&gt; Skip to Marketplace-&gt;Marketplace Start]]
-[[&gt; Skip to Escape!-&gt;Escape!]]</tw-passagedata><tw-passagedata pid="47" name="Workspaces" tags="" position="1450,425" size="100,100">### Workspaces
+[[&gt; Skip to Escape!-&gt;Escape!]]</tw-passagedata><tw-passagedata pid="48" name="Workspaces" tags="" position="1450,425" size="100,100">($render_bg:)\
+### Workspaces
 
 You enter the $location_format[WORKSPACES] area.
 
@@ -1873,7 +1958,7 @@ $workspaces_played_minesweeper_text
 \(click-append:?check_recycling)+(t8n:&#39;dissolve&#39;)[
 $workspaces_checked_recycling_text
 \(set: $workspaces_checked_recycling to true)
-\]</tw-passagedata><tw-passagedata pid="48" name="Shortcut" tags="" position="1450,725" size="100,100"></tw-passagedata></tw-storydata>
+\]</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
  * https://github.com/paulmillr/es6-shim
