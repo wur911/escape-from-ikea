@@ -167,7 +167,7 @@
 
     <div class="card">
         <div class="audio-player">
-            <h2 id="segment-title">Arrival</h2>
+            <h2 id="segment-title">Ice Cream Parlor</h2>
             <audio id="audio" controls></audio>
 
             <div class="tour-nav">
@@ -190,43 +190,79 @@
 
     const tourSegments = [
         {
-            title: "Arrival",
-            audioSrc: "audio/01 O_Super x Mag.Lo - CEO Champion [Main Theme of CEO 2015].mp3",
+            title: "Ice Cream Parlor",
+            audioSrc: "audio/Ice cream parlor.wav",
             transcript: [
-                { start: 0, text: "The road into Måla is long and quiet." },
-                { start: 12, text: "Pine trees line the way, standing still." }
+                { start: 0, text: "Our final stop on the tour is Bergström's Ice Cream Parlor." },
+                { start: 5, text: "Bergström's has been serving ice cream here since the 1960's and is a perennial go to spot for the locals." },
+                { start: 11, text: "You're welcome to sample any of the 12 unique seasonal ice cream flavors or sample any other sweet treats such as the cupcakes or ice cream floats." },
+                { start: 19, text: "Oh and don't forget the to try the fläderblomsglass - it's a elderflower popsicle unique to this region of Sweden." },
+                { start: 27, text: "Well that about does it for the tour. If you've enjoyed this tour, do leave us a review." },
+                { start: 32, text: "On behalf of all of us here in Måla, we wish you a safe travels." }
             ]
         },
         {
-            title: "The Bus Stop",
-            audioSrc: "audio/01 O_Super x Mag.Lo - CEO Champion [Main Theme of CEO 2015].mp3",
+            title: "School",
+            audioSrc: "audio/School.wav",
             transcript: [
-                { start: 0, text: "The bus stop waits, as it always has." },
-                { start: 15, text: "Few people pass through now." }
+                { start: 0, text: "We are now walking by the Måla Gymnasieskola or high school." },
+                { start: 6, text: "It serves the broader region with some students riding the bus for up to 2 hours." },
+                { start: 10, text: "Beyond just learning, school serves as an important hub for cultural and social gatherings for the townspeople, making it a cornerstone of the local community." },
+                { start: 20, text: "Sounds like that's the school bell. It's 14:30 so students are leaving school now." }
             ]
         },
         {
-            title: "Town Center",
-            audioSrc: "audio/01 O_Super x Mag.Lo - CEO Champion [Main Theme of CEO 2015].mp3",
+            title: "Fire Station",
+            audioSrc: "audio/Fire station.wav",
             transcript: [
-                { start: 0, text: "Måla’s center feels larger than it is." },
-                { start: 18, text: "Shops close early, lights dim sooner." }
+                { start: 0, text: "We're passing by the local firestation now." },
+                { start: 5, text: "The fire station is staffed by a combination of full-time firefighters and volunteers. Fun fact - Måla hasn't had a major fire since the 1970's." },
+                { start: 13, text: "But the firefighters now handle all sorts of local requests, from rescuing pets stuck in trees to car accidents." }
             ]
         },
         {
-            title: "The Lake",
-            audioSrc: "audio/01 O_Super x Mag.Lo - CEO Champion [Main Theme of CEO 2015].mp3",
+            title: "Police Station",
+            audioSrc: "audio/Police station.wav",
             transcript: [
-                { start: 0, text: "The lake reflects the sky without comment." },
-                { start: 20, text: "In winter, it listens more than it moves." }
+                { start: 0, text: "Welcome to MÅLA. Glad you could join us on this wonderful journey exploring the top sights our town has to offer." },
+                { start: 7, text: "We'll start the tour at our police station." }
+                { start: 10, text: "You must be wondering about the helipad and the helicopters." }
+                { start: 13, text: "Did you know that Måla has one of the best in the world mountain rescue services?" }
+                { start: 17, text: "With our state of the art radars and the helicopters you see, we're always just a call for help away." }
             ]
         },
         {
-            title: "Leaving",
-            audioSrc: "audio/01 O_Super x Mag.Lo - CEO Champion [Main Theme of CEO 2015].mp3",
+            title: "Hospital",
+            audioSrc: "audio/Hospital.wav",
             transcript: [
-                { start: 0, text: "Leaving Måla feels quieter than arriving." },
-                { start: 14, text: "The road remembers you." }
+                { start: 0, text: "Looks like the rain has stopped for now." },
+                { start: 3, text: "Continuing on, on your right, you'll see the Måla Hospital." }
+                { start: 6, text: "Did you know that this hospital was constructed with the help of SVEN LARSSON?" }
+                { start: 9, text: "That's right, the same SVEN LARSSON whose house we visited earlier." }
+                { start: 13, text: "Thanks to the generosity of the Larsson family who funded the hospital in the 1970's, we have state of the art facilities for inpatient care and even have a fleet of ambulances and helicopters." }
+            ]
+        }
+        {
+            title: "Cafe",
+            audioSrc: "audio/Cafe.wav",
+            transcript: [
+                { start: 0, text: "We are now at the Nyström Cafe." },
+                { start: 4, text: "We dropped in just in time for a 3 o'clock fika." }
+                { start: 7, text: "Fika is a beloved Swedish tradition of taking time out of your day to enjoy a hot drink and a snack." }
+                { start: 13, text: "Since we're here, we may as well grab a kanelbulle or a cinnamon bun and enjoy a hot cup of coffee." }
+                { start: 20, text: "Order your food and feel free to grab a seat. I recommend the table on the upper floor balcony." }
+                { start: 25, text: "It's covered with an awning and you'll get a great view of the rest of the town even in the rain." }
+            ]
+        }
+        {
+            title: "Larsson House",
+            audioSrc: "audio/Sven.wav",
+            transcript: [
+                { start: 0, text: "Here we are at the Larsson House." },
+                { start: 3, text: "It's an elegant example of early 20th century Swedish architecture." }
+                { start: 7, text: "Sven Larsson was a local inventor and amateur botanist, who built this house in the 1950's." }
+                { start: 14, text: "Notice the stylish tiled gable roofs. Around the house you'll see some evidence of Sven's love of gardening as well." }
+                { start: 22, text: "Uh oh, looks like it's starting to rain. Let's go to our next destination where we'll head indoors." }
             ]
         }
     ];
