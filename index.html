@@ -1564,8 +1564,10 @@ You tug on the door but it doesn&#39;t budge.
 &lt;br&gt;
 [[&gt; Back-&gt;Childrens]]
 ]
-}</tw-passagedata><tw-passagedata pid="45" name="Storage" tags="" position="1450,725" size="100,100">{
+}</tw-passagedata><tw-passagedata pid="45" name="Storage" tags="" position="1450,875" size="100,100">{
 (set: $storage_look_around_text to &quot;You look around. There&#39;s a wardrobe that&#39;s definitely bigger on the inside and enough storage cubes to conceal your every mortal possession. If you listen closely you can hear a really faint ticking sound.&quot;)
+(set: $shortcut_unlock_click_text to &quot;|unlock_shortcut&gt;[&gt; Push the big yellow button]&quot;)
+(set: $shortcut_unlock_text to &quot;You push the big yellow button and open a $location_format[SHORTCUT] back to the $location_format[LIVING_ROOM].&quot;)
 (set: $storage_bomb_defused_text to &quot;You&#39;ve successfully defused the $item_format[bomb] and acquired the $allen_wrench_text.&quot;)
 (set: $storage_found_bomb_text to &quot;Oh no - that ticking sound you heard is actually a $item_format[bomb]! Find your nearest IKEA co-worker to learn how you can defuse this $item_format[bomb].&quot;)
 (set: $storage_bomb_correct_text to &quot;You find a keypad attached to the bomb and enter in the pin. Hooray - you&#39;ve successfully defused the bomb. The bomb, now fully disarmed, suddenly opens up. You peer inside and find the $allen_wrench_text.&quot;)
@@ -1578,6 +1580,8 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
 (if: $storage_looked_around)[\
   &gt; Look around
   $storage_look_around_text\
+  &lt;br&gt;
+  $shortcut_unlock_click_text\
 ]\
 (else:)[\
   |look_around&gt;[&gt; Look around]\
@@ -1606,15 +1610,17 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
   |bomb_guess_result&gt;[]
 ]\
 {
-(set: $storage_north_text to &quot;[[Go to LIVING ROOM-&gt;Living Room]]&quot;)
+
 (set: $storage_west_text to &quot;[[Go to CHILDREN&#39;S-&gt;Childrens]]&quot;)
 (set: $storage_east_text to &quot;[[Go to BEDROOM-&gt;Bedroom]]&quot;)
-($compass: &quot;$storage_north_text&quot;, &quot;$storage_west_text&quot;, &quot;$storage_east_text&quot;, &quot;&quot;)
+($compass: &quot;&quot;, &quot;$storage_west_text&quot;, &quot;$storage_east_text&quot;, &quot;&quot;)
 }
 {
 (click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
   &lt;br&gt;
   $storage_look_around_text
+  &lt;br&gt;
+  $shortcut_unlock_click_text
   (set: $storage_looked_around to true)
 ]
 }</tw-passagedata><tw-passagedata pid="46" name="Welcome" tags="" position="1125,275" size="100,100">### Welcome to IKEA
@@ -1643,8 +1649,8 @@ document.querySelectorAll(&#39;tw-story&#39;)[0].classList.add(&#39;dark-mode&#3
     &lt;tr&gt;
         &lt;td&gt;_west&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
-        (if: $darkMode is true)[&lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;]
-        (else:)[&lt;img src=&quot;images/compass.png&quot; alt=&quot;Compass&quot;&gt;]
+        (if: $darkMode is true)[&lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;]\
+        (else:)[&lt;img src=&quot;images/compass.png&quot; alt=&quot;Compass&quot;&gt;]\
         &lt;/td&gt;
         &lt;td&gt;_east&lt;/td&gt;
     &lt;/tr&gt;
@@ -1867,7 +1873,7 @@ $workspaces_played_minesweeper_text
 \(click-append:?check_recycling)+(t8n:&#39;dissolve&#39;)[
 $workspaces_checked_recycling_text
 \(set: $workspaces_checked_recycling to true)
-\]</tw-passagedata></tw-storydata>
+\]</tw-passagedata><tw-passagedata pid="48" name="Shortcut" tags="" position="1450,725" size="100,100"></tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
  * https://github.com/paulmillr/es6-shim
