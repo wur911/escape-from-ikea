@@ -34,7 +34,7 @@ table {
   max-height: 300px; /* Set an equal height to help make cells square */
 }
 td {
-  border: 1px solid black; /* Adds a visible border to each cell */
+  border: none; /* Adds a visible border to each cell */
   text-align: center; /* Centers content horizontally */
   vertical-align: middle; /* Centers content vertically */
   width: 100px; /* Equal width for 3 columns */
@@ -190,12 +190,17 @@ td.plaque_table {
     0 2px 6px #00000044;
 }</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Welcome" tags="" position="1125,275" size="100,100">### Welcome to IKEA
 {
-&lt;!-- General formatting --&gt;
+&lt;!-- Background and font colors --&gt;
+(set: $darkMode to true)
+
+&lt;!-- Text formatting and colors --&gt;
 (set: $item_format to (text-color: cyan)+(text-style:&quot;emboss&quot;))
 (set: $location_format to (text-color: green)+(text-style:&quot;emboss&quot;))
 (set: $direction_format to (text-style: &quot;bold&quot;))
 (set: $answer_format to (font:&#39;Courier New&#39;)+(text-color:orange)+(text-style:&quot;emboss&quot;))
 (set: $relic_format to (text-color:red)+(text-style:&quot;emboss&quot;))
+
+&lt;!-- Compass formatting --&gt;
 (set: $compass to (macro: str-type _north, str-type _west, str-type _east, str-type _south, [
   (output:)[&lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
@@ -309,7 +314,9 @@ td.plaque_table {
 ]\
 }]]))
 }
+
 [[&gt; Wake up-&gt;Lobby]]
+[[&gt; Skip to Restaurant-&gt;Restaurant &amp; Cafe]]
 [[&gt; Skip to Living Room-&gt;Living Room]]
 [[&gt; Skip to Workspaces-&gt;Workspaces]]
 [[&gt; Skip to Kitchen-&gt;Kitchen]]
@@ -321,50 +328,31 @@ td.plaque_table {
 [[&gt; Skip to Stairs-&gt;Stairs]]
 [[&gt; Skip to Marketplace-&gt;Marketplace Start]]
 [[&gt; Skip to Escape!-&gt;Escape!]]
-</tw-passagedata><tw-passagedata pid="2" name="Restaurant &amp; Cafe" tags="" position="1275,425" size="100,100">### Restaurant &amp; Cafe
-
-(if:visits &gt; 1)[You enter the $location_format[RESTAURANT &amp; CAFE].]
-\(else:)[Figuring that some food might help jog your memory (or at least tide you over until you find your way out), you enter the $location_format[RESTAURANT &amp; CAFE].]
-
-(if: $restaurant_looked_around)[&gt; Look around
-$restaurant_look_around_text
-]
-\(else:)[|look_around&gt;[&gt; Look around]]
-(if: $restaurant_examined_food_counter)[&gt; Examine $item_format[food counter]
-$restaurant_examine_food_counter_text
-]
-\(else-if: $restaurant_looked_around)[$restaurant_examine_food_counter_click_text]
-\(else:)[|examine_food_counter_click&gt;[]]
-(if: $restaurant_examined_cash_register)[&gt; Examine $item_format[cash register]
-$restaurant_examine_cash_register_text
-]
-\(else-if: $restaurant_looked_around)[$restaurant_examine_cash_register_click_text]
-\(else:)[|examine_cash_register_click&gt;[]]
-\(set: $restaurant_west_text to &quot;[[Go to LOBBY-&gt;Lobby]]&quot;)
-\(set: $restaurant_south_text to &quot;(if:(history: where its name contains \&quot;Living Room\&quot;)&#39;s length &gt;= 1)[[[Go to LIVING ROOM-&gt;Living Room]]](else:)[[[Go to SHOWROOM-&gt;Showroom]]]&quot;)
-\($compass: &quot;&quot;, &quot;$restaurant_west_text&quot;, &quot;&quot;, &quot;(if:$restaurant_looked_around)[$restaurant_south_text](else:)|go_south&gt;[]&quot;)
-\(set: $restaurant_look_around_text to &quot;You look around. It&#39;s weirdly empty in here today, not a single bickering couple or &lt;a target=\&quot;_blank\&quot; rel=\&quot;noopener noreferrer\&quot; href=\&quot;https://www.theglobeandmail.com/news/toronto/stylish-but-illegal-monkey-found-roaming-toronto-ikea/article6140276/\&quot;&gt;stylish but illegal monkey&lt;/a&gt; in sight. There&#39;s a $item_format[food counter] but all the menu display screens are dark. You might have to figure out the menu some other way. You also see a $item_format[cash register].\
+</tw-passagedata><tw-passagedata pid="2" name="Restaurant &amp; Cafe" tags="" position="1275,425" size="100,100">{
+(set: $restaurant_look_around_text to &quot;You look around. It&#39;s weirdly empty in here today, not a single bickering couple or &lt;a target=\&quot;_blank\&quot; rel=\&quot;noopener noreferrer\&quot; href=\&quot;https://www.theglobeandmail.com/news/toronto/stylish-but-illegal-monkey-found-roaming-toronto-ikea/article6140276/\&quot;&gt;stylish but illegal monkey&lt;/a&gt; in sight. There&#39;s a $item_format[food counter] but all the menu display screens are dark. You might have to figure out the menu some other way. You also see a $item_format[cash register].\
 &lt;br&gt;
 To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM].&quot;)
-\(set: $restaurant_examine_food_counter_click_text to &quot;|examine_food_counter&gt;[&gt; Examine $item_format[food counter]]&quot;)
-\(set: $restaurant_examine_cash_register_click_text to &quot;|examine_cash_register&gt;[&gt; Examine $item_format[cash register]]&quot;)
-\(set: $restaurant_examine_food_counter_text to &quot;You examine the $item_format[food counter]. Tentatively, you reach out and pluck a single Swedish meatball from the perfectly stacked pile. It reinvigorates your spirits, but it doesn&#39;t get you any closer to escaping.
+(set: $restaurant_examine_food_counter_click_text to &quot;|examine_food_counter&gt;[&gt; Examine $item_format[food counter]]&quot;)
+(set: $restaurant_examine_cash_register_click_text to &quot;|examine_cash_register&gt;[&gt; Examine $item_format[cash register]]&quot;)
+(set: $restaurant_examine_food_counter_text to &quot;You examine the $item_format[food counter]. Tentatively, you reach out and pluck a single Swedish meatball from the perfectly stacked pile. It reinvigorates your spirits, but it doesn&#39;t get you any closer to escaping.
 {
-(link-repeat: \&quot;&gt; Eat another meatball\&quot;)[
+&lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+(link-repeat: \&quot;&gt; Eat another meatball\&quot;)[\
   (set: $restaurant_meatballs_eaten to it + 1)
   (rerun: ?meatballs_eaten_text)\
   (if: $restaurant_meatballs_eaten &gt; 5)[
     (replace: ?meatballs_eaten_text)[You&#39;ve eaten (print: $restaurant_meatballs_eaten) meatballs. (//This is not a puzzle//)]
   ]
-]&lt;br&gt;
-|meatballs_eaten_text&gt;[You&#39;ve eaten (print: $restaurant_meatballs_eaten) meatballs.]
-}&quot;)
-\(set: $restaurant_examine_cash_register_text to &quot;{You examine the $item_format[cash register]. It&#39;s one of those newer ones that needs an alphanumeric password to open.
+]\
 &lt;br&gt;
-(if: $restaurant_cash_register_opened)[
+|meatballs_eaten_text&gt;[You&#39;ve eaten (print: $restaurant_meatballs_eaten) meatballs.]\
+}&quot;)
+(set: $restaurant_examine_cash_register_text to &quot;{You examine the $item_format[cash register]. It&#39;s one of those newer ones that needs an alphanumeric password to open.
+&lt;br&gt;
+(if: $restaurant_cash_register_opened)[\
   $restaurant_cash_register_already_open_text
-]
-(else:)[
+]\
+(else:)[\
   (input: bind _guess, \&quot;X=\&quot;)
   (link-repeat: \&quot;&gt; Enter password\&quot;)[
     (if: (uppercase: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess)) is $restaurant_cash_register_answer)[
@@ -377,25 +365,76 @@ To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM]
   ]
   &lt;br&gt;
   |cash_register_guess_result&gt;[]
-]}&quot;)
-\(set: $restaurant_cash_register_already_open_text to &quot;The cash register is open. You already have the $item_format[showroom key]&quot;)\
-\(set: $restaurant_cash_register_open_correct_text to &quot;Success! The cash register opens and you find an old key. Etched into it is the word SHOWROOM. You take the $item_format[showroom key]&quot;)
-\(set: $restaurant_cash_register_open_incorrect_text to &quot;The $item_format[cash register] screen flashes \&quot;Incorrect Password\&quot;.&quot;)\
-\(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
-$restaurant_look_around_text
-\(set: $restaurant_looked_around to true)
-\(replace: ?go_south)[$restaurant_south_text]
-\(replace: ?examine_food_counter_click)[$restaurant_examine_food_counter_click_text]
-\(replace: ?examine_cash_register_click)[$restaurant_examine_cash_register_click_text]
+]\}&quot;)
+(set: $restaurant_cash_register_already_open_text to &quot;The cash register is open. You already have the $item_format[showroom key]&quot;)\
+(set: $restaurant_cash_register_open_correct_text to &quot;Success! The cash register opens and you find an old key. Etched into it is the word SHOWROOM. You take the $item_format[showroom key]&quot;)
+(set: $restaurant_cash_register_open_incorrect_text to &quot;The $item_format[cash register] screen flashes \&quot;Incorrect Password\&quot;.&quot;)\
+
+### Restaurant &amp; Cafe
+
+(if:visits &gt; 1)[You enter the $location_format[RESTAURANT &amp; CAFE].]
+(else:)[Figuring that some food might help jog your memory (or at least tide you over until you find your way out), you enter the $location_format[RESTAURANT &amp; CAFE].]
+
+&lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+
+(if: $restaurant_looked_around)[\
+  &gt; Look around
+  &lt;br&gt;
+  $restaurant_look_around_text
+  &lt;br&gt;
+]\
+(else:)[\
+  |look_around&gt;[&gt; Look around]
+]\
+&lt;br&gt;
+
+(if: $restaurant_examined_food_counter)[\
+  &gt; Examine $item_format[food counter]
+  &lt;br&gt;
+  $restaurant_examine_food_counter_text
+  &lt;br&gt;
+]\
+(else-if: $restaurant_looked_around)[\
+  $restaurant_examine_food_counter_click_text
+]\
+(else:)[\
+  |examine_food_counter_click&gt;[]
+]\
+&lt;br&gt;
+
+(if: $restaurant_examined_cash_register)[\
+  &gt; Examine $item_format[cash register]
+  $restaurant_examine_cash_register_text
+]\
+(else-if: $restaurant_looked_around)[\
+  $restaurant_examine_cash_register_click_text
+]\
+(else:)[\
+  |examine_cash_register_click&gt;[]
+]\
+
+\(set: $restaurant_west_text to &quot;[[Go to LOBBY-&gt;Lobby]]&quot;)
+\(set: $restaurant_south_text to &quot;(if:(history: where its name contains \&quot;Living Room\&quot;)&#39;s length &gt;= 1)[[[Go to LIVING ROOM-&gt;Living Room]]](else:)[[[Go to SHOW ROOM-&gt;Showroom]]]&quot;)
+\($compass: &quot;&quot;, &quot;$restaurant_west_text&quot;, &quot;&quot;, &quot;(if:$restaurant_looked_around)[$restaurant_south_text](else:)|go_south&gt;[]&quot;)
+
+(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+  &lt;br&gt;
+  $restaurant_look_around_text
+  (set: $restaurant_looked_around to true)
+  (replace: ?go_south)[$restaurant_south_text]
+  (replace: ?examine_food_counter_click)[$restaurant_examine_food_counter_click_text]
+  (replace: ?examine_cash_register_click)[$restaurant_examine_cash_register_click_text]
+  &lt;br&gt;
 ]
-\(click-append:?examine_food_counter)+(t8n:&#39;dissolve&#39;)[
-$restaurant_examine_food_counter_text
-\(set: $restaurant_examined_food_counter to true)
+(click-append:?examine_food_counter)+(t8n:&#39;dissolve&#39;)[
+  $restaurant_examine_food_counter_text
+  (set: $restaurant_examined_food_counter to true)\
 ]
-\(click-append:?examine_cash_register)+(t8n:&#39;dissolve&#39;)[
-$restaurant_examine_cash_register_text
-\(set: $restaurant_examined_cash_register to true)
-]</tw-passagedata><tw-passagedata pid="3" name="Lobby" tags="" position="1125,425" size="100,100">{
+(click-append:?examine_cash_register)+(t8n:&#39;dissolve&#39;)[
+  $restaurant_examine_cash_register_text
+  (set: $restaurant_examined_cash_register to true)\
+]
+}</tw-passagedata><tw-passagedata pid="3" name="Lobby" tags="" position="1125,425" size="100,100">{
 (set: $lobby_look_around_text to &quot;You look around and see that you&#39;re currently in the IKEA $location_format[LOBBY]. A single yellow arrow painted on the floor beckons you forward. Turning towards the arrow&#39;s path, to the $direction_format[EAST], you see the $location_format[RESTAURANT &amp; CAFE].&quot;)
 (set: $lobby_examine_catalog_text to &quot;You examine the IKEA catalog.
 //`[`You should refer to the physical copy of the IKEA catalog`]`//&quot;)
@@ -404,8 +443,12 @@ $restaurant_examine_cash_register_text
 
 ### Lobby
 
-(if:visits &gt; 1)[You enter the $location_format[LOBBY].]\
-(else:)[You wake up and find yourself in a large building. Where are you? Looking up, you see a massive sign with the iconic yellow and blue IKEA logo. The air smells faintly of cinnamon buns, particleboard, and possibility.]
+(if:visits &gt; 1)[
+  You enter the $location_format[LOBBY].
+]
+(else:)[
+  You wake up and find yourself in a large building. Where are you? Looking up, you see a massive sign with the iconic yellow and blue IKEA logo. The air smells faintly of cinnamon buns, particleboard, and possibility.
+]
 
 &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
 
@@ -423,6 +466,7 @@ At your feet, you notice an IKEA shoping bag. Inside there&#39;s an $item_format
   |look_around&gt;[&gt; Look around]
 ]\
 &lt;br&gt;
+
 (if: $lobby_examined_catalog)[\
   &gt; Examine $item_format[catalog]
   &lt;br&gt;
@@ -433,6 +477,7 @@ At your feet, you notice an IKEA shoping bag. Inside there&#39;s an $item_format
   |examine_catalog&gt;[&gt; Examine $item_format[catalog]]
 ]\
 &lt;br&gt;
+
 (if: $lobby_examined_pencil)[\
   &gt; Examine $item_format[pencil]
   &lt;br&gt;
@@ -443,6 +488,7 @@ At your feet, you notice an IKEA shoping bag. Inside there&#39;s an $item_format
   |examine_pencil&gt;[&gt; Examine $item_format[pencil]]
 ]\
 &lt;br&gt;
+
 (if: $lobby_examined_compass)[\
   &gt; Examine $item_format[compass]
   &lt;br&gt;
@@ -458,9 +504,9 @@ At your feet, you notice an IKEA shoping bag. Inside there&#39;s an $item_format
 
 (click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
   &lt;br&gt;
-  $lobby_look_around_text\
-  (set: $lobby_looked_around to true)\
-  (replace: ?go_east)[$lobby_east_text]\
+  $lobby_look_around_text
+  (set: $lobby_looked_around to true)
+  (replace: ?go_east)[$lobby_east_text]
   &lt;br&gt;
 ]
 (click-append:?examine_catalog)+(t8n:&#39;dissolve&#39;)[
@@ -491,19 +537,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace 1]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace 1]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;
@@ -516,19 +562,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace 2]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace 2]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="6" name="Marketplace Restart" tags="" position="100,500" size="100,100">You continue onward but you suddenly start to feel woozy. You black out.
@@ -565,19 +611,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace 3]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace 3]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="9" name="Marketplace 3" tags="" position="275,500" size="100,100">### Marketplace 3
@@ -589,19 +635,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 4]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace 4]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="10" name="Marketplace 4" tags="" position="275,625" size="100,100">### Marketplace 4
@@ -611,19 +657,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace 5]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace 5]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="11" name="Marketplace 5" tags="" position="275,750" size="100,100">### Marketplace 5
@@ -633,19 +679,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 6]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace 6]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="12" name="Marketplace 6" tags="" position="275,875" size="100,100">### Marketplace 6
@@ -657,19 +703,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace 7]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace 7]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="13" name="Marketplace 7" tags="" position="400,875" size="100,100">### Marketplace 7
@@ -678,19 +724,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace 8]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace 8]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="14" name="Marketplace 8" tags="" position="400,750" size="100,100">### Marketplace 8
@@ -702,19 +748,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace 9]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace 9]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="15" name="Marketplace 9" tags="" position="400,625" size="100,100">### Marketplace 9
@@ -724,19 +770,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 10]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace 10]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="16" name="Marketplace 10" tags="" position="400,500" size="100,100">### Marketplace 10
@@ -746,19 +792,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace 11]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace 11]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="17" name="Marketplace 11" tags="" position="400,375" size="100,100">### Marketplace 11
@@ -770,19 +816,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 12]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace 12]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="18" name="Marketplace 12" tags="" position="400,250" size="100,100">### Marketplace 12
@@ -792,19 +838,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace 13]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace 13]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="19" name="Marketplace 13" tags="" position="400,125" size="100,100">### Marketplace 13
@@ -814,19 +860,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 14]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace 14]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="20" name="Marketplace 14" tags="" position="525,125" size="100,100">### Marketplace 14
@@ -838,19 +884,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace 15]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace 15]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="21" name="Marketplace 15" tags="" position="525,250" size="100,100">### Marketplace 15
@@ -860,19 +906,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 16]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace 16]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="22" name="Marketplace 16" tags="" position="525,375" size="100,100">### Marketplace 16
@@ -882,19 +928,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace 17]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace 17]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="23" name="Marketplace 17" tags="" position="525,500" size="100,100">### Marketplace 17
@@ -904,19 +950,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 18]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace 18]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="24" name="Marketplace 18" tags="" position="525,625" size="100,100">### Marketplace 18
@@ -926,19 +972,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace 19]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace 19]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="25" name="Marketplace 19" tags="" position="525,750" size="100,100">### Marketplace 19
@@ -950,19 +996,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 20]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace 20]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="26" name="Marketplace 20" tags="" position="525,875" size="100,100">### Marketplace 20
@@ -974,19 +1020,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace 21]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace 21]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="27" name="Marketplace 21" tags="" position="650,875" size="100,100">### Marketplace 21
@@ -998,19 +1044,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace 22]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace 22]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="28" name="Marketplace 22" tags="" position="650,750" size="100,100">### Marketplace 22
@@ -1020,19 +1066,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace 23]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace 23]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="29" name="Marketplace 23" tags="" position="650,625" size="100,100">### Marketplace 23
@@ -1042,19 +1088,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace 24]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace 24]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="30" name="Marketplace 24" tags="" position="650,500" size="100,100">### Marketplace 24
@@ -1064,19 +1110,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace 25]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace 25]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="31" name="Marketplace 25" tags="" position="650,375" size="100,100">### Marketplace 25
@@ -1088,19 +1134,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace 26]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace 26]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="32" name="Marketplace 26" tags="" position="650,250" size="100,100">### Marketplace 26
@@ -1110,19 +1156,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace 27]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace 27]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="33" name="Marketplace 27" tags="" position="650,125" size="100,100">### Marketplace 27
@@ -1132,19 +1178,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 28]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace 28]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="34" name="Marketplace 28" tags="" position="775,125" size="100,100">### Marketplace 28
@@ -1154,19 +1200,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace 29]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace 29]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="35" name="Marketplace 29" tags="" position="775,250" size="100,100">### Marketplace 29
@@ -1176,19 +1222,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace 30]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace 30]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="36" name="Marketplace 30" tags="" position="775,375" size="100,100">### Marketplace 30
@@ -1198,19 +1244,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace 31]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace 31]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="37" name="Marketplace 31" tags="" position="775,500" size="100,100">### Marketplace 31
@@ -1220,19 +1266,19 @@ Which way should you go?
 &lt;table class=&quot;compass-table&quot;&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go NORTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-        &lt;td&gt;[[&gt; Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go WEST-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td class=&quot;image-cell&quot;&gt;
            &lt;img src=&quot;images/compass_inverted.png&quot; alt=&quot;Compass&quot;&gt;
         &lt;/td&gt;
-        &lt;td&gt;[[&gt; Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
+        &lt;td&gt;[[Go EAST-&gt;Marketplace Restart]]&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[&gt; Go SOUTH-&gt;Escape!]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Escape!]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="38" name="Showroom" tags="" position="1275,575" size="100,100">### Showroom
@@ -1277,7 +1323,7 @@ $living_room_examine_chair_text
 [[&gt; Return to RESTAURANT &amp; CAFE-&gt;Restaurant &amp; Cafe]]
 &lt;br&gt;
 
-\(set: $living_room_north_text to &quot;[[Go to WORKSPACES-&gt;Workspaces]]&quot;)
+\(set: $living_room_north_text to &quot;[[Go to WORK SPACES-&gt;Workspaces]]&quot;)
 \(set: $living_room_east_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
 \(set: $living_room_south_text to &quot;[[Go to STORAGE-&gt;Storage]]&quot;)
 \($compass: &quot;$living_room_north_text&quot;, &quot;&quot;, &quot;$living_room_east_text&quot;, &quot;$living_room_south_text&quot;)
@@ -1567,7 +1613,7 @@ $kitchen_examine_refrigerator_text
 \(else-if: $kitchen_looked_around)[$kitchen_examine_refrigerator_click_text]
 \(else:)[|examine_refrigerator_click&gt;[]]
 
-\(set: $kitchen_west_text to &quot;[[Go to WORKSPACES-&gt;Workspaces]]&quot;)
+\(set: $kitchen_west_text to &quot;[[Go to WORK SPACES-&gt;Workspaces]]&quot;)
 \(set: $kitchen_south_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
 \($compass: &quot;&quot;, &quot;$kitchen_west_text&quot;, &quot;&quot;, &quot;$kitchen_south_text&quot;)
 
@@ -1650,14 +1696,17 @@ $bedroom_examine_dresser_text
 \(else:)[|examine_dresser_click&gt;[]]
 \(if: $bedroom_looked_around)[$bedroom_take_nap_click_text]
 \(else:)[|take_nap_click&gt;[]]
+\(if: $bedroom_looked_around)[$bedroom_light_switch_click_text]
+\(else:)[|light_switch_click&gt;[]]
 
 \(set: $bedroom_north_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
 \(set: $bedroom_west_text to &quot;[[Go to STORAGE-&gt;Storage]]&quot;)
 \($compass: &quot;$bedroom_north_text&quot;, &quot;$bedroom_west_text&quot;, &quot;&quot;, &quot;&quot;)
 
-\(set: $bedroom_look_around_text to &quot;You look around. You see an endless row of plush looking mattresses atop bedframes of all sizes, colors, and heights. Interestingly, you notice there&#39;s only one $item_format[dresser] in the whole area.&quot;)
+\(set: $bedroom_look_around_text to &quot;You look around. You see an endless row of plush looking mattresses atop bedframes of all sizes, colors, and heights. Interestingly, you notice there&#39;s only one $item_format[dresser] in the whole area. You also note a $item_format[light switch] on the wall nearby.&quot;)
 \(set: $bedroom_examine_dresser_click_text to &quot;&lt;br&gt;|examine_dresser&gt;[&gt; Examine $item_format[dresser]]&quot;)
 \(set: $bedroom_take_nap_click_text to &quot;&lt;br&gt;|take_nap&gt;[&gt; Take a nap]&quot;)
+\(set: $bedroom_light_switch_click_text to &quot;&lt;br&gt;|light_switch&gt;[&gt; Flip the $item_format[light switch] (cond: $darkMode, \&quot;on\&quot;, \&quot;off\&quot;)]&quot;)
 \(set: $bedroom_examine_dresser_text to &quot;{It&#39;s odd that there&#39;s only one dresser. You look inside the drawers. Written in dark ink inside is the following:
 &lt;div class=\&quot;dresser-drawer\&quot;&gt;
 \&quot;I&#39;ve hidden a secret IKEA treasure somewhere in the world. You&#39;ll never be able to guess where it is on the map unless you closely re-examine the beginning of the CATALOG for some directions.\&quot;
@@ -1671,6 +1720,7 @@ $bedroom_look_around_text
 \(set: $bedroom_looked_around to true)
 \(replace: ?examine_dresser_click)[$bedroom_examine_dresser_click_text]
 \(replace: ?take_nap_click)[$bedroom_take_nap_click_text]
+\(replace: ?light_switch_click)[$bedroom_light_switch_click_text]
 ]
 \(click-append:?examine_dresser)+(t8n:&#39;dissolve&#39;)[
 $bedroom_examine_dresser_text
@@ -1678,6 +1728,16 @@ $bedroom_examine_dresser_text
 \(click-append:?take_nap)+(t8n:&#39;dissolve&#39;)[
 $bedroom_take_nap_text
 \(set: $bedroom_naps_taken to it + 1)
+]
+(click-rerun: ?light_switch)[
+  (set: $darkMode to not $darkMode)
+  (rerun: ?light_switch)
+  (if: $darkMode)[
+    (change: ?Page, (bg: black) + (text-color: white))
+  ]
+  (else:)[
+    (change: ?Page, (bg: white) + (text-color: black))
+  ]
 ]</tw-passagedata><tw-passagedata pid="46" name="Childrens" tags="" position="1275,725" size="100,100">### Children&#39;s Area
 
 You enter the $location_format[CHILDREN&#39;S AREA].
