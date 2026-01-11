@@ -102,6 +102,13 @@
             cursor: pointer;
         }
 
+        .tour-nav button:disabled {
+            color: lightgrey;
+            border-color: lightgrey;
+            cursor: default;
+            pointer-events: none;
+        }
+
         .tour-nav button:hover,
         .tour-nav button:focus-visible {
             border-color: var(--accent-color);
@@ -171,7 +178,7 @@
             <audio id="audio" controls></audio>
 
             <div class="tour-nav">
-                <button id="prevBtn" aria-label="Previous tour segment">← Previous</button>
+                <button id="prevBtn" aria-label="Previous tour segment" disabled>← Previous</button>
                 <button id="nextBtn" aria-label="Next tour segment">Next →</button>
             </div>
         </div>
@@ -318,16 +325,24 @@
     }
 
     document.getElementById('prevBtn').onclick = () => {
+        document.getElementById('nextBtn').disabled = false
         if (currentIndex > 0) {
             currentIndex--;
             loadSegment(currentIndex);
         }
+        if (currentIndex === 0) {
+            document.getElementById('prevBtn').disabled = true
+        }
     };
 
     document.getElementById('nextBtn').onclick = () => {
+        document.getElementById('prevBtn').disabled = false
         if (currentIndex < tourSegments.length - 1) {
             currentIndex++;
             loadSegment(currentIndex);
+        }
+        if (currentIndex === tourSegments.length - 1) {
+            document.getElementById('nextBtn').disabled = true
         }
     };
 
