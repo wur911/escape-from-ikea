@@ -1619,11 +1619,28 @@ You tug on the door but it doesn&#39;t budge.
 ]
 }</tw-passagedata><tw-passagedata pid="46" name="Storage" tags="" position="1450,875" size="100,100">{
 ($render_bg:)
-(set: $storage_look_around_text to &quot;You look around. There&#39;s a wardrobe that&#39;s definitely bigger on the inside and enough storage cubes to conceal your every mortal possession. There&#39;s a $item_format[big yellow button] on the north wall. &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt; If you listen closely you can hear a really faint ticking sound.&quot;)
-(set: $shortcut_unlock_click_text to &quot;|unlock_shortcut&gt;[&gt; Push the big yellow button]&quot;)
+(set: $storage_look_around_text to &quot;You look around. There&#39;s a wardrobe that&#39;s definitely bigger on the inside and enough storage cubes to conceal your every mortal possession. There&#39;s a $item_format[big yellow button] on the north wall. &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt; If you listen closely you can hear a really faint $item_format[ticking sound].&quot;)
+(set: $shortcut_unlock_click_text to &quot;|unlock_shortcut&gt;[&gt; Push the $item_format[big yellow button]]&quot;)
+(set: $shortcut_investigate_ticking_click_text to &quot;|investigate_ticking&gt;[&gt; Investigate the $item_format[ticking sound]]&quot;)
 (set: $shortcut_unlock_text to &quot;You push the big yellow button and open a $location_format[SHORTCUT] back to the $location_format[LIVING ROOM].&quot;)
 (set: $storage_bomb_defused_text to &quot;You&#39;ve successfully defused the $item_format[bomb] and acquired the $allen_wrench_text.&quot;)
-(set: $storage_found_bomb_text to &quot;Oh no - that ticking sound you heard is actually a $item_format[bomb]! Find your nearest IKEA co-worker to learn how you can defuse this $item_format[bomb].&quot;)
+(set: $storage_found_bomb_text to &quot;Oh no - that ticking sound you heard is actually a $item_format[bomb]! Find your nearest IKEA co-worker to learn how you can defuse this $item_format[bomb].
+
+  What&#39;s the key to defusing the bomb?
+  {
+  (input: bind _guess, \&quot;X=\&quot;)
+  (link-repeat: \&quot;&gt; Try\&quot;)[
+    (if: $storage_bomb_answers contains (uppercase: (str-replaced: \&quot; \&quot;, \&quot;\&quot;, _guess)))[
+      (replace: ?bomb_guess_result)[$storage_bomb_correct_text]
+      (set: $storage_bomb_defused to true)
+      (set: $inventory to it + (a: $allen_wrench_text))
+    ]
+    (else:)[
+      (replace: ?bomb_guess_result)[$storage_bomb_incorrect_text]
+    ]
+  ]
+  }
+  |bomb_guess_result&gt;[]&quot;)
 (set: $storage_bomb_correct_text to &quot;You find a keypad attached to the bomb and enter in the pin. Hooray - you&#39;ve successfully defused the bomb. The bomb, now fully disarmed, suddenly opens up. You peer inside and find the $allen_wrench_text.&quot;)
 (set: $storage_bomb_incorrect_text to &quot;That doesn&#39;t seem right. Luckily nothing bad seemed to happen, but time is still ticking down...&quot;)
 }\
@@ -1644,7 +1661,7 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
 ]\
 (else-if: $storage_shortcut_unlocked)[\
   &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;\
-  &gt; Push the big yellow button
+  &gt; Push the $item_format[big yellow button]
   $shortcut_unlock_text
 ]\
 (else-if: $storage_looked_around)[\
@@ -1652,26 +1669,17 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
   $shortcut_unlock_click_text\
 ]\
 (if: $storage_bomb_defused)[\
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;\
   $storage_bomb_defused_text\
 ]\
-(else-if: $living_room_chair_assembled)[\
+(else-if: $storage_investigated_ticking)[\
+  &lt;br&gt;\
+  &gt; Investigate the $item_format[ticking sound]
   $storage_found_bomb_text
-  
-  What&#39;s the key to defusing the bomb?
-  {
-  (input: bind _guess, &quot;X=&quot;)
-  (link-repeat: &quot;&gt; Try&quot;)[
-    (if: $storage_bomb_answers contains (uppercase: (str-replaced: &quot; &quot;, &quot;&quot;, _guess)))[
-      (replace: ?bomb_guess_result)[$storage_bomb_correct_text]
-      (set: $storage_bomb_defused to true)
-      (set: $inventory to it + (a: $allen_wrench_text))
-    ]
-    (else:)[
-      (replace: ?bomb_guess_result)[$storage_bomb_incorrect_text]
-    ]
-  ]
-  }
-  |bomb_guess_result&gt;[]
+]\
+(else-if: $storage_looked_around)[\
+  &lt;br&gt;\
+  $shortcut_investigate_ticking_click_text\
 ]\
 {
 
@@ -1685,13 +1693,20 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
   &lt;br&gt;
   $storage_look_around_text
   &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
-  $shortcut_unlock_click_text\
+  $shortcut_unlock_click_text
+  &lt;br&gt;
+  $shortcut_investigate_ticking_click_text
   (set: $storage_looked_around to true)\
 ]
 (click-append:?unlock_shortcut)+(t8n:&#39;dissolve&#39;)[
   $shortcut_unlock_text\
   (set: $storage_shortcut_unlocked to true)\
   (replace: ?compass-shortcut)[[[Go to SHORTCUT-&gt;Shortcut]]]\
+  &lt;br&gt;\
+]
+(click-append:?investigate_ticking)+(t8n:&#39;dissolve&#39;)[
+  $storage_found_bomb_text\
+  (set: $storage_investigated_ticking to true)\
 ]
 }</tw-passagedata><tw-passagedata pid="47" name="Welcome" tags="" position="1125,275" size="100,100">### Welcome to IKEA
 {
@@ -1796,6 +1811,7 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
 
 &lt;!-- Storage variables --&gt;
 (set: $storage_looked_around to false)
+(set: $storage_investigated_ticking to false)
 (set: $storage_bomb_defused to false)
 (set: $storage_bomb_answers to (a: &quot;123&quot;, &quot;456&quot;))
 (set: $storage_shortcut_unlocked to false)
