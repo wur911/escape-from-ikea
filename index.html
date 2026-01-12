@@ -532,17 +532,14 @@ $living_room_look_around_text
 $living_room_examine_plaque_text]
 \(else-if: $living_room_looked_around)[$living_room_examine_plaque_click_text]
 \(else:)[|examine_plaque_click&gt;[]]
-\(if: $storage_bomb_defused)[&lt;br&gt;&gt; Examine $item_format[chair]
-$living_room_chair_already_assembled_bomb_defused_text
-]
-\(else-if: $living_room_chair_assembled)[&lt;br&gt;&gt; Examine $item_format[chair]
+\(if: $living_room_chair_assembled)[&lt;br&gt;&gt; Examine $item_format[chair]
 $living_room_chair_already_assembled_text
 ]
-\(else-if: $living_room_examined_chair)[&lt;br&gt;&gt; Examine $item_format[chair]
-$living_room_examine_chair_text
+\(else-if: $living_room_examined_extra_pieces)[&lt;br&gt;&gt; Examine $item_format[extra pieces]
+$living_room_examine_extra_pieces_text
 ]
-\(else-if: $living_room_looked_around)[$living_room_examine_chair_click_text]
-\(else:)[|examine_chair_click&gt;[]]
+\(else-if: $living_room_looked_around)[$living_room_examine_extra_pieces_click_text]
+\(else:)[|examine_extra_pieces_click&gt;[]]
 [[&gt; Return to RESTAURANT &amp; CAFE-&gt;Restaurant &amp; Cafe]]
 &lt;br&gt;
 
@@ -551,9 +548,9 @@ $living_room_examine_chair_text
 \(set: $living_room_south_text to &quot;(if: $storage_shortcut_unlocked)[[[Go to STORAGE-&gt;Storage]]]&quot;)
 \($compass: &quot;$living_room_north_text&quot;, &quot;&quot;, &quot;$living_room_east_text&quot;, &quot;$living_room_south_text&quot;)
 
-\(set: $living_room_look_around_text to &quot;You look around. To your left, you see lamps of every shape—floor lamps, desk lamps, even a lamp shaped like a bagel—casting a warm, conspiratorial glow. They illuminate a shiny $item_format[plaque] on the wall. To your right is an IKEA $item_format[chair], broken in pieces.&quot;)
+\(set: $living_room_look_around_text to &quot;You look around. To your left, you see lamps of every shape—floor lamps, desk lamps, even a lamp shaped like a bagel—casting a warm, conspiratorial glow. They illuminate a shiny $item_format[plaque] on the wall. To your right is a a bunch of spare $item_format[extra pieces] of some piece of furniture.&quot;)
 \(set: $living_room_examine_plaque_click_text to &quot;&lt;br&gt;|examine_plaque&gt;[&gt; Examine $item_format[plaque]]&quot;)
-\(set: $living_room_examine_chair_click_text to &quot;&lt;br&gt;|examine_chair&gt;[&gt; Examine $item_format[chair]]&quot;)
+\(set: $living_room_examine_extra_pieces_click_text to &quot;&lt;br&gt;|examine_extra_pieces&gt;[&gt; Examine $item_format[extra pieces]]&quot;)
 \(set: $living_room_examine_plaque_text to &quot;You inspect the $item_format[plaque]. It reads: &lt;div class=\&quot;plaque\&quot;&gt;&lt;blockquote&gt;\&quot;Before I depart, I leave you this catalog. Study every &lt;u&gt;page&lt;/u&gt;, question every &lt;u&gt;item&lt;/u&gt;, and mind every &lt;u&gt;word&lt;/u&gt;; the future of IKEA lives on in your careful hands.\&quot;&lt;/blockquote&gt;&lt;table class=\&quot;plaque_table\&quot;&gt;
 &lt;tr&gt;&lt;td class=\&quot;plaque_table\&quot;&gt;6, 4, 3&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td class=\&quot;plaque_table\&quot;&gt;6, 1, 16&lt;/td&gt;&lt;/tr&gt;
@@ -563,7 +560,7 @@ $living_room_examine_chair_text
 &lt;tr&gt;&lt;td class=\&quot;plaque_table\&quot;&gt;9, 2, 7&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td class=\&quot;plaque_table\&quot;&gt;6, 3, 10&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;&lt;div class=\&quot;author\&quot;&gt;    - Böök Sifer (Chief IKEA designer)&lt;/div&gt;&lt;/div&gt;&quot;)
-\(set: $living_room_examine_chair_text to &quot;{You inspect some pieces that look like they came from an IKEA $item_format[chair]. There seem to be some parts missing, and you can&#39;t find the guide with the cheery little instruction guy for how to put the parts together. You might want to use extra pieces obtained from elsewhere to figure out what to do here...
+\(set: $living_room_examine_extra_pieces_text to &quot;{You examine the pieces. It seems like they might go together, but you can&#39;t figure out what they make. And you can&#39;t find the guide with the cheery little instruction guy for how to put the parts together. You might need to look elsewhere for how to put these pieces together...
 &lt;br&gt;
 What do you want to do?
 (input: bind _guess, \&quot;X=\&quot;)
@@ -579,23 +576,22 @@ What do you want to do?
 &lt;br&gt;
 |chair_guess_result&gt;[]
 }&quot;)
-\(set: $living_room_chair_already_assembled_bomb_defused_text to &quot;You&#39;ve already assembled the chair with the power of $answer_format[MANUAL ASSEMBLY].&quot;)
-\(set: $living_room_chair_already_assembled_text to &quot;You&#39;ve already assembled the chair with the power of $answer_format[MANUAL ASSEMBLY]. You should check out the ticking sounds in the $location_format[WARDROBE &amp; STORAGE] area.&quot;)
-\(set: $living_room_chair_correct_text to &quot;You use the power of $answer_format[MANUAL ASSEMBLY] to construct the chair. As you put the last piece of the chair in place, you hear a //*kathunk*// sound followed by some loud ticking sounds. It seems to originate from the $location_format[WARDROBE &amp; STORAGE] area.&quot;)
+\(set: $living_room_chair_already_assembled_text to &quot;You&#39;ve already assembled the $relic_format[FÄLLSTOL] with the power of $answer_format[MANUAL ASSEMBLY]. Now you just need to find your way out of IKEA...&quot;)
+\(set: $living_room_chair_correct_text to &quot;You use the power of $answer_format[MANUAL ASSEMBLY] to construct a $relic_format[FÄLLSTOL]. As you put the last piece of the chair in place, you recall that this was the reason you came to IKEA today. You now have the perfect chair for your apartment. (cond: $marketplace_maze_solved, \&quot;Now you just need to head back to the exit and leave.\&quot;, \&quot;Now you just need to find your way out of here...\&quot;)&quot;)
 \(set: $living_room_chair_incorrect_text to &quot;Nothing seems to happen.&quot;)
 \(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
 $living_room_look_around_text
 \(set: $living_room_looked_around to true)
 \(replace: ?examine_plaque_click)[$living_room_examine_plaque_click_text]
-\(replace: ?examine_chair_click)[$living_room_examine_chair_click_text]
+\(replace: ?examine_extra_pieces_click)[$living_room_examine_extra_pieces_click_text]
 ]
 \(click-append:?examine_plaque)+(t8n:&#39;dissolve&#39;)[
 $living_room_examine_plaque_text
 \(set: $living_room_examined_plaque to true)
 \]
-\(click-append:?examine_chair)+(t8n:&#39;dissolve&#39;)[
-$living_room_examine_chair_text
-\(set: $living_room_examined_chair to true)
+\(click-append:?examine_extra_pieces)+(t8n:&#39;dissolve&#39;)[
+$living_room_examine_extra_pieces_text
+\(set: $living_room_examined_extra_pieces to true)
 ]</tw-passagedata><tw-passagedata pid="8" name="Lobby" tags="" position="1125,425" size="100,100">{
 ($render_bg:)
 (set: $lobby_look_around_text to &quot;You look around and see that you&#39;re currently in the IKEA $location_format[LOBBY]. A single yellow arrow painted on the floor beckons you forward. Turning towards the arrow&#39;s path, to the $direction_format[EAST], you see the $location_format[RESTAURANT &amp; CAFE].&quot;)
@@ -1761,7 +1757,7 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
 &lt;!-- Living Room variables --&gt;
 (set: $living_room_looked_around to false)
 (set: $living_room_examined_plaque to false)
-(set: $living_room_examined_chair to false)
+(set: $living_room_examined_extra_pieces to false)
 (set: $living_room_chair_answer to &quot;MANUALASSEMBLY&quot;)
 (set: $living_room_chair_assembled to false)
 
@@ -1808,6 +1804,9 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
 (set: $childrens_looked_around to false)
 (set: $childrens_search_clicked to false)
 (set: $childrens_search_answer to &quot;BUNKBED&quot;)
+
+&lt;!-- Marketplace variables --&gt;
+(set: $marketplace_maze_solved to false)
 
 &lt;!-- Visit stats variables --&gt;
 (set: $valid_room_stats_array to (a: &quot;Lobby&quot;, &quot;Restaurant &amp; Cafe&quot;, &quot;Living Room&quot;, &quot;Workspaces&quot;, &quot;Kitchen&quot;, &quot;Dining&quot;, &quot;Bathroom&quot;, &quot;Bedroom&quot;, &quot;Storage&quot;, &quot;Childrens&quot;))
