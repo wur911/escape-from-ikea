@@ -198,7 +198,7 @@ td.plaque_table {
     inset 0 0 14px #00000055,
     inset 0 0 3px #00000088,
     0 2px 6px #00000044;
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Bathroom" tags="" position="1775,575" size="100,100">($render_bg:)\
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Bathroom" tags="" position="1775,650" size="100,100">($render_bg:)\
 ### Bathroom
 
 You enter the $location_format[BATHROOM] area.
@@ -240,7 +240,7 @@ $bathroom_look_around_text
 \(click-append:?examine_help_desk)+(t8n:&#39;dissolve&#39;)[
 $bathroom_examine_help_desk_text
 \(set: $bathroom_examined_help_desk to true)
-]</tw-passagedata><tw-passagedata pid="2" name="Bedroom" tags="" position="1650,725" size="200,100">($render_bg:)\
+]</tw-passagedata><tw-passagedata pid="2" name="Bedroom" tags="" position="1650,800" size="200,100">($render_bg:)\
 ### Bedroom
 
 You enter the $location_format[BEDROOM] area.
@@ -315,7 +315,7 @@ $bedroom_take_nap_text
   (set: $relic_format to (text-color:#c5a230))
   (rerun: ?Passage)
   ]
-]</tw-passagedata><tw-passagedata pid="3" name="Childrens" tags="" position="1275,725" size="100,100">($render_bg:)\
+]</tw-passagedata><tw-passagedata pid="3" name="Childrens" tags="" position="1300,800" size="100,100">($render_bg:)\
 ### Children&#39;s Area
 
 You enter the $location_format[CHILDREN&#39;S AREA].
@@ -382,7 +382,7 @@ You enter the $location_format[CHILDREN&#39;S AREA].
   $childrens_search_text\
   (set: $childrens_search_clicked to true)\
 ]
-}</tw-passagedata><tw-passagedata pid="4" name="Dining" tags="" position="1625,575" size="100,100">($render_bg:)\
+}</tw-passagedata><tw-passagedata pid="4" name="Dining" tags="" position="1625,650" size="100,100">($render_bg:)\
 ### Dining
 
 You enter the $location_format[DINING] area.
@@ -451,33 +451,21 @@ $dining_examine_bar_cart_text
 \(click-append:?examine_safe)+(t8n:&#39;dissolve&#39;)[
 $dining_examine_safe_text
 \(set: $dining_examined_safe to true)
-\]</tw-passagedata><tw-passagedata pid="5" name="Escape!" tags="" position="875,825" size="100,100">($render_bg:)\
+\]</tw-passagedata><tw-passagedata pid="5" name="Escape!" tags="" position="925,950" size="100,100">{
+($render_bg:)
 ### Escape
 
-At long last, you round one final corner and a beam of light shines down from the heavens. In a flash of revelation, you see the $item_format[PERFECT SIDE TABLE] for your apartment and suddenly remember that was the reason you came to IKEA today. Weary but triumphant, you clutch your hard-earned treasure and ring it up through the self checkout. Stepping through the sliding glass doors out into the cool night, the twilight air is sweet and quiet. For a moment, the rooms you left behind seem almost like a dream. You feel a sudden sense of wonder. 
- 
-Congrats on escaping IKEA!
+At long last, you&#39;ve found the exit and have your perfect $relic_format[FÄLLSTOL] for your apartment. Weary but triumphant, you clutch your hard-earned treasure and ring it up through the self checkout. Stepping through the sliding glass doors out into the cool night, the twilight air is sweet and quiet. For a moment, the rooms you left behind seem almost like a dream. You feel a sudden sense of wonder. 
 
-&#39;&#39;Your Stats&#39;&#39;
-{
-&lt;ul&gt;
-&lt;li&gt;You ate $restaurant_meatballs_eaten meatballs&lt;/li&gt;
-&lt;li&gt;You took $bedroom_naps_taken naps&lt;/li&gt;
-(if: $workspaces_played_minesweeper)[
-  &lt;li&gt;You played 1 game of minesweeper on the computer&lt;/li&gt;
+(t8n:&#39;fade-right&#39;)+(t8n-delay:12s)[
+&lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;\
+###Congrats on escaping IKEA!
 ]
-(set: _max_visit_room to &quot;&quot;)
-(set: _max_visit_room_count to 0)
-(for: each _room, ...$valid_room_stats_array)[
-  (if: (count: (history:), _room) &gt; _max_visit_room_count)[
-    (set: _max_visit_room to _room)
-    (set: _max_visit_room_count to (count: (history:), _room))
-  ]
-  &lt;!-- &lt;li&gt;You visited _room (count: (history:), _room) times&lt;/li&gt; --&gt;
+
+(t8n:&#39;fade-right&#39;)+(t8n-delay:14s)[
+[[&gt; View Stats &amp; Credits-&gt;Stats]]
 ]
-&lt;li&gt;Your most visited room is _max_visit_room, which you visited _max_visit_room_count times&lt;/li&gt;
-}
-&lt;/ul&gt;</tw-passagedata><tw-passagedata pid="6" name="Kitchen" tags="" position="1625,425" size="100,100">($render_bg:)\
+}</tw-passagedata><tw-passagedata pid="6" name="Kitchen" tags="" position="1625,500" size="100,100">($render_bg:)\
 ### Kitchen
 
 You enter the $location_format[KITCHEN] area.
@@ -519,7 +507,7 @@ $kitchen_look_around_text
 \(click-append:?examine_refrigerator)+(t8n:&#39;dissolve&#39;)[
 $kitchen_examine_refrigerator_text
 \(set: $kitchen_examined_refrigerator to true)
-]</tw-passagedata><tw-passagedata pid="7" name="Living Room" tags="" position="1450,575" size="100,100">($render_bg:)\
+]</tw-passagedata><tw-passagedata pid="7" name="Living Room" tags="" position="1450,650" size="100,100">($render_bg:)\
 ### Living Room
 
 You enter the $location_format[LIVING ROOM] area.
@@ -540,7 +528,8 @@ $living_room_examine_extra_pieces_text
 ]
 \(else-if: $living_room_looked_around)[$living_room_examine_extra_pieces_click_text]
 \(else:)[|examine_extra_pieces_click&gt;[]]
-[[&gt; Return to RESTAURANT &amp; CAFE-&gt;Restaurant &amp; Cafe]]
+[[&gt; Return to RESTAURANT &amp; CAFE-&gt;Restaurant &amp; Cafe]]\
+(if: $marketplace_maze_solved)[&lt;br&gt;[[&gt; Take elevator to CHECKOUT-&gt;Checkout]]]\
 &lt;br&gt;
 
 \(set: $living_room_north_text to &quot;[[Go to WORK SPACES-&gt;Workspaces]]&quot;)
@@ -577,7 +566,7 @@ What do you want to do?
 |chair_guess_result&gt;[]
 }&quot;)
 \(set: $living_room_chair_already_assembled_text to &quot;You&#39;ve already assembled the $relic_format[FÄLLSTOL] with the power of $answer_format[MANUAL ASSEMBLY]. Now you just need to find your way out of IKEA...&quot;)
-\(set: $living_room_chair_correct_text to &quot;You use the power of $answer_format[MANUAL ASSEMBLY] to construct a $relic_format[FÄLLSTOL]. As you put the last piece of the chair in place, you recall that this was the reason you came to IKEA today. You now have the perfect chair for your apartment. (cond: $marketplace_maze_solved, \&quot;Now you just need to head back to the exit and leave.\&quot;, \&quot;Now you just need to find your way out of here...\&quot;)&quot;)
+\(set: $living_room_chair_correct_text to &quot;You use the power of $answer_format[MANUAL ASSEMBLY] to construct a $relic_format[FÄLLSTOL]. As you put the last piece of the chair in place, you recall that this was the reason you came to IKEA today. You now have the perfect chair for your apartment. (cond: $marketplace_maze_solved, \&quot;Now you just need to head back to the checkout and leave.\&quot;, \&quot;Now you just need to find your way out of here...\&quot;)&quot;)
 \(set: $living_room_chair_incorrect_text to &quot;Nothing seems to happen.&quot;)
 \(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
 $living_room_look_around_text
@@ -592,7 +581,7 @@ $living_room_examine_plaque_text
 \(click-append:?examine_extra_pieces)+(t8n:&#39;dissolve&#39;)[
 $living_room_examine_extra_pieces_text
 \(set: $living_room_examined_extra_pieces to true)
-]</tw-passagedata><tw-passagedata pid="8" name="Lobby" tags="" position="1125,425" size="100,100">{
+]</tw-passagedata><tw-passagedata pid="8" name="Lobby" tags="" position="1075,275" size="100,100">{
 ($render_bg:)
 (set: $lobby_look_around_text to &quot;You look around and see that you&#39;re currently in the IKEA $location_format[LOBBY]. A single yellow arrow painted on the floor beckons you forward. Turning towards the arrow&#39;s path, to the $direction_format[EAST], you see the $location_format[RESTAURANT &amp; CAFE].&quot;)
 (set: $lobby_examine_catalog_text to &quot;You examine the IKEA catalog.
@@ -1274,7 +1263,7 @@ Which way should you go?
     &lt;/tr&gt;
     &lt;tr&gt;
         &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;[[Go SOUTH-&gt;Escape!]]&lt;/td&gt;
+        &lt;td&gt;[[Go SOUTH-&gt;Checkout]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
 &lt;/table&gt;</tw-passagedata><tw-passagedata pid="34" name="Marketplace 4" tags="" position="275,625" size="100,100">($render_bg:)\
@@ -1448,7 +1437,7 @@ Which way should you go?
         &lt;td&gt;[[Go SOUTH-&gt;Marketplace Restart]]&lt;/td&gt;
         &lt;td&gt;&lt;/td&gt;
     &lt;/tr&gt;
-&lt;/table&gt;</tw-passagedata><tw-passagedata pid="42" name="Restaurant &amp; Cafe" tags="" position="1275,425" size="100,100">{
+&lt;/table&gt;</tw-passagedata><tw-passagedata pid="42" name="Restaurant &amp; Cafe" tags="" position="1225,275" size="100,100">{
 ($render_bg:)
 (set: $restaurant_look_around_text to &quot;You look around. It&#39;s weirdly empty in here today, not a single bickering couple or &lt;a target=\&quot;_blank\&quot; rel=\&quot;noopener noreferrer\&quot; href=\&quot;https://www.theglobeandmail.com/news/toronto/stylish-but-illegal-monkey-found-roaming-toronto-ikea/article6140276/\&quot;&gt;stylish but illegal monkey&lt;/a&gt; in sight. There&#39;s a $item_format[food counter] but all the menu display screens are dark. You might have to figure out the menu some other way. You also see a $item_format[cash register].\
 &lt;br&gt;
@@ -1555,7 +1544,7 @@ To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM]
   $restaurant_examine_cash_register_text
   (set: $restaurant_examined_cash_register to true)\
 ]
-}</tw-passagedata><tw-passagedata pid="43" name="Shortcut" tags="" position="1450,725" size="100,100">{
+}</tw-passagedata><tw-passagedata pid="43" name="Shortcut" tags="" position="1450,800" size="100,100">{
 ($render_bg:)
 
 ### Shortcut
@@ -1570,7 +1559,7 @@ You enter the $location_format[SHORTCUT]. It&#39;s a narrow hallway connecting f
 
 [[&gt; Continue NORTH to LIVING ROOM-&gt;Living Room]]
 
-}</tw-passagedata><tw-passagedata pid="44" name="Showroom" tags="" position="1275,575" size="100,100">($render_bg:)\
+}</tw-passagedata><tw-passagedata pid="44" name="Showroom" tags="" position="1225,425" size="100,100">($render_bg:)\
 ### Showroom
 
 You go $direction_format[SOUTH] to the $location_format[SHOWROOM]. There&#39;s a door in your way.
@@ -1587,7 +1576,7 @@ You go $direction_format[SOUTH] to the $location_format[SHOWROOM]. There&#39;s a
 You use the $item_format[showroom key] on the door. The key fits perfectly and you slowly twist the doorknob. The door opens...
 &lt;br&gt;
 [[&gt; Enter SHOWROOM-&gt;Living Room]]
-}]</tw-passagedata><tw-passagedata pid="45" name="Stairs" tags="" position="1125,725" size="100,100">($render_bg:)\
+}]</tw-passagedata><tw-passagedata pid="45" name="Stairs" tags="" position="1125,800" size="100,100">($render_bg:)\
 ### Stairs to MARKETPLACE
 
 You go $direction_format[WEST] to the $location_format[STAIRS].
@@ -1617,7 +1606,7 @@ You tug on the door but it doesn&#39;t budge.
 &lt;br&gt;
 [[&gt; Back-&gt;Childrens]]
 ]
-}</tw-passagedata><tw-passagedata pid="46" name="Storage" tags="" position="1450,875" size="100,100">{
+}</tw-passagedata><tw-passagedata pid="46" name="Storage" tags="" position="1450,950" size="100,100">{
 ($render_bg:)
 (set: $storage_look_around_text to &quot;You look around. There&#39;s a wardrobe that&#39;s definitely bigger on the inside and enough storage cubes to conceal your every mortal possession. There&#39;s a $item_format[big yellow button] on the north wall. &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt; If you listen closely you can hear a really faint $item_format[ticking sound].&quot;)
 (set: $shortcut_unlock_click_text to &quot;|unlock_shortcut&gt;[&gt; Push the $item_format[big yellow button]]&quot;)
@@ -1708,7 +1697,7 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
   $storage_found_bomb_text\
   (set: $storage_investigated_ticking to true)\
 ]
-}</tw-passagedata><tw-passagedata pid="47" name="Welcome" tags="" position="1125,275" size="100,100">### Welcome to IKEA
+}</tw-passagedata><tw-passagedata pid="47" name="Welcome" tags="" position="1075,125" size="100,100">### Welcome to IKEA
 {
 &lt;!-- Background and font colors --&gt;
 (set: $darkMode to true)
@@ -1867,7 +1856,9 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
 [[&gt; Skip to Childrens-&gt;Childrens]]
 [[&gt; Skip to Stairs-&gt;Stairs]]
 [[&gt; Skip to Marketplace-&gt;Marketplace Start]]
-[[&gt; Skip to Escape!-&gt;Escape!]]</tw-passagedata><tw-passagedata pid="48" name="Workspaces" tags="" position="1450,425" size="100,100">($render_bg:)\
+[[&gt; Skip to Checkout-&gt;Checkout]]
+[[&gt; Skip to Escape!-&gt;Escape!]]
+[[&gt; Skip to Stats-&gt;Stats]]</tw-passagedata><tw-passagedata pid="48" name="Workspaces" tags="" position="1450,500" size="100,100">($render_bg:)\
 ### Workspaces
 
 You enter the $location_format[WORKSPACES] area.
@@ -1973,7 +1964,72 @@ $workspaces_played_minesweeper_text
 \(click-append:?check_recycling)+(t8n:&#39;dissolve&#39;)[
 $workspaces_checked_recycling_text
 \(set: $workspaces_checked_recycling to true)
-\]</tw-passagedata></tw-storydata>
+\]</tw-passagedata><tw-passagedata pid="49" name="Checkout" tags="" position="925,775" size="100,100">{
+($render_bg:)
+(cond: $living_room_chair_assembled, &quot;### Checkout&quot;, &quot;### Checkout?&quot;)
+
+(set: $marketplace_maze_solved to true)
+
+You round one final corner and a beam of light shines down from the heavens. It&#39;s the checkout.
+
+(if: $living_room_chair_assembled)[
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+  You have your $relic_format[FÄLLSTOL] in tow.
+
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+  [[Checkout and escape!-&gt;Escape!]]
+]
+(else:)[
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+  But you&#39;re still missing something...
+  
+  In a flash, you remember that you have a specific piece of furniture you came here to get. You&#39;ll have to head back to the Showroom to get it.
+  
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;\
+  Luckily, it seems like there&#39;s an $item_format[elevator] from here to the $location_format[LIVING ROOM] area.
+  
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;\
+  [[&gt; Take elevator to LIVING ROOM-&gt;Living Room]]
+]
+}</tw-passagedata><tw-passagedata pid="50" name="Stats" tags="" position="925,1125" size="100,100">{
+($render_bg:)
+### Stats
+
+&#39;&#39;Your Stats&#39;&#39;
+&lt;ul&gt;
+&lt;li&gt;You ate $restaurant_meatballs_eaten meatballs&lt;/li&gt;
+&lt;li&gt;You took $bedroom_naps_taken naps&lt;/li&gt;
+(if: $workspaces_played_minesweeper)[
+  &lt;li&gt;You played 1 game of minesweeper on the computer&lt;/li&gt;
+]
+(set: _max_visit_room to &quot;&quot;)
+(set: _max_visit_room_count to 0)
+(for: each _room, ...$valid_room_stats_array)[
+  (if: (count: (history:), _room) &gt; _max_visit_room_count)[
+    (set: _max_visit_room to _room)
+    (set: _max_visit_room_count to (count: (history:), _room))
+  ]
+  &lt;!-- &lt;li&gt;You visited _room (count: (history:), _room) times&lt;/li&gt; --&gt;
+]
+&lt;li&gt;Your most visited room is _max_visit_room, which you visited _max_visit_room_count times&lt;/li&gt;
+&lt;/ul&gt;
+
+### Credits
+&lt;ul&gt;
+&lt;li&gt;&#39;&#39;Editors In Chief&#39;&#39;: Amy Liu, Raymond Wu&lt;/li&gt;
+&lt;li&gt;&#39;&#39;Puzzle Authors&#39;&#39;: Amy Liu, Raymond Wu&lt;/li&gt;
+&lt;li&gt;&#39;&#39;Story&#39;&#39;: Amy Liu, Raymond Wu&lt;/li&gt;
+&lt;li&gt;&#39;&#39;Art and Design&#39;&#39;: Amy Liu, Raymond Wu&lt;/li&gt;
+&lt;li&gt;&#39;&#39;Factchecking&#39;&#39;: Amy Liu, Raymond Wu&lt;/li&gt;
+&lt;li&gt;&#39;&#39;Tech&#39;&#39;: Amy Liu, Raymond Wu&lt;/li&gt;
+&lt;li&gt;&#39;&#39;Logistics&#39;&#39;: Amy Liu, Raymond Wu&lt;/li&gt;
+&lt;li&gt;&#39;&#39;Testsolving&#39;&#39;: Amy Liu, Raymond Wu&lt;/li&gt;
+&lt;li&gt;&#39;&#39;Logistics&#39;&#39;: Amy Liu, Raymond Wu&lt;/li&gt;
+&lt;li&gt;&#39;&#39;Catering&#39;&#39;: Amy Liu, Raymond Wu, and IKEA&lt;/li&gt;
+&lt;/ul&gt;
+
+Not affiliated with IKEA in any way.
+}</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
  * https://github.com/paulmillr/es6-shim
