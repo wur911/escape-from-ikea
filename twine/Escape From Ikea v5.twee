@@ -394,13 +394,13 @@ $living_room_examine_chair_text
 \(set: $living_room_examine_plaque_click_text to "<br>|examine_plaque>[> Examine $item_format[plaque]]")
 \(set: $living_room_examine_chair_click_text to "<br>|examine_chair>[> Examine $item_format[chair]]")
 \(set: $living_room_examine_plaque_text to "You inspect the $item_format[plaque]. It reads: <div class=\"plaque\"><blockquote>\"Before I depart, I leave you this catalog. Study every <u>page</u>, question every <u>item</u>, and mind every <u>word</u>; the future of IKEA lives on in your careful hands.\"</blockquote><table class=\"plaque_table\">
-<tr><td class=\"plaque_table\">5, 4, 3</td></tr>
-<tr><td class=\"plaque_table\">5, 1, 16</td></tr>
-<tr><td class=\"plaque_table\">7, 1, 6</td></tr>
-<tr><td class=\"plaque_table\">3, 2, 17</td></tr>
-<tr><td class=\"plaque_table\">4, 2, 7</td></tr>
-<tr><td class=\"plaque_table\">8, 2, 7</td></tr>
-<tr><td class=\"plaque_table\">5, 3, 10</td></tr>
+<tr><td class=\"plaque_table\">6, 4, 3</td></tr>
+<tr><td class=\"plaque_table\">6, 1, 16</td></tr>
+<tr><td class=\"plaque_table\">8, 1, 6</td></tr>
+<tr><td class=\"plaque_table\">4, 2, 17</td></tr>
+<tr><td class=\"plaque_table\">5, 2, 7</td></tr>
+<tr><td class=\"plaque_table\">9, 2, 7</td></tr>
+<tr><td class=\"plaque_table\">6, 3, 10</td></tr>
 </table><div class=\"author\">    - Böök Sifer (Chief IKEA designer)</div></div>")
 \(set: $living_room_examine_chair_text to "{You inspect some pieces that look like they came from an IKEA $item_format[chair]. There seem to be some parts missing, and you can't find the guide with the cheery little instruction guy for how to put the parts together. You might want to use extra pieces obtained from elsewhere to figure out what to do here...
 <br>
