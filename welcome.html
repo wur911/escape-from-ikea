@@ -98,18 +98,18 @@
             text-decoration: none;
             transition: all 0.25s ease;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            pointer-events: none;
-            opacity: 0.4;
-            cursor: not-allowed;
+            /* pointer-events: none; */
+            /* opacity: 0.4; */
+            /* cursor: not-allowed; */
         }
 
-        .next-button.enabled {
+        /* .next-button.enabled {
             pointer-events: auto;
             opacity: 1;
             cursor: pointer;
-        }
+        } */
 
-        .next-button.enabled:hover {
+        .next-button:hover {
             background-color: #f5cf00;
             transform: translateY(-2px);
             box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
@@ -128,7 +128,17 @@
     <br>
 
     <div class="video-wrapper">
-        <div id="player"></div>
+        <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/yreb57rfnKE?si=PnSw5W0z7KyNr7Kz"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+        </iframe>
+        <!-- <div id="player"></div> -->
     </div>
 
     <a id="nextButton" href="timer.html" class="next-button">
@@ -137,9 +147,9 @@
 </div>
 
 <!-- YouTube IFrame API -->
-<script src="https://www.youtube.com/iframe_api"></script>
+<!-- <script src="https://www.youtube.com/iframe_api"></script> -->
 
-<script>
+<!-- <script>
     let player;
 
     function onYouTubeIframeAPIReady() {
@@ -161,7 +171,7 @@
             button.classList.add('enabled');
         }
     }
-</script>
+</script> -->
 
 </body>
 </html>
