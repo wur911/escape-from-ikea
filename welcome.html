@@ -31,17 +31,39 @@
         }
 
         .logo {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: #0058a3;
-            margin-bottom: 8px;
+            background: #0057AD; /* IKEA blue */
+            padding: 10px 10px;
+            border-radius: 6px;
+            width: 80%;
+            margin: 0 auto;
         }
-
-        .subtitle {
-            font-size: 16px;
-            color: #6b7280;
-            margin-bottom: 24px;
+    
+        .logo-inner {
+            background: #FBDA0C; /* IKEA yellow */
+            padding: 20px 60px;
+            border-radius: 50% / 55%; 
+            text-align: center;
+        }
+    
+        .logo-text {
+            color: #0057AD;
+            font-weight: 900;
+            font-family: "Noto Sans", Arial, Helvetica, sans-serif;
+            font-size: 36px;
+        }
+        
+        .ikea-text {
+            color: #0057AD;
+            font-weight: 900;
+            font-family: "Noto Sans", Arial, Helvetica, sans-serif;
+            font-size: 36px;
+            letter-spacing: 2px;
+        }
+        
+        .reg {
+            font-size: 0.6em;
+            vertical-align: super;
+            margin-left: 0px;
         }
 
         .video-wrapper {
@@ -94,8 +116,13 @@
 <body>
 
 <div class="container">
-    <div class="logo">IKEA ESCAPE ROOM</div>
-    <div class="subtitle">Watch the briefing carefully to proceed.</div>
+    <div class="logo">
+        <div class="logo-inner">
+            <div class="logo-text">Escape from <span class="ikea-text">IKEA</span><span class="reg">®</span></div>
+        </div>
+    </div>
+    
+    <br>
 
     <div class="video-wrapper">
         <div id="player"></div>
