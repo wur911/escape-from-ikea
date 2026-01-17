@@ -261,7 +261,7 @@ $bedroom_examine_dresser_text
 |switch_mode&gt;[]
 
 \(set: $bedroom_north_text to &quot;[[Go to BATHROOM-&gt;Bathroom]]&quot;)
-\(set: $bedroom_west_text to &quot;[[Go to STORAGE-&gt;Storage]]&quot;)
+\(set: $bedroom_west_text to &quot;[[Go to WARD ROBE &amp; STORAGE-&gt;Storage]]&quot;)
 \($compass: &quot;$bedroom_north_text&quot;, &quot;$bedroom_west_text&quot;, &quot;&quot;, &quot;&quot;)
 
 \(set: $bedroom_look_around_text to &quot;You look around. You see an endless row of plush looking mattresses atop bedframes of all sizes, colors, and heights. Interestingly, you notice there&#39;s only one $item_format[dresser] in the whole area. You also note a $item_format[light switch] on the wall nearby.&quot;)
@@ -346,7 +346,7 @@ You enter the $location_format[CHILDREN&#39;S AREA].
 ]\
 {
 (set: $childrens_west_text to &quot;[[Go to STAIRS-&gt;Stairs]]&quot;)
-(set: $childrens_east_text to &quot;[[Go to STORAGE-&gt;Storage]]&quot;)
+(set: $childrens_east_text to &quot;[[Go to WARD ROBE &amp; STORAGE-&gt;Storage]]&quot;)
 ($compass: &quot;&quot;, &quot;$childrens_west_text&quot;, &quot;$childrens_east_text&quot;, &quot;&quot;)
 
 (set: $childrens_look_around_text to &quot;You look around. There are hundreds of stuffed animals scattered across the room, spilling over the tops of bins, peeping out of each child-sized cabinet, piled precariously on every available surface as far as the eye can see. You sense that there might be something hidden in this room.&quot;)
@@ -534,7 +534,7 @@ $living_room_examine_extra_pieces_text
 
 \(set: $living_room_north_text to &quot;[[Go to WORK SPACES-&gt;Workspaces]]&quot;)
 \(set: $living_room_east_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
-\(set: $living_room_south_text to &quot;(if: $storage_shortcut_unlocked)[[[Go to STORAGE-&gt;Storage]]]&quot;)
+\(set: $living_room_south_text to &quot;(if: $storage_shortcut_unlocked)[[[Go to WARD ROBE &amp; STORAGE-&gt;Storage]]]&quot;)
 \($compass: &quot;$living_room_north_text&quot;, &quot;&quot;, &quot;$living_room_east_text&quot;, &quot;$living_room_south_text&quot;)
 
 \(set: $living_room_look_around_text to &quot;You look around. To your left, you see lamps of every shape—floor lamps, desk lamps, even a lamp shaped like a bagel—casting a warm, conspiratorial glow. They illuminate a shiny $item_format[plaque] on the wall. To your right is a a bunch of spare $item_format[extra pieces] of some piece of furniture.&quot;)
@@ -1851,7 +1851,7 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
 [[&gt; Skip to Dining-&gt;Dining]]
 [[&gt; Skip to Bathroom-&gt;Bathroom]]
 [[&gt; Skip to Bedroom-&gt;Bedroom]]
-[[&gt; Skip to Storage-&gt;Storage]]
+[[&gt; Skip to Wardrobe &amp; Storage-&gt;Storage]]
 [[&gt; Skip to Shortcut-&gt;Shortcut]]
 [[&gt; Skip to Childrens-&gt;Childrens]]
 [[&gt; Skip to Stairs-&gt;Stairs]]
