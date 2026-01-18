@@ -71,6 +71,8 @@ td {
   margin-left: auto;
   margin-right: auto;
   width: 100%; /* Set a width less than 100% */
+  table-layout: fixed;
+  font-size: 0.7em;
 }
 .image-cell img {
   width: 100%;  /* Image takes up 100% of the cell's width */
@@ -1673,7 +1675,7 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
 {
 
 (set: $storage_north_text to &quot;(if:(history: where its name contains \&quot;Shortcut\&quot;)&#39;s length &gt;= 1)[[[Go to LIVING ROOM-&gt;Living Room]]](else-if: $storage_shortcut_unlocked)[[[Go to SHORTCUT-&gt;Shortcut]]](else:)[|compass_shortcut&gt;[]]&quot;)
-(set: $storage_west_text to &quot;[[Go to CHILDREN&#39;S-&gt;Childrens]]&quot;)
+(set: $storage_west_text to &quot;[[Go to CHILDREN-&gt;Childrens]]&quot;)
 (set: $storage_east_text to &quot;[[Go to BEDROOM-&gt;Bedroom]]&quot;)
 ($compass: &quot;$storage_north_text&quot;, &quot;$storage_west_text&quot;, &quot;$storage_east_text&quot;, &quot;&quot;)
 }
