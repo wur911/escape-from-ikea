@@ -467,28 +467,12 @@ At long last, you&#39;ve found the exit and have your perfect $relic_format[FÄL
 (t8n:&#39;fade-right&#39;)+(t8n-delay:14s)[
 [[&gt; View Stats &amp; Credits-&gt;Stats]]
 ]
-}</tw-passagedata><tw-passagedata pid="6" name="Kitchen" tags="" position="1625,500" size="100,100">($render_bg:)\
-### Kitchen
+}</tw-passagedata><tw-passagedata pid="6" name="Kitchen" tags="" position="1625,500" size="100,100">{
+($render_bg:)
 
-You enter the $location_format[KITCHEN] area.
-
-(if: $kitchen_looked_around)[&gt; Look around
-$kitchen_look_around_text
-]
-\(else:)[|look_around&gt;[&gt; Look around]]
-\(if: $kitchen_examined_refrigerator)[&lt;br&gt;&gt; Examine $item_format[golden refigerator]
-$kitchen_examine_refrigerator_text
-]
-\(else-if: $kitchen_looked_around)[$kitchen_examine_refrigerator_click_text]
-\(else:)[|examine_refrigerator_click&gt;[]]
-
-\(set: $kitchen_west_text to &quot;[[Go to WORK SPACES-&gt;Workspaces]]&quot;)
-\(set: $kitchen_south_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
-\($compass: &quot;&quot;, &quot;$kitchen_west_text&quot;, &quot;&quot;, &quot;$kitchen_south_text&quot;)
-
-\(set: $kitchen_look_around_text to &quot;You look around. You see glistening countertops and an arsenal of faucets. Small signs are affixed to every item with bespoke, vowel-heavy Swedish words you can’t quite pronounce. Further in the room, there are a few refrigerators, and your eye catches on one that seems sparkle - a solid $item_format[golden refrigerator].&quot;)
-\(set: $kitchen_examine_refrigerator_click_text to &quot;&lt;br&gt;|examine_refrigerator&gt;[&gt; Examine $item_format[golden refrigerator]]&quot;)
-\(set: $kitchen_examine_refrigerator_text to &quot;{
+(set: $kitchen_look_around_text to &quot;You look around. You see glistening countertops and an arsenal of faucets. Small signs are affixed to every item with bespoke, vowel-heavy Swedish words you can’t quite pronounce. Further in the room, there are a few refrigerators, and your eye catches on one that seems sparkle - a solid $item_format[golden refrigerator].&quot;)
+(set: $kitchen_examine_refrigerator_click_text to &quot;&lt;br&gt;|examine_refrigerator&gt;[&gt; Examine $item_format[golden refrigerator]]&quot;)
+(set: $kitchen_examine_refrigerator_text to &quot;{
 (if: $kitchen_refrigerator_unlocked_seen)[
   You&#39;ve already taken the $measuring_tape_text from the fridge.
 ]
@@ -501,15 +485,49 @@ $kitchen_examine_refrigerator_text
   You try to open it up, but the doors don&#39;t seem to budge at all.
 ]}&quot;)
 
-\(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
-$kitchen_look_around_text
-\(set: $kitchen_looked_around to true)
-\(replace: ?examine_refrigerator_click)[$kitchen_examine_refrigerator_click_text]
+### Kitchen
+
+You enter the $location_format[KITCHEN] area.
+
+&lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+
+(if: $kitchen_looked_around)[
+  &gt; Look around
+  &lt;br&gt;
+  $kitchen_look_around_text
+  &lt;br&gt;
 ]
-\(click-append:?examine_refrigerator)+(t8n:&#39;dissolve&#39;)[
-$kitchen_examine_refrigerator_text
-\(set: $kitchen_examined_refrigerator to true)
-]</tw-passagedata><tw-passagedata pid="7" name="Living Room" tags="" position="1450,650" size="100,100">($render_bg:)\
+(else:)[
+  |look_around&gt;[&gt; Look around]
+]
+(if: $kitchen_examined_refrigerator)[
+  &lt;br&gt;
+  &gt; Examine $item_format[golden refrigerator]
+  $kitchen_examine_refrigerator_text
+]
+(else-if: $kitchen_looked_around)
+  [$kitchen_examine_refrigerator_click_text]
+(else:)[
+  |examine_refrigerator_click&gt;[]
+]
+
+(set: $kitchen_west_text to &quot;[[Go to WORK SPACES-&gt;Workspaces]]&quot;)
+(set: $kitchen_south_text to &quot;[[Go to DINING-&gt;Dining]]&quot;)
+($compass: &quot;&quot;, &quot;$kitchen_west_text&quot;, &quot;&quot;, &quot;$kitchen_south_text&quot;)
+
+(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+  &lt;br&gt;
+  $kitchen_look_around_text
+  (set: $kitchen_looked_around to true)
+  (replace: ?examine_refrigerator_click)
+  [$kitchen_examine_refrigerator_click_text]
+  &lt;br&gt;
+]
+(click-append:?examine_refrigerator)+(t8n:&#39;dissolve&#39;)[
+  $kitchen_examine_refrigerator_text
+  (set: $kitchen_examined_refrigerator to true)\
+]
+}</tw-passagedata><tw-passagedata pid="7" name="Living Room" tags="" position="1450,650" size="100,100">($render_bg:)\
 ### Living Room
 
 You enter the $location_format[LIVING ROOM] area.
@@ -1516,6 +1534,7 @@ To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM]
 
 (if: $restaurant_examined_cash_register)[\
   &gt; Examine $item_format[cash register]
+  &lt;br&gt;
   $restaurant_examine_cash_register_text
 ]\
 (else-if: $restaurant_looked_around)[\
@@ -1561,24 +1580,32 @@ You enter the $location_format[SHORTCUT]. It&#39;s a narrow hallway connecting f
 
 [[&gt; Continue NORTH to LIVING ROOM-&gt;Living Room]]
 
-}</tw-passagedata><tw-passagedata pid="44" name="Showroom" tags="" position="1225,425" size="100,100">($render_bg:)\
+}</tw-passagedata><tw-passagedata pid="44" name="Showroom" tags="" position="1225,425" size="100,100">{
+($render_bg:)
 ### Showroom
 
 You go $direction_format[SOUTH] to the $location_format[SHOWROOM]. There&#39;s a door in your way.
 
-(if: $restaurant_cash_register_opened)[You have the $item_format[showroom key].
-|use_showroom_key&gt;[&gt; Use $item_format[showroom key]]
+&lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+
+(if: $restaurant_cash_register_opened)[
+  You have the $item_format[showroom key].
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+  |use_showroom_key&gt;[&gt; Use $item_format[showroom key]]
 ]
-\(else:)[You reach for the doorknob. Drats! The door is locked. You see a keyhole on the doorknob.
-[[&gt; Back-&gt;Restaurant &amp; Cafe]]
+(else:)[
+  You reach for the doorknob. Drats! The door is locked. You see a keyhole on the doorknob.
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+  [[&gt; Back-&gt;Restaurant &amp; Cafe]]
 ]
 
-\(click-append:?use_showroom_key)+(t8n:&#39;dissolve&#39;)[{
-&lt;br&gt;
-You use the $item_format[showroom key] on the door. The key fits perfectly and you slowly twist the doorknob. The door opens...
-&lt;br&gt;
-[[&gt; Enter SHOWROOM-&gt;Living Room]]
-}]</tw-passagedata><tw-passagedata pid="45" name="Stairs" tags="" position="1125,800" size="100,100">($render_bg:)\
+(click-append:?use_showroom_key)+(t8n:&#39;dissolve&#39;)[
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+  You use the $item_format[showroom key] on the door. The key fits perfectly and you slowly twist the doorknob. The door opens...
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+  [[&gt; Enter SHOWROOM-&gt;Living Room]]
+]
+}</tw-passagedata><tw-passagedata pid="45" name="Stairs" tags="" position="1125,800" size="100,100">($render_bg:)\
 ### Stairs to MARKETPLACE
 
 You go $direction_format[WEST] to the $location_format[STAIRS].
