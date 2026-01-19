@@ -59,82 +59,111 @@ $bathroom_examine_help_desk_text
 
 
 :: Bedroom {"position":"1650,800","size":"200,100"}
-($render_bg:)\
-### Bedroom
+{
+($render_bg:)
 
-You enter the $location_format[BEDROOM] area.
-
-(if: $bedroom_looked_around)[> Look around
-$bedroom_look_around_text
-]
-\(else:)[|look_around>[> Look around]]
-\(if: $bedroom_examined_dresser)[<br>> Examine $item_format[dresser]
-$bedroom_examine_dresser_text
-]
-\(else-if: $bedroom_looked_around)[$bedroom_examine_dresser_click_text]
-\(else:)[|examine_dresser_click>[]]
-\(if: $bedroom_looked_around)[$bedroom_take_nap_click_text]
-\(else:)[|take_nap_click>[]]
-\(if: $bedroom_looked_around)[$bedroom_light_switch_click_text]
-\(else:)[|light_switch_click>[]]
-|switch_mode>[]
-
-\(set: $bedroom_north_text to "[[Go to BATHROOM->Bathroom]]")
-\(set: $bedroom_west_text to "[[Go to WARD ROBE & STORAGE->Storage]]")
-\($compass: "$bedroom_north_text", "$bedroom_west_text", "", "")
-
-\(set: $bedroom_look_around_text to "You look around. You see an endless row of plush looking mattresses atop bedframes of all sizes, colors, and heights. Interestingly, you notice there's only one $item_format[dresser] in the whole area. You also note a $item_format[light switch] on the wall nearby.")
-\(set: $bedroom_examine_dresser_click_text to "<br>|examine_dresser>[> Examine $item_format[dresser]]")
-\(set: $bedroom_take_nap_click_text to "<br>|take_nap>[> Take a nap]")
-\(set: $bedroom_light_switch_click_text to "<br>|light_switch>[> Flip the $item_format[light switch] (cond: $darkMode, \"on\", \"off\")]")
-\(set: $bedroom_examine_dresser_text to "{It's odd that there's only one dresser. You look inside the drawers. Written in dark ink inside is the following:
+(set: $bedroom_look_around_text to "You look around. You see an endless row of plush looking mattresses atop bedframes of all sizes, colors, and heights. Interestingly, you notice there's only one $item_format[dresser] in the whole area. You also note a $item_format[light switch] on the wall nearby.")
+(set: $bedroom_examine_dresser_click_text to "<br>|examine_dresser>[> Examine $item_format[dresser]]")
+(set: $bedroom_take_nap_click_text to "<br>|take_nap>[> Take a nap]")
+(set: $bedroom_light_switch_click_text to "<br>|light_switch>[> Flip the $item_format[light switch] (cond: $darkMode, \"on\", \"off\")]")
+(set: $bedroom_examine_dresser_text to "{It's odd that there's only one dresser. You look inside the drawers. Written in dark ink inside is the following:
 <div class=\"dresser-drawer\">
 \"I've hidden a secret IKEA treasure somewhere in the world. You'll never be able to guess where it is on the map unless you closely re-examine the beginning of the CATALOG for some directions.\"
 <br>
 - Mark X. Atläs (IKEA marketing strategist)\
 <div>}")
-\(set: $bedroom_take_nap_text to "You take a quick power nap on one of the beds. Quite comfy. But you should probably get back to escaping now.")
+(set: $bedroom_take_nap_text to "You take a quick power nap on one of the beds. Quite comfy. But you should probably get back to escaping now.")
 
-\(click-append:?look_around)+(t8n:'dissolve')[
-$bedroom_look_around_text
-\(set: $bedroom_looked_around to true)
-\(replace: ?examine_dresser_click)[$bedroom_examine_dresser_click_text]
-\(replace: ?take_nap_click)[$bedroom_take_nap_click_text]
-\(replace: ?light_switch_click)[$bedroom_light_switch_click_text]
+### Bedroom
+
+You enter the $location_format[BEDROOM] area.
+
+<tw-consecutive-br data-raw></tw-consecutive-br>
+
+(if: $bedroom_looked_around)[
+  > Look around
+  <br>
+  $bedroom_look_around_text
+  <br>
 ]
-\(click-append:?examine_dresser)+(t8n:'dissolve')[
-$bedroom_examine_dresser_text
-\(set: $bedroom_examined_dresser to true)]
-\(click-append:?take_nap)+(t8n:'dissolve')[
-$bedroom_take_nap_text
-\(set: $bedroom_naps_taken to it + 1)
+(else:)[
+  |look_around>[> Look around]
+]
+(if: $bedroom_examined_dresser)[\
+  <br>
+  > Examine $item_format[dresser]
+  <br>
+  $bedroom_examine_dresser_text
+]
+(else-if: $bedroom_looked_around)[
+  $bedroom_examine_dresser_click_text\
+]\
+(else:)[\
+  |examine_dresser_click>[]\
+]\
+\(if: $bedroom_looked_around)
+  [$bedroom_take_nap_click_text
+]
+\(else:)[
+  |take_nap_click>[]
+]
+\(if: $bedroom_looked_around)[
+  $bedroom_light_switch_click_text
+]
+\(else:)[
+  |light_switch_click>[]
+]
+|switch_mode>[]
+
+(set: $bedroom_north_text to "[[Go to BATHROOM->Bathroom]]")
+(set: $bedroom_west_text to "[[Go to WARD ROBE & STORAGE->Storage]]")
+($compass: "$bedroom_north_text", "$bedroom_west_text", "", "")
+
+(click-append:?look_around)+(t8n:'dissolve')[
+  <br>
+  $bedroom_look_around_text
+  (set: $bedroom_looked_around to true)
+  (replace: ?examine_dresser_click)[$bedroom_examine_dresser_click_text]
+  (replace: ?take_nap_click)[$bedroom_take_nap_click_text]
+  (replace: ?light_switch_click)[$bedroom_light_switch_click_text]
+  <br>
+]
+(click-append:?examine_dresser)+(t8n:'dissolve')[
+  $bedroom_examine_dresser_text\
+  (set: $bedroom_examined_dresser to true)\
+]
+(click-append:?take_nap)+(t8n:'dissolve')[
+  $bedroom_take_nap_text\
+  (set: $bedroom_naps_taken to it + 1)
 ]
 (click-rerun: ?light_switch)[
   (set: $darkMode to not $darkMode)
-  (rerun: ?light_switch)
   (if: $darkMode)[
     (replace: ?switch_mode)[
       <script>
-      document.querySelectorAll('tw-story')[0].classList.replace('light-mode', 'dark-mode');
-    </script>
+    document.querySelectorAll('tw-story')[0].classList.replace('light-mode', 'dark-mode');
+   </script>
     ]
     (set: $item_format to (text-color: #51e1ff))
     (set: $location_format to (text-color: #ff7d7d))
     (set: $answer_format to (font:'Courier New')+(text-color:#8a94fc)+(text-style:"bold"))
     (set: $relic_format to (text-color:#fdcd5a))
-    (rerun: ?Passage)
+    (rerun: ?light_switch)
   ]
   (else:)[
-    <script>
+    (replace: ?switch_mode)[
+      <script>
     document.querySelectorAll('tw-story')[0].classList.replace('dark-mode', 'light-mode');
-  </script>
-  (set: $item_format to (text-color: #099bde))
-  (set: $location_format to (text-color: #ce3257))
-  (set: $answer_format to (font:'Courier New')+(text-color:#7a82da)+(text-style:"bold"))
-  (set: $relic_format to (text-color:#c5a230))
-  (rerun: ?Passage)
+   </script>
+    ]
+    (set: $item_format to (text-color: #099bde))
+    (set: $location_format to (text-color: #ce3257))
+    (set: $answer_format to (font:'Courier New')+(text-color:#7a82da)+(text-style:"bold"))
+    (set: $relic_format to (text-color:#c5a230))
+    (rerun: ?light_switch)
   ]
 ]
+}
 
 
 :: Checkout {"position":"925,775","size":"100,100"}
@@ -319,40 +348,24 @@ $dining_examine_safe_text
 
 At long last, you've found the exit and have your perfect $relic_format[FÄLLSTOL] for your apartment. Weary but triumphant, you clutch your hard-earned treasure and ring it up through the self checkout. Stepping through the sliding glass doors out into the cool night, the twilight air is sweet and quiet. For a moment, the rooms you left behind seem almost like a dream. You feel a sudden sense of wonder. 
 
-(t8n:'fade-right')+(t8n-delay:12s)[
+(t8n:'fade-right')+(t8n-delay:7s)[
 <tw-consecutive-br data-raw></tw-consecutive-br>\
 ###Congrats on escaping IKEA!
 ]
 
-(t8n:'fade-right')+(t8n-delay:14s)[
+(t8n:'fade-right')+(t8n-delay:10s)[
 [[> View Stats & Credits->Stats]]
 ]
 }
 
 
 :: Kitchen {"position":"1625,500","size":"100,100"}
-($render_bg:)\
-### Kitchen
+{
+($render_bg:)
 
-You enter the $location_format[KITCHEN] area.
-
-(if: $kitchen_looked_around)[> Look around
-$kitchen_look_around_text
-]
-\(else:)[|look_around>[> Look around]]
-\(if: $kitchen_examined_refrigerator)[<br>> Examine $item_format[golden refigerator]
-$kitchen_examine_refrigerator_text
-]
-\(else-if: $kitchen_looked_around)[$kitchen_examine_refrigerator_click_text]
-\(else:)[|examine_refrigerator_click>[]]
-
-\(set: $kitchen_west_text to "[[Go to WORK SPACES->Workspaces]]")
-\(set: $kitchen_south_text to "[[Go to DINING->Dining]]")
-\($compass: "", "$kitchen_west_text", "", "$kitchen_south_text")
-
-\(set: $kitchen_look_around_text to "You look around. You see glistening countertops and an arsenal of faucets. Small signs are affixed to every item with bespoke, vowel-heavy Swedish words you can’t quite pronounce. Further in the room, there are a few refrigerators, and your eye catches on one that seems sparkle - a solid $item_format[golden refrigerator].")
-\(set: $kitchen_examine_refrigerator_click_text to "<br>|examine_refrigerator>[> Examine $item_format[golden refrigerator]]")
-\(set: $kitchen_examine_refrigerator_text to "{
+(set: $kitchen_look_around_text to "You look around. You see glistening countertops and an arsenal of faucets. Small signs are affixed to every item with bespoke, vowel-heavy Swedish words you can’t quite pronounce. Further in the room, there are a few refrigerators, and your eye catches on one that seems sparkle - a solid $item_format[golden refrigerator].")
+(set: $kitchen_examine_refrigerator_click_text to "<br>|examine_refrigerator>[> Examine $item_format[golden refrigerator]]")
+(set: $kitchen_examine_refrigerator_text to "{
 (if: $kitchen_refrigerator_unlocked_seen)[
   You've already taken the $measuring_tape_text from the fridge.
 ]
@@ -365,15 +378,49 @@ $kitchen_examine_refrigerator_text
   You try to open it up, but the doors don't seem to budge at all.
 ]}")
 
-\(click-append:?look_around)+(t8n:'dissolve')[
-$kitchen_look_around_text
-\(set: $kitchen_looked_around to true)
-\(replace: ?examine_refrigerator_click)[$kitchen_examine_refrigerator_click_text]
+### Kitchen
+
+You enter the $location_format[KITCHEN] area.
+
+<tw-consecutive-br data-raw></tw-consecutive-br>
+
+(if: $kitchen_looked_around)[
+  > Look around
+  <br>
+  $kitchen_look_around_text
+  <br>
 ]
-\(click-append:?examine_refrigerator)+(t8n:'dissolve')[
-$kitchen_examine_refrigerator_text
-\(set: $kitchen_examined_refrigerator to true)
+(else:)[
+  |look_around>[> Look around]
 ]
+(if: $kitchen_examined_refrigerator)[
+  <br>
+  > Examine $item_format[golden refrigerator]
+  $kitchen_examine_refrigerator_text
+]
+(else-if: $kitchen_looked_around)
+  [$kitchen_examine_refrigerator_click_text]
+(else:)[
+  |examine_refrigerator_click>[]
+]
+
+(set: $kitchen_west_text to "[[Go to WORK SPACES->Workspaces]]")
+(set: $kitchen_south_text to "[[Go to DINING->Dining]]")
+($compass: "", "$kitchen_west_text", "", "$kitchen_south_text")
+
+(click-append:?look_around)+(t8n:'dissolve')[
+  <br>
+  $kitchen_look_around_text
+  (set: $kitchen_looked_around to true)
+  (replace: ?examine_refrigerator_click)
+  [$kitchen_examine_refrigerator_click_text]
+  <br>
+]
+(click-append:?examine_refrigerator)+(t8n:'dissolve')[
+  $kitchen_examine_refrigerator_text
+  (set: $kitchen_examined_refrigerator to true)\
+]
+}
 
 
 :: Living Room {"position":"1450,650","size":"100,100"}
@@ -1524,6 +1571,7 @@ To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM]
 
 (if: $restaurant_examined_cash_register)[\
   > Examine $item_format[cash register]
+  <br>
   $restaurant_examine_cash_register_text
 ]\
 (else-if: $restaurant_looked_around)[\
@@ -1577,24 +1625,32 @@ You enter the $location_format[SHORTCUT]. It's a narrow hallway connecting from 
 
 
 :: Showroom {"position":"1225,425","size":"100,100"}
-($render_bg:)\
+{
+($render_bg:)
 ### Showroom
 
 You go $direction_format[SOUTH] to the $location_format[SHOWROOM]. There's a door in your way.
 
-(if: $restaurant_cash_register_opened)[You have the $item_format[showroom key].
-|use_showroom_key>[> Use $item_format[showroom key]]
+<tw-consecutive-br data-raw></tw-consecutive-br>
+
+(if: $restaurant_cash_register_opened)[
+  You have the $item_format[showroom key].
+  <tw-consecutive-br data-raw></tw-consecutive-br>
+  |use_showroom_key>[> Use $item_format[showroom key]]
 ]
-\(else:)[You reach for the doorknob. Drats! The door is locked. You see a keyhole on the doorknob.
-[[> Back->Restaurant & Cafe]]
+(else:)[
+  You reach for the doorknob. Drats! The door is locked. You see a keyhole on the doorknob.
+  <tw-consecutive-br data-raw></tw-consecutive-br>
+  [[> Back->Restaurant & Cafe]]
 ]
 
-\(click-append:?use_showroom_key)+(t8n:'dissolve')[{
-<br>
-You use the $item_format[showroom key] on the door. The key fits perfectly and you slowly twist the doorknob. The door opens...
-<br>
-[[> Enter SHOWROOM->Living Room]]
-}]
+(click-append:?use_showroom_key)+(t8n:'dissolve')[
+  <tw-consecutive-br data-raw></tw-consecutive-br>
+  You use the $item_format[showroom key] on the door. The key fits perfectly and you slowly twist the doorknob. The door opens...
+  <tw-consecutive-br data-raw></tw-consecutive-br>
+  [[> Enter SHOWROOM->Living Room]]
+]
+}
 
 
 :: Stairs {"position":"1125,800","size":"100,100"}
@@ -1731,18 +1787,18 @@ You enter the $location_format[WARDROBE & STORAGE] area.
   $storage_bomb_defused_text\
 ]\
 (else-if: $storage_investigated_ticking)[\
-  <br>\
+  <tw-consecutive-br data-raw></tw-consecutive-br>\
   > Investigate the $item_format[ticking sound]
   $storage_found_bomb_text
 ]\
 (else-if: $storage_looked_around)[\
-  <br>\
+  <tw-consecutive-br data-raw></tw-consecutive-br>\
   $shortcut_investigate_ticking_click_text\
 ]\
 {
 
 (set: $storage_north_text to "(if:(history: where its name contains \"Shortcut\")'s length >= 1)[[[Go to LIVING ROOM->Living Room]]](else-if: $storage_shortcut_unlocked)[[[Go to SHORTCUT->Shortcut]]](else:)[|compass_shortcut>[]]")
-(set: $storage_west_text to "[[Go to CHILDREN'S->Childrens]]")
+(set: $storage_west_text to "[[Go to CHILDREN->Childrens]]")
 (set: $storage_east_text to "[[Go to BEDROOM->Bedroom]]")
 ($compass: "$storage_north_text", "$storage_west_text", "$storage_east_text", "")
 }
@@ -2107,6 +2163,8 @@ td {
   margin-left: auto;
   margin-right: auto;
   width: 100%; /* Set a width less than 100% */
+  table-layout: fixed;
+  font-size: 0.7em;
 }
 .image-cell img {
   width: 100%;  /* Image takes up 100% of the cell's width */
