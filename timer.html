@@ -65,6 +65,26 @@
     .start-button:hover {
       background: #1ed760;
     }
+    
+    .pause-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 30px 60px;
+      font-size: 3rem;
+      font-weight: bold;
+      background: #fbda0c;
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 40px rgba(251, 218, 12, 0.6);
+    }
+
+    .pause-button:hover {
+      background: #fce812;
+    }
 
     .qr-container {
       width: 300px;
@@ -95,6 +115,7 @@
     <div class="timer-wrapper">
       <div id="timer" class="timer">00:00:00</div>
       <button id="startButton" class="start-button">START</button>
+      <button id="pauseButton" class="pause-button" style="display:none">UNPAUSE</button>
     </div>
 
     <div class="qr-container">
@@ -117,12 +138,19 @@
       return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     }
 
-    function startTimer() {
-      if (running) return;
+    function startOrPauseTimer() {
+      if (running) {
+          running = false;
+          timerEl.classList.remove('running');
+          clearInterval(intervalId);
+          pauseButton.style.display = "block";
+          return;
+      };
 
       running = true;
       timerEl.classList.add('running');
       startButton.style.display = 'none';
+      pauseButton.style.display = 'none';
 
       intervalId = setInterval(() => {
         secondsElapsed++;
@@ -149,7 +177,7 @@
     }
 
     // Button click
-    startButton.addEventListener('click', startTimer);
+    startButton.addEventListener('click', startOrPauseTimer);
 
     // Keyboard controls
     document.addEventListener('keydown', (e) => {
@@ -157,7 +185,7 @@
         case ' ':
         case 'enter':
           e.preventDefault();
-          startTimer();
+          startOrPauseTimer();
           break;
         case 'r':
           resetTimer();
