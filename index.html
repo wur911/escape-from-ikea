@@ -242,82 +242,111 @@ $bathroom_look_around_text
 \(click-append:?examine_help_desk)+(t8n:&#39;dissolve&#39;)[
 $bathroom_examine_help_desk_text
 \(set: $bathroom_examined_help_desk to true)
-]</tw-passagedata><tw-passagedata pid="2" name="Bedroom" tags="" position="1650,800" size="200,100">($render_bg:)\
-### Bedroom
+]</tw-passagedata><tw-passagedata pid="2" name="Bedroom" tags="" position="1650,800" size="200,100">{
+($render_bg:)
 
-You enter the $location_format[BEDROOM] area.
-
-(if: $bedroom_looked_around)[&gt; Look around
-$bedroom_look_around_text
-]
-\(else:)[|look_around&gt;[&gt; Look around]]
-\(if: $bedroom_examined_dresser)[&lt;br&gt;&gt; Examine $item_format[dresser]
-$bedroom_examine_dresser_text
-]
-\(else-if: $bedroom_looked_around)[$bedroom_examine_dresser_click_text]
-\(else:)[|examine_dresser_click&gt;[]]
-\(if: $bedroom_looked_around)[$bedroom_take_nap_click_text]
-\(else:)[|take_nap_click&gt;[]]
-\(if: $bedroom_looked_around)[$bedroom_light_switch_click_text]
-\(else:)[|light_switch_click&gt;[]]
-|switch_mode&gt;[]
-
-\(set: $bedroom_north_text to &quot;[[Go to BATHROOM-&gt;Bathroom]]&quot;)
-\(set: $bedroom_west_text to &quot;[[Go to WARD ROBE &amp; STORAGE-&gt;Storage]]&quot;)
-\($compass: &quot;$bedroom_north_text&quot;, &quot;$bedroom_west_text&quot;, &quot;&quot;, &quot;&quot;)
-
-\(set: $bedroom_look_around_text to &quot;You look around. You see an endless row of plush looking mattresses atop bedframes of all sizes, colors, and heights. Interestingly, you notice there&#39;s only one $item_format[dresser] in the whole area. You also note a $item_format[light switch] on the wall nearby.&quot;)
-\(set: $bedroom_examine_dresser_click_text to &quot;&lt;br&gt;|examine_dresser&gt;[&gt; Examine $item_format[dresser]]&quot;)
-\(set: $bedroom_take_nap_click_text to &quot;&lt;br&gt;|take_nap&gt;[&gt; Take a nap]&quot;)
-\(set: $bedroom_light_switch_click_text to &quot;&lt;br&gt;|light_switch&gt;[&gt; Flip the $item_format[light switch] (cond: $darkMode, \&quot;on\&quot;, \&quot;off\&quot;)]&quot;)
-\(set: $bedroom_examine_dresser_text to &quot;{It&#39;s odd that there&#39;s only one dresser. You look inside the drawers. Written in dark ink inside is the following:
+(set: $bedroom_look_around_text to &quot;You look around. You see an endless row of plush looking mattresses atop bedframes of all sizes, colors, and heights. Interestingly, you notice there&#39;s only one $item_format[dresser] in the whole area. You also note a $item_format[light switch] on the wall nearby.&quot;)
+(set: $bedroom_examine_dresser_click_text to &quot;&lt;br&gt;|examine_dresser&gt;[&gt; Examine $item_format[dresser]]&quot;)
+(set: $bedroom_take_nap_click_text to &quot;&lt;br&gt;|take_nap&gt;[&gt; Take a nap]&quot;)
+(set: $bedroom_light_switch_click_text to &quot;&lt;br&gt;|light_switch&gt;[&gt; Flip the $item_format[light switch] (cond: $darkMode, \&quot;on\&quot;, \&quot;off\&quot;)]&quot;)
+(set: $bedroom_examine_dresser_text to &quot;{It&#39;s odd that there&#39;s only one dresser. You look inside the drawers. Written in dark ink inside is the following:
 &lt;div class=\&quot;dresser-drawer\&quot;&gt;
 \&quot;I&#39;ve hidden a secret IKEA treasure somewhere in the world. You&#39;ll never be able to guess where it is on the map unless you closely re-examine the beginning of the CATALOG for some directions.\&quot;
 &lt;br&gt;
 - Mark X. Atläs (IKEA marketing strategist)\
 &lt;div&gt;}&quot;)
-\(set: $bedroom_take_nap_text to &quot;You take a quick power nap on one of the beds. Quite comfy. But you should probably get back to escaping now.&quot;)
+(set: $bedroom_take_nap_text to &quot;You take a quick power nap on one of the beds. Quite comfy. But you should probably get back to escaping now.&quot;)
 
-\(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
-$bedroom_look_around_text
-\(set: $bedroom_looked_around to true)
-\(replace: ?examine_dresser_click)[$bedroom_examine_dresser_click_text]
-\(replace: ?take_nap_click)[$bedroom_take_nap_click_text]
-\(replace: ?light_switch_click)[$bedroom_light_switch_click_text]
+### Bedroom
+
+You enter the $location_format[BEDROOM] area.
+
+&lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
+
+(if: $bedroom_looked_around)[
+  &gt; Look around
+  &lt;br&gt;
+  $bedroom_look_around_text
+  &lt;br&gt;
 ]
-\(click-append:?examine_dresser)+(t8n:&#39;dissolve&#39;)[
-$bedroom_examine_dresser_text
-\(set: $bedroom_examined_dresser to true)]
-\(click-append:?take_nap)+(t8n:&#39;dissolve&#39;)[
-$bedroom_take_nap_text
-\(set: $bedroom_naps_taken to it + 1)
+(else:)[
+  |look_around&gt;[&gt; Look around]
+]
+(if: $bedroom_examined_dresser)[\
+  &lt;br&gt;
+  &gt; Examine $item_format[dresser]
+  &lt;br&gt;
+  $bedroom_examine_dresser_text
+]
+(else-if: $bedroom_looked_around)[
+  $bedroom_examine_dresser_click_text\
+]\
+(else:)[\
+  |examine_dresser_click&gt;[]\
+]\
+\(if: $bedroom_looked_around)
+  [$bedroom_take_nap_click_text
+]
+\(else:)[
+  |take_nap_click&gt;[]
+]
+\(if: $bedroom_looked_around)[
+  $bedroom_light_switch_click_text
+]
+\(else:)[
+  |light_switch_click&gt;[]
+]
+|switch_mode&gt;[]
+
+(set: $bedroom_north_text to &quot;[[Go to BATHROOM-&gt;Bathroom]]&quot;)
+(set: $bedroom_west_text to &quot;[[Go to WARD ROBE &amp; STORAGE-&gt;Storage]]&quot;)
+($compass: &quot;$bedroom_north_text&quot;, &quot;$bedroom_west_text&quot;, &quot;&quot;, &quot;&quot;)
+
+(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
+  &lt;br&gt;
+  $bedroom_look_around_text
+  (set: $bedroom_looked_around to true)
+  (replace: ?examine_dresser_click)[$bedroom_examine_dresser_click_text]
+  (replace: ?take_nap_click)[$bedroom_take_nap_click_text]
+  (replace: ?light_switch_click)[$bedroom_light_switch_click_text]
+  &lt;br&gt;
+]
+(click-append:?examine_dresser)+(t8n:&#39;dissolve&#39;)[
+  $bedroom_examine_dresser_text\
+  (set: $bedroom_examined_dresser to true)\
+]
+(click-append:?take_nap)+(t8n:&#39;dissolve&#39;)[
+  $bedroom_take_nap_text\
+  (set: $bedroom_naps_taken to it + 1)
 ]
 (click-rerun: ?light_switch)[
   (set: $darkMode to not $darkMode)
-  (rerun: ?light_switch)
   (if: $darkMode)[
     (replace: ?switch_mode)[
       &lt;script&gt;
-      document.querySelectorAll(&#39;tw-story&#39;)[0].classList.replace(&#39;light-mode&#39;, &#39;dark-mode&#39;);
-    &lt;/script&gt;
+    document.querySelectorAll(&#39;tw-story&#39;)[0].classList.replace(&#39;light-mode&#39;, &#39;dark-mode&#39;);
+   &lt;/script&gt;
     ]
     (set: $item_format to (text-color: #51e1ff))
     (set: $location_format to (text-color: #ff7d7d))
     (set: $answer_format to (font:&#39;Courier New&#39;)+(text-color:#8a94fc)+(text-style:&quot;bold&quot;))
     (set: $relic_format to (text-color:#fdcd5a))
-    (rerun: ?Passage)
+    (rerun: ?light_switch)
   ]
   (else:)[
-    &lt;script&gt;
+    (replace: ?switch_mode)[
+      &lt;script&gt;
     document.querySelectorAll(&#39;tw-story&#39;)[0].classList.replace(&#39;dark-mode&#39;, &#39;light-mode&#39;);
-  &lt;/script&gt;
-  (set: $item_format to (text-color: #099bde))
-  (set: $location_format to (text-color: #ce3257))
-  (set: $answer_format to (font:&#39;Courier New&#39;)+(text-color:#7a82da)+(text-style:&quot;bold&quot;))
-  (set: $relic_format to (text-color:#c5a230))
-  (rerun: ?Passage)
+   &lt;/script&gt;
+    ]
+    (set: $item_format to (text-color: #099bde))
+    (set: $location_format to (text-color: #ce3257))
+    (set: $answer_format to (font:&#39;Courier New&#39;)+(text-color:#7a82da)+(text-style:&quot;bold&quot;))
+    (set: $relic_format to (text-color:#c5a230))
+    (rerun: ?light_switch)
   ]
-]</tw-passagedata><tw-passagedata pid="3" name="Childrens" tags="" position="1300,800" size="100,100">($render_bg:)\
+]
+}</tw-passagedata><tw-passagedata pid="3" name="Childrens" tags="" position="1300,800" size="100,100">($render_bg:)\
 ### Children&#39;s Area
 
 You enter the $location_format[CHILDREN&#39;S AREA].
@@ -459,12 +488,12 @@ $dining_examine_safe_text
 
 At long last, you&#39;ve found the exit and have your perfect $relic_format[FÄLLSTOL] for your apartment. Weary but triumphant, you clutch your hard-earned treasure and ring it up through the self checkout. Stepping through the sliding glass doors out into the cool night, the twilight air is sweet and quiet. For a moment, the rooms you left behind seem almost like a dream. You feel a sudden sense of wonder. 
 
-(t8n:&#39;fade-right&#39;)+(t8n-delay:12s)[
+(t8n:&#39;fade-right&#39;)+(t8n-delay:7s)[
 &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;\
 ###Congrats on escaping IKEA!
 ]
 
-(t8n:&#39;fade-right&#39;)+(t8n-delay:14s)[
+(t8n:&#39;fade-right&#39;)+(t8n-delay:10s)[
 [[&gt; View Stats &amp; Credits-&gt;Stats]]
 ]
 }</tw-passagedata><tw-passagedata pid="6" name="Kitchen" tags="" position="1625,500" size="100,100">{
@@ -1691,12 +1720,12 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
   $storage_bomb_defused_text\
 ]\
 (else-if: $storage_investigated_ticking)[\
-  &lt;br&gt;\
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;\
   &gt; Investigate the $item_format[ticking sound]
   $storage_found_bomb_text
 ]\
 (else-if: $storage_looked_around)[\
-  &lt;br&gt;\
+  &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;\
   $shortcut_investigate_ticking_click_text\
 ]\
 {
