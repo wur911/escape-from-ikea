@@ -117,6 +117,10 @@
       <button id="startButton" class="start-button">START</button>
       <button id="pauseButton" class="pause-button" style="display:none">UNPAUSE</button>
     </div>
+    
+    <audio id="intercomAudio">
+      <source src="audio/Announcement Sound.wav" type="audio/wav">
+    </audio>
 
     <div class="qr-container">
       <img src="images/Escape QR code.png" alt="Start QR code">
@@ -130,6 +134,7 @@
 
     const timerEl = document.getElementById('timer');
     const startButton = document.getElementById('startButton');
+    const intercomAudio = document.getElementById('intercomAudio');
 
     function formatTime(seconds) {
       const hours = Math.floor(seconds / 3600);
@@ -175,6 +180,10 @@
         document.exitFullscreen();
       }
     }
+    
+    function playIntercomSound() {
+      intercomAudio.play();
+    }
 
     // Button click
     startButton.addEventListener('click', startOrPauseTimer);
@@ -192,6 +201,9 @@
           break;
         case 'f':
           toggleFullscreen();
+          break;
+        case '!':
+          playIntercomSound();
           break;
       }
     });
