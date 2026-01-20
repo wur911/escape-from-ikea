@@ -263,19 +263,22 @@ $bathroom_examine_help_desk_text
 
 ### Bedroom
 
-You enter the $location_format[BEDROOM] area.
+|bedroom_text&gt;[You enter the $location_format[BEDROOM] area.]
 
 &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;
 
-(if: $bedroom_looked_around)[
-  &gt; Look around
-  &lt;br&gt;
-  $bedroom_look_around_text
-  &lt;br&gt;
+|look_around_text&gt;[
+  (if: $bedroom_looked_around)[
+    &gt; Look around
+    &lt;br&gt;
+    $bedroom_look_around_text
+    &lt;br&gt;
+  ]
+  (else:)[
+    |look_around&gt;[&gt; Look around]
+  ]
 ]
-(else:)[
-  |look_around&gt;[&gt; Look around]
-]
+|dresser_text&gt;[\
 (if: $bedroom_examined_dresser)[\
   &lt;br&gt;
   &gt; Examine $item_format[dresser]
@@ -288,6 +291,7 @@ You enter the $location_format[BEDROOM] area.
 (else:)[\
   |examine_dresser_click&gt;[]\
 ]\
+]
 \(if: $bedroom_looked_around)
   [$bedroom_take_nap_click_text
 ]
@@ -336,6 +340,9 @@ You enter the $location_format[BEDROOM] area.
     (set: $answer_format to (font:&#39;Courier New&#39;)+(text-color:#8a94fc)+(text-style:&quot;bold&quot;))
     (set: $relic_format to (text-color:#fdcd5a))
     (rerun: ?light_switch)
+    (rerun: ?bedroom_text)
+    (rerun: ?look_around_text)
+    (rerun: ?dresser_text)
   ]
   (else:)[
     (replace: ?switch_mode)[
@@ -348,6 +355,9 @@ You enter the $location_format[BEDROOM] area.
     (set: $answer_format to (font:&#39;Courier New&#39;)+(text-color:#7a82da)+(text-style:&quot;bold&quot;))
     (set: $relic_format to (text-color:#c5a230))
     (rerun: ?light_switch)
+    (rerun: ?bedroom_text)
+    (rerun: ?look_around_text)
+    (rerun: ?dresser_text)
   ]
 ]
 }</tw-passagedata><tw-passagedata pid="3" name="Checkout" tags="" position="925,775" size="100,100">{
@@ -472,7 +482,7 @@ $dining_examine_safe_text
 \(set: $dining_east_text to &quot;[[Go to BATHROOM-&gt;Bathroom]]&quot;)
 \($compass: &quot;$dining_north_text&quot;, &quot;$dining_west_text&quot;, &quot;$dining_east_text&quot;, &quot;&quot;)
 
-\(set: $dining_look_around_text to &quot;You look around. You walk into a model home and see four chairs gathered in earnest anticipation, placemats aligned with hopeful precision, and plates arranged at the ready for an imaginary feast. For a moment, you forget what you&#39;re doing and imagine an aspirational version of yourself who&#39;s coming home to have dinner in this Scandinavian tiny house. Beyond the dining table is a sleek, minimalist $item_format[bar cart].&quot;)
+\(set: $dining_look_around_text to &quot;You look around. You walk into a model home and see chairs gathered in earnest anticipation, placemats aligned with hopeful precision, and plates arranged at the ready for an imaginary feast. For a moment, you forget what you&#39;re doing and imagine an aspirational version of yourself who&#39;s coming home to have dinner in this Scandinavian tiny house. Beyond the dining table is a sleek, minimalist $item_format[bar cart].&quot;)
 \(set: $dining_examine_bar_cart_click_text to &quot;&lt;br&gt;|examine_bar_cart&gt;[&gt; Examine $item_format[bar cart]]&quot;)
 \(set: $dining_examine_safe_click_text to &quot;&lt;br&gt;|examine_safe&gt;[&gt; Examine $item_format[safe]]&quot;)
 \(set: $dining_examine_bar_cart_text to &quot;You examine the $item_format[bar cart]. There&#39;s a $item_format[safe] on it.&quot;)
@@ -497,7 +507,7 @@ $dining_examine_safe_text
 }&quot;)
 \(set: $dining_safe_unlocked_text to &quot;You&#39;ve opened the $item_format[bar cart safe] and acquired the $wooden_peg_text.&quot;)
 \(set: $dining_safe_correct_text to &quot;You enter the 4-digit pin code $answer_format[1958]. The safe door swings open. You peer inside and find an IKEA relic—the $wooden_peg_text.&quot;)
-\(set: $dining_safe_other_password_text to &quot;//Try this password somewhere else.//&quot;)
+\(set: $dining_safe_other_password_text to &quot;`[`//Try this password somewhere else.//`]`&quot;)
 \(set: $dining_safe_incorrect_text to &quot;Nothing seems to happen. Seems like you have the wrong password for the safe.&quot;)
 
 \(click-append:?look_around)+(t8n:&#39;dissolve&#39;)[
@@ -519,12 +529,12 @@ $dining_examine_safe_text
 
 At long last, you&#39;ve found the exit and have your perfect $relic_format[FÄLLSTOL] for your apartment. Weary but triumphant, you clutch your hard-earned treasure and ring it up through the self checkout. Stepping through the sliding glass doors out into the cool night, the twilight air is sweet and quiet. For a moment, the rooms you left behind seem almost like a dream. You feel a sudden sense of wonder. 
 
-(t8n:&#39;fade-right&#39;)+(t8n-delay:7s)[
+(t8n:&#39;fade-right&#39;)+(t8n-delay:5s)[
 &lt;tw-consecutive-br data-raw&gt;&lt;/tw-consecutive-br&gt;\
 ###Congrats on escaping IKEA!
 ]
 
-(t8n:&#39;fade-right&#39;)+(t8n-delay:10s)[
+(t8n:&#39;fade-right&#39;)+(t8n-delay:8s)[
 [[&gt; View Stats &amp; Credits-&gt;Stats]]
 ]
 }</tw-passagedata><tw-passagedata pid="7" name="Kitchen" tags="" position="1625,500" size="100,100">{
@@ -1701,8 +1711,8 @@ You tug on the door, but it doesn&#39;t budge.
 
 &#39;&#39;Your Stats&#39;&#39;
 &lt;ul&gt;
-&lt;li&gt;You ate $restaurant_meatballs_eaten meatballs&lt;/li&gt;
-&lt;li&gt;You took $bedroom_naps_taken naps&lt;/li&gt;
+&lt;li&gt;You ate $restaurant_meatballs_eaten meatball(if: $restaurant_meatballs_eaten is not 1)[s]&lt;/li&gt;
+&lt;li&gt;You took $bedroom_naps_taken nap(if: $bedroom_naps_taken is not 1)[s]&lt;/li&gt;
 (if: $workspaces_played_minesweeper)[
   &lt;li&gt;You played 1 game of minesweeper on the computer&lt;/li&gt;
 ]
@@ -1972,7 +1982,7 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
 }
 
 [[&gt; Wake up-&gt;Lobby]]
-[[&gt; Skip to Restaurant-&gt;Restaurant &amp; Cafe]]
+&lt;!--[[&gt; Skip to Restaurant-&gt;Restaurant &amp; Cafe]]
 [[&gt; Skip to Living Room-&gt;Living Room]]
 [[&gt; Skip to Workspaces-&gt;Workspaces]]
 [[&gt; Skip to Kitchen-&gt;Kitchen]]
@@ -1986,7 +1996,7 @@ You enter the $location_format[WARDROBE &amp; STORAGE] area.
 [[&gt; Skip to Marketplace-&gt;Marketplace Start]]
 [[&gt; Skip to Checkout-&gt;Checkout]]
 [[&gt; Skip to Escape!-&gt;Escape!]]
-[[&gt; Skip to Stats-&gt;Stats]]</tw-passagedata><tw-passagedata pid="50" name="Workspaces" tags="" position="1450,500" size="100,100">($render_bg:)\
+[[&gt; Skip to Stats-&gt;Stats]] --&gt;</tw-passagedata><tw-passagedata pid="50" name="Workspaces" tags="" position="1450,500" size="100,100">($render_bg:)\
 ### Workspaces
 
 You enter the $location_format[WORKSPACES] area.
