@@ -1,0 +1,2309 @@
+:: StoryTitle
+Escape From Ikea
+
+
+:: StoryData
+{
+  "ifid": "79A118C2-C78F-48ED-9915-E077B548AD75",
+  "format": "Harlowe",
+  "format-version": "3.3.9",
+  "start": "Welcome",
+  "zoom": 0.6
+}
+
+
+:: Bathroom {"position":"1775,650","size":"100,100"}
+($render_bg:)\
+### Bathroom
+
+You enter the $location_format[BATHROOM] area.
+
+(if: $bathroom_looked_around)[> Look around
+$bathroom_look_around_text
+]
+\(else:)[|look_around>[> Look around]]
+\(if: $bathroom_examined_help_desk)[<br>> Examine $item_format[help desk]
+$bathroom_examine_help_desk_text
+]
+\(else-if: $bathroom_looked_around)[$bathroom_examine_help_desk_click_text]
+\(else:)[|examine_help_desk_click>[]]
+
+\(set: $bathroom_west_text to "[[Go to DINING->Dining]]")
+\(set: $bathroom_south_text to "[[Go to BEDROOM->Bedroom]]")
+\($compass: "", "$bathroom_west_text", "", "$bathroom_south_text")
+
+\(set: $bathroom_look_around_text to "You look around. You see modular bathroom furniture. Lights bounce playfully off shiny chrome faucets and stylish mirrors. There's also a $item_format[help desk] in this area. Unfortunately, there doesn't seem to be anyone there.")
+\(set: $bathroom_examine_help_desk_click_text to "<br>|examine_help_desk>[> Examine $item_format[help desk]]")
+\(set: $bathroom_examine_help_desk_text to "{You examine the HELP DESK. There's a $item_format[Post-it note] on the desk next to a laptop.
+<div class=\"postit\">
+  <h3>Remember</h3>
+  <p>
+    Laptop password: $bathroom_real_world_computer_password<br>
+    <br>
+    I hid the bar cart safe password on the laptop
+  </p>
+</div>
+<br>
+`[`//This will be helpful in the real world//`]`
+}")
+
+\(click-append:?look_around)+(t8n:'dissolve')[
+$bathroom_look_around_text
+\(set: $bathroom_looked_around to true)
+\(replace: ?examine_help_desk_click)[$bathroom_examine_help_desk_click_text]
+]
+\(click-append:?examine_help_desk)+(t8n:'dissolve')[
+$bathroom_examine_help_desk_text
+\(set: $bathroom_examined_help_desk to true)
+]
+
+
+:: Bedroom {"position":"1650,800","size":"200,100"}
+{
+($render_bg:)
+
+(set: $bedroom_look_around_text to "You look around. You see an endless row of plush-looking mattresses atop bedframes of all sizes, colors, and heights. Interestingly, you notice there's only one $item_format[dresser] in the whole area. You also note a $item_format[light switch] on the wall nearby.")
+(set: $bedroom_examine_dresser_click_text to "<br>|examine_dresser>[> Examine $item_format[dresser]]")
+(set: $bedroom_take_nap_click_text to "<br>|take_nap>[> Take a nap]")
+(set: $bedroom_light_switch_click_text to "<br>|light_switch>[> Flip the $item_format[light switch] (cond: $darkMode, \"on\", \"off\")]")
+(set: $bedroom_examine_dresser_text to "{It's odd that there's only one dresser. You look in the drawers. Written inside is the following:
+<div class=\"dresser-drawer\">
+\"I've hidden a secret IKEA treasure somewhere in the world. You'll never be able to guess where it is on the map unless you closely re-examine the beginning of the CATALOG for some directions.\"
+<br>
+- Mark X. Atläs (IKEA marketing strategist)\
+<div>}")
+(set: $bedroom_take_nap_text to "You take a quick power nap on one of the beds. Quite comfy. But you should probably get back to escaping now.")
+
+### Bedroom
+
+|bedroom_text>[You enter the $location_format[BEDROOM] area.]
+
+<tw-consecutive-br data-raw></tw-consecutive-br>
+
+|look_around_text>[
+  (if: $bedroom_looked_around)[
+    > Look around
+    <br>
+    $bedroom_look_around_text
+    <br>
+  ]
+  (else:)[
+    |look_around>[> Look around]
+  ]
+]
+|dresser_text>[\
+(if: $bedroom_examined_dresser)[\
+  <br>
+  > Examine $item_format[dresser]
+  <br>
+  $bedroom_examine_dresser_text
+]
+(else-if: $bedroom_looked_around)[
+  $bedroom_examine_dresser_click_text\
+]\
+(else:)[\
+  |examine_dresser_click>[]\
+]\
+]
+\(if: $bedroom_looked_around)
+  [$bedroom_take_nap_click_text
+]
+\(else:)[
+  |take_nap_click>[]
+]
+\(if: $bedroom_looked_around)[
+  $bedroom_light_switch_click_text
+]
+\(else:)[
+  |light_switch_click>[]
+]
+|switch_mode>[]
+
+(set: $bedroom_north_text to "[[Go to BATHROOM->Bathroom]]")
+(set: $bedroom_west_text to "[[Go to WARD ROBE & STORAGE->Storage]]")
+($compass: "$bedroom_north_text", "$bedroom_west_text", "", "")
+
+(click-append:?look_around)+(t8n:'dissolve')[
+  <br>
+  $bedroom_look_around_text
+  (set: $bedroom_looked_around to true)
+  (replace: ?examine_dresser_click)[$bedroom_examine_dresser_click_text]
+  (replace: ?take_nap_click)[$bedroom_take_nap_click_text]
+  (replace: ?light_switch_click)[$bedroom_light_switch_click_text]
+  <br>
+]
+(click-append:?examine_dresser)+(t8n:'dissolve')[
+  $bedroom_examine_dresser_text\
+  (set: $bedroom_examined_dresser to true)\
+]
+(click-append:?take_nap)+(t8n:'dissolve')[
+  $bedroom_take_nap_text\
+  (set: $bedroom_naps_taken to it + 1)
+]
+(click-rerun: ?light_switch)[
+  (set: $darkMode to not $darkMode)
+  (if: $darkMode)[
+    (replace: ?switch_mode)[
+      <script>
+    document.querySelectorAll('tw-story')[0].classList.replace('light-mode', 'dark-mode');
+   </script>
+    ]
+    (set: $item_format to (text-color: #51e1ff))
+    (set: $location_format to (text-color: #ff7d7d))
+    (set: $answer_format to (font:'Courier New')+(text-color:#8a94fc)+(text-style:"bold"))
+    (set: $relic_format to (text-color:#fdcd5a))
+    (rerun: ?light_switch)
+    (rerun: ?bedroom_text)
+    (rerun: ?look_around_text)
+    (rerun: ?dresser_text)
+  ]
+  (else:)[
+    (replace: ?switch_mode)[
+      <script>
+    document.querySelectorAll('tw-story')[0].classList.replace('dark-mode', 'light-mode');
+   </script>
+    ]
+    (set: $item_format to (text-color: #099bde))
+    (set: $location_format to (text-color: #ce3257))
+    (set: $answer_format to (font:'Courier New')+(text-color:#7a82da)+(text-style:"bold"))
+    (set: $relic_format to (text-color:#c5a230))
+    (rerun: ?light_switch)
+    (rerun: ?bedroom_text)
+    (rerun: ?look_around_text)
+    (rerun: ?dresser_text)
+  ]
+]
+}
+
+
+:: Checkout {"position":"925,775","size":"100,100"}
+{
+($render_bg:)
+(cond: $living_room_chair_assembled, "### Checkout", "### Checkout?")
+
+(set: $marketplace_maze_solved to true)
+
+You round one final corner and a beam of light shines down from the heavens. It's the checkout.
+
+(if: $living_room_chair_assembled)[
+  <tw-consecutive-br data-raw></tw-consecutive-br>
+  You have your $relic_format[FÄLLSTOL] in tow.
+
+  <tw-consecutive-br data-raw></tw-consecutive-br>
+  [[> Checkout and escape!->Escape!]]
+]
+(else:)[
+  <tw-consecutive-br data-raw></tw-consecutive-br>
+  But you're still missing something...
+  
+  In a flash, you remember that you have a specific piece of furniture you came here to get. You'll have to head back to the Showroom to get it.
+  
+  <tw-consecutive-br data-raw></tw-consecutive-br>\
+  Luckily, it seems like there's an $item_format[elevator] from here to the $location_format[LIVING ROOM] area.
+  
+  <tw-consecutive-br data-raw></tw-consecutive-br>\
+  [[> Take elevator to LIVING ROOM->Living Room]]
+]
+}
+
+
+:: Childrens {"position":"1300,800","size":"100,100"}
+($render_bg:)\
+### Children's Area
+
+You enter the $location_format[CHILDREN'S AREA].
+
+(if: $childrens_looked_around)[\
+  > Look around
+  $childrens_look_around_text\
+]\
+(else:)[\
+  |look_around>[> Look around]\
+]\
+(if: $kitchen_refrigerator_unlocked)[\
+  <br>
+  You've pulled the $item_format[large lever] behind the $answer_format[BUNK BED]. It opened something in the $location_format[KITCHEN].
+]\
+(else-if: $childrens_search_clicked)[\
+  <br>
+  > Search
+  $childrens_search_text\
+]\
+(else-if: $childrens_looked_around)[\
+  <br>
+  $childrens_search_click_text\
+]\
+(else:)[\
+  <br>\
+  |search_click>[]\
+]\
+{
+(set: $childrens_west_text to "[[Go to STAIRS->Stairs]]")
+(set: $childrens_east_text to "[[Go to WARD ROBE & STORAGE->Storage]]")
+($compass: "", "$childrens_west_text", "$childrens_east_text", "")
+
+(set: $childrens_look_around_text to "You look around. There are hundreds of stuffed animals scattered across the room, spilling over the tops of bins, peeping out of each child-sized cabinet, piled precariously on every available surface as far as the eye can see. You sense that there might be something hidden in this room.")
+(set: $childrens_search_click_text to "|search>[> Search]")
+(set: $childrens_search_text to "Where do you want to search?
+`[`//You may need to find something in the real world//`]`
+{
+  (input: bind _guess, \"X=\")
+  (link-repeat: \"> Search\")[
+    (if: (uppercase: (str-replaced: \" \", \"\", _guess)) is $childrens_search_answer)[
+      (replace: ?search_guess_result)[$childrens_search_correct_text]
+      (set: $kitchen_refrigerator_unlocked to true)
+    ]
+    (else:)[
+      (replace: ?search_guess_result)[$childrens_search_incorrect_text]
+    ]
+  ]
+}
+|search_guess_result>[]")
+(set: $childrens_search_correct_text to "You search the $answer_format[BUNK BED]. Tucked between the bunk bed and the wall, you find a $item_format[large lever]. You pull it and hear a //*kathunk*// in the distance. You think the sound came from the $location_format[KITCHEN].")
+(set: $childrens_search_incorrect_text to "You search the $answer_format[(uppercase: (str-replaced: \" \", \"\", _guess))]. You don't find anything there.")
+}
+{
+(click-append:?look_around)+(t8n:'dissolve')[
+  <br>
+  $childrens_look_around_text
+  (set: $childrens_looked_around to true)
+  (replace: ?search_click )[
+    $childrens_search_click_text
+  ]
+]
+(click-append:?search)+(t8n:'dissolve')[
+  $childrens_search_text\
+  (set: $childrens_search_clicked to true)\
+]
+}
+
+
+:: Dining {"position":"1625,650","size":"100,100"}
+($render_bg:)\
+### Dining
+
+You enter the $location_format[DINING] area.
+
+(if: $dining_looked_around)[> Look around
+$dining_look_around_text
+]
+\(else:)[|look_around>[> Look around]]
+\(if: $dining_examined_bar_cart)[<br>> Examine $item_format[bar cart]
+$dining_examine_bar_cart_text
+]
+\(else-if: $dining_looked_around)[$dining_examine_bar_cart_click_text]
+\(else:)[|examine_bar_cart_click>[]]
+\(if: $dining_safe_unlocked)[<br>> Examine $item_format[safe]
+$dining_safe_unlocked_text
+]
+\(else-if: $dining_examined_safe)[<br>> Examine $item_format[safe]
+$dining_examine_safe_text
+]
+\(else-if: $dining_examined_bar_cart)[$dining_examine_safe_click_text]
+\(else:)[|examine_safe_click>[]]
+
+\(set: $dining_north_text to "[[Go to KITCHEN->Kitchen]]")
+\(set: $dining_west_text to "[[Go to LIVING ROOM->Living Room]]")
+\(set: $dining_east_text to "[[Go to BATHROOM->Bathroom]]")
+\($compass: "$dining_north_text", "$dining_west_text", "$dining_east_text", "")
+
+\(set: $dining_look_around_text to "You look around. You walk into a model home and see chairs gathered in earnest anticipation, placemats aligned with hopeful precision, and plates arranged at the ready for an imaginary feast. For a moment, you forget what you're doing and imagine an aspirational version of yourself who's coming home to have dinner in this Scandinavian tiny house. Beyond the dining table is a sleek, minimalist $item_format[bar cart].")
+\(set: $dining_examine_bar_cart_click_text to "<br>|examine_bar_cart>[> Examine $item_format[bar cart]]")
+\(set: $dining_examine_safe_click_text to "<br>|examine_safe>[> Examine $item_format[safe]]")
+\(set: $dining_examine_bar_cart_text to "You examine the $item_format[bar cart]. There's a $item_format[safe] on it.")
+\(set: $dining_examine_safe_text to "{You examine the $item_format[safe]. Looks like the safe needs a password to open.
+<br>
+(input: bind _guess, \"X=\")
+(link-repeat: \"> Enter password\")[
+  (if: (str-replaced: \" \", \"\", _guess) is $dining_safe_answer)[
+    (replace: ?safe_guess_result)[$dining_safe_correct_text]
+    (set: $dining_safe_unlocked to true)
+    (set: $inventory to it + (a: $wooden_peg_text))
+  ]
+  (else-if: (uppercase: (str-replaced: \" \", \"\", _guess)) is $bathroom_real_world_computer_password)[
+    (replace: ?safe_guess_result)[$dining_safe_other_password_text]
+  ]
+  (else:)[
+    (replace: ?safe_guess_result)[$dining_safe_incorrect_text]
+  ]
+]
+<br>
+|safe_guess_result>[]
+}")
+\(set: $dining_safe_unlocked_text to "You've opened the $item_format[bar cart safe] and acquired the $wooden_peg_text.")
+\(set: $dining_safe_correct_text to "You enter the 4-digit pin code $answer_format[1958]. The safe door swings open. You peer inside and find an IKEA relic—the $wooden_peg_text.")
+\(set: $dining_safe_other_password_text to "`[`//Try this password somewhere else.//`]`")
+\(set: $dining_safe_incorrect_text to "Nothing seems to happen. Seems like you have the wrong password for the safe.")
+
+\(click-append:?look_around)+(t8n:'dissolve')[
+$dining_look_around_text
+\(set: $dining_looked_around to true)
+\(replace: ?examine_bar_cart_click)[$dining_examine_bar_cart_click_text]
+]
+\(click-append:?examine_bar_cart)+(t8n:'dissolve')[
+$dining_examine_bar_cart_text
+\(set: $dining_examined_bar_cart to true)
+\(replace: ?examine_safe_click)[$dining_examine_safe_click_text]
+]
+\(click-append:?examine_safe)+(t8n:'dissolve')[
+$dining_examine_safe_text
+\(set: $dining_examined_safe to true)
+\]
+
+
+:: Escape! {"position":"925,950","size":"100,100"}
+{
+($render_bg:)
+### Escape!
+
+At long last, you've found the exit and have your perfect $relic_format[FÄLLSTOL] for your apartment. Weary but triumphant, you clutch your hard-earned treasure and ring it up through the self checkout. Stepping through the sliding glass doors out into the cool night, the twilight air is sweet and quiet. For a moment, the rooms you left behind seem almost like a dream. You feel a sudden sense of wonder. 
+
+(t8n:'fade-right')+(t8n-delay:5s)[
+<tw-consecutive-br data-raw></tw-consecutive-br>\
+###Congrats on escaping IKEA!
+]
+
+(t8n:'fade-right')+(t8n-delay:8s)[
+[[> View Stats & Credits->Stats]]
+]
+}
+
+
+:: Kitchen {"position":"1625,500","size":"100,100"}
+{
+($render_bg:)
+
+(set: $kitchen_look_around_text to "You look around. You see glistening countertops and an arsenal of faucets. Small signs are affixed to every item with bespoke, vowel-heavy Swedish words you can’t quite pronounce. Further in the room, there are a few refrigerators, and your eye catches on one that seems to sparkle—a solid $item_format[golden refrigerator].")
+(set: $kitchen_examine_refrigerator_click_text to "<br>|examine_refrigerator>[> Examine $item_format[golden refrigerator]]")
+(set: $kitchen_examine_refrigerator_text to "{
+(if: $kitchen_refrigerator_unlocked_seen)[
+  You've already taken the $measuring_tape_text from the fridge.
+]
+(else-if: $kitchen_refrigerator_unlocked)[
+  You examine the $item_format[golden refrigerator]. The fridge doors open. You peer inside and find an IKEA relic—the $measuring_tape_text.
+  (set: $kitchen_refrigerator_unlocked_seen to true)
+  (set: $inventory to it + (a: $measuring_tape_text))
+]
+(else:)[
+  You try to open it up, but the doors don't seem to budge at all.
+]}")
+
+### Kitchen
+
+You enter the $location_format[KITCHEN] area.
+
+<tw-consecutive-br data-raw></tw-consecutive-br>
+
+(if: $kitchen_looked_around)[
+  > Look around
+  <br>
+  $kitchen_look_around_text
+  <br>
+]
+(else:)[
+  |look_around>[> Look around]
+]
+(if: $kitchen_examined_refrigerator)[
+  <br>
+  > Examine $item_format[golden refrigerator]
+  $kitchen_examine_refrigerator_text
+]
+(else-if: $kitchen_looked_around)
+  [$kitchen_examine_refrigerator_click_text]
+(else:)[
+  |examine_refrigerator_click>[]
+]
+
+(set: $kitchen_west_text to "[[Go to WORK SPACES->Workspaces]]")
+(set: $kitchen_south_text to "[[Go to DINING->Dining]]")
+($compass: "", "$kitchen_west_text", "", "$kitchen_south_text")
+
+(click-append:?look_around)+(t8n:'dissolve')[
+  <br>
+  $kitchen_look_around_text
+  (set: $kitchen_looked_around to true)
+  (replace: ?examine_refrigerator_click)
+  [$kitchen_examine_refrigerator_click_text]
+  <br>
+]
+(click-append:?examine_refrigerator)+(t8n:'dissolve')[
+  $kitchen_examine_refrigerator_text
+  (set: $kitchen_examined_refrigerator to true)\
+]
+}
+
+
+:: Living Room {"position":"1450,650","size":"100,100"}
+($render_bg:)\
+### Living Room
+
+You enter the $location_format[LIVING ROOM] area.
+
+(if: $living_room_looked_around)[> Look around
+$living_room_look_around_text
+]
+\(else:)[|look_around>[> Look around]]
+\(if: $living_room_examined_plaque)[<br>> Examine $item_format[plaque]
+$living_room_examine_plaque_text]
+\(else-if: $living_room_looked_around)[$living_room_examine_plaque_click_text]
+\(else:)[|examine_plaque_click>[]]
+\(if: $living_room_chair_assembled)[<br>> Examine $item_format[chair]
+$living_room_chair_already_assembled_text
+]
+\(else-if: $living_room_examined_extra_pieces)[<br>> Examine $item_format[extra pieces]
+$living_room_examine_extra_pieces_text
+]
+\(else-if: $living_room_looked_around)[$living_room_examine_extra_pieces_click_text]
+\(else:)[|examine_extra_pieces_click>[]]
+[[> Return to RESTAURANT & CAFE->Restaurant & Cafe]]\
+(if: $marketplace_maze_solved)[<br>[[> Take elevator to CHECKOUT->Checkout]]]\
+<br>
+
+\(set: $living_room_north_text to "[[Go to WORK SPACES->Workspaces]]")
+\(set: $living_room_east_text to "[[Go to DINING->Dining]]")
+\(set: $living_room_south_text to "(if: $storage_shortcut_unlocked)[[[Go to WARD ROBE & STORAGE->Storage]]]")
+\($compass: "$living_room_north_text", "", "$living_room_east_text", "$living_room_south_text")
+
+\(set: $living_room_look_around_text to "You look around. To your left, you see lamps of every shape—floor lamps, desk lamps, even a lamp shaped like a bagel—casting a warm, conspiratorial glow. They illuminate a shiny $item_format[plaque] on the wall. To your right is a bunch of $item_format[extra pieces] from some kind of furniture.")
+\(set: $living_room_examine_plaque_click_text to "<br>|examine_plaque>[> Examine $item_format[plaque]]")
+\(set: $living_room_examine_extra_pieces_click_text to "<br>|examine_extra_pieces>[> Examine $item_format[extra pieces]]")
+\(set: $living_room_examine_plaque_text to "You inspect the $item_format[plaque]. It reads: <div class=\"plaque\"><blockquote>\"Before I depart, I leave you this catalog. Study every <u>page</u>, question every <u>item</u>, and mind every <u>word</u>; the future of IKEA lives on in your careful hands.\"</blockquote><table class=\"plaque_table\">
+<tr><td class=\"plaque_table\">6, 4, 3</td></tr>
+<tr><td class=\"plaque_table\">6, 1, 16</td></tr>
+<tr><td class=\"plaque_table\">8, 1, 6</td></tr>
+<tr><td class=\"plaque_table\">4, 2, 17</td></tr>
+<tr><td class=\"plaque_table\">5, 2, 7</td></tr>
+<tr><td class=\"plaque_table\">9, 2, 7</td></tr>
+<tr><td class=\"plaque_table\">6, 3, 10</td></tr>
+</table><div class=\"author\">    - Böök Sifer (Chief IKEA designer)</div></div>")
+\(set: $living_room_examine_extra_pieces_text to "{You examine the pieces. It seems like they might go together, but you can't figure out what they make. And you can't find the guide with the cheery little instruction guy for how to put the parts together. You might need to look elsewhere for how to put these pieces together...
+<br>
+What do you want to do?
+(input: bind _guess, \"X=\")
+(link-repeat: \"> Try\")[
+  (if: (uppercase: (str-replaced: \" \", \"\", _guess)) is $living_room_chair_answer)[
+    (replace: ?chair_guess_result)[$living_room_chair_correct_text]
+    (set: $living_room_chair_assembled to true)
+  ]
+  (else:)[
+    (replace: ?chair_guess_result)[$living_room_chair_incorrect_text]
+  ]
+]
+<br>
+|chair_guess_result>[]
+}")
+\(set: $living_room_chair_already_assembled_text to "You've already assembled the $relic_format[FÄLLSTOL] with the power of $answer_format[MANUAL ASSEMBLY]. Now you just need to find your way out of IKEA...")
+\(set: $living_room_chair_correct_text to "You use the power of $answer_format[MANUAL ASSEMBLY] to construct a $relic_format[FÄLLSTOL]. As you put the last piece of the chair in place, you recall that this was the reason you came to IKEA today. You now have the perfect chair for your apartment. (cond: $marketplace_maze_solved, \"Now you just need to head back to the checkout and leave.\", \"Now you just need to find your way out of here...\")")
+\(set: $living_room_chair_incorrect_text to "Nothing seems to happen.")
+\(click-append:?look_around)+(t8n:'dissolve')[
+$living_room_look_around_text
+\(set: $living_room_looked_around to true)
+\(replace: ?examine_plaque_click)[$living_room_examine_plaque_click_text]
+\(replace: ?examine_extra_pieces_click)[$living_room_examine_extra_pieces_click_text]
+]
+\(click-append:?examine_plaque)+(t8n:'dissolve')[
+$living_room_examine_plaque_text
+\(set: $living_room_examined_plaque to true)
+\]
+\(click-append:?examine_extra_pieces)+(t8n:'dissolve')[
+$living_room_examine_extra_pieces_text
+\(set: $living_room_examined_extra_pieces to true)
+]
+
+
+:: Lobby {"position":"1075,275","size":"100,100"}
+{
+($render_bg:)
+(set: $lobby_look_around_text to "You look around and see that you're currently in the IKEA $location_format[LOBBY]. A single yellow arrow painted on the floor beckons you forward. Turning towards the arrow's path, to the $direction_format[EAST], you see the $location_format[RESTAURANT & CAFE].")
+(set: $lobby_examine_catalog_text to "You examine the IKEA catalog.
+//`[`You should refer to the physical copy of the IKEA catalog`]`//")
+(set: $lobby_examine_pencil_text to "This is just a normal pencil. It's IKEA branded. Sweet!")
+(set: $lobby_examine_compass_text to "This is just a normal compass.")
+($render_bg:)\
+
+### Lobby
+
+(if:visits > 1)[
+  You enter the $location_format[LOBBY].
+]
+(else:)[
+  You wake up and find yourself in a large building. Where are you? Looking up, you see a massive sign with the iconic yellow and blue IKEA logo. The air smells faintly of cinnamon buns, particleboard, and possibility.
+]
+
+<tw-consecutive-br data-raw></tw-consecutive-br>
+
+At your feet, you notice an IKEA shopping bag. Inside there's an $item_format[IKEA catalog], a $item_format[pencil], and a $item_format[compass].
+
+<tw-consecutive-br data-raw></tw-consecutive-br>
+
+(if: $lobby_looked_around)[\
+  > Look around
+  <br>
+  $lobby_look_around_text
+  <br>
+]\
+(else:)[\
+  |look_around>[> Look around]
+]\
+<br>
+
+(if: $lobby_examined_catalog)[\
+  > Examine $item_format[catalog]
+  <br>
+  $lobby_examine_catalog_text
+  <br>
+]\
+(else:)[\
+  |examine_catalog>[> Examine $item_format[catalog]]
+]\
+<br>
+
+(if: $lobby_examined_pencil)[\
+  > Examine $item_format[pencil]
+  <br>
+  $lobby_examine_pencil_text
+  <br>
+]\
+(else:)[\
+  |examine_pencil>[> Examine $item_format[pencil]]
+]\
+<br>
+
+(if: $lobby_examined_compass)[\
+  > Examine $item_format[compass]
+  <br>
+  $lobby_examine_compass_text
+  <br>
+]\
+(else:)[\
+  |examine_compass>[> Examine $item_format[compass]]
+]\
+
+(set: $lobby_east_text to "[[Go to CAFE->Restaurant & Cafe]]")
+($compass: "", "", "(if:$lobby_looked_around)[$lobby_east_text](else:)|go_east>[]", "")
+
+(click-append:?look_around)+(t8n:'dissolve')[
+  <br>
+  $lobby_look_around_text
+  (set: $lobby_looked_around to true)
+  (replace: ?go_east)[$lobby_east_text]
+  <br>
+]
+(click-append:?examine_catalog)+(t8n:'dissolve')[
+  <br>
+  $lobby_examine_catalog_text
+  (set: $lobby_examined_catalog to true)
+  <br>
+]
+(click-append:?examine_pencil)+(t8n:'dissolve')[
+  <br>
+  $lobby_examine_pencil_text
+  (set: $lobby_examined_pencil to true)
+  <br>
+]
+(click-append:?examine_compass)+(t8n:'dissolve')[
+  <br>
+  $lobby_examine_compass_text
+  (set: $lobby_examined_compass to true)
+]
+}
+
+
+:: Marketplace 1 {"position":"275,250","size":"100,100"}
+($render_bg:)\
+### Marketplace 1
+
+//You enter a new passageway.//
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace 2]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 10 {"position":"400,500","size":"100,100"}
+($render_bg:)\
+### Marketplace 10
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace 11]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 11 {"position":"400,375","size":"100,100"}
+($render_bg:)\
+### Marketplace 11
+
+//You think to yourself, "Should have grabbed a few extra snacks from the Restaurant & Cafe before starting this maze."//
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace 12]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 12 {"position":"400,250","size":"100,100"}
+($render_bg:)\
+### Marketplace 12
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace 13]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 13 {"position":"400,125","size":"100,100"}
+($render_bg:)\
+### Marketplace 13
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace 14]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 14 {"position":"525,125","size":"100,100"}
+($render_bg:)\
+### Marketplace 14
+
+//Is this the halfway point? You sure hope so...//
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace 15]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 15 {"position":"525,250","size":"100,100"}
+($render_bg:)\
+### Marketplace 15
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace 16]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 16 {"position":"525,375","size":"100,100"}
+($render_bg:)\
+### Marketplace 16
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace 17]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 17 {"position":"525,500","size":"100,100"}
+($render_bg:)\
+### Marketplace 17
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace 18]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 18 {"position":"525,625","size":"100,100"}
+($render_bg:)\
+### Marketplace 18
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace 19]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 19 {"position":"525,750","size":"100,100"}
+($render_bg:)\
+### Marketplace 19
+
+//You see a really long hallway to your south.//
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace 20]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 2 {"position":"275,375","size":"100,100"}
+($render_bg:)\
+### Marketplace 2
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace 3]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 20 {"position":"525,875","size":"100,100"}
+($render_bg:)\
+### Marketplace 20
+
+//You continue down the really long hallway. Your mind starts to drift...//
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace 21]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 21 {"position":"650,875","size":"100,100"}
+($render_bg:)\
+### Marketplace 21
+
+//You've been here for ages. Is that a talking meatball in the corner or are you just hallucinating?//
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace 22]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 22 {"position":"650,750","size":"100,100"}
+($render_bg:)\
+### Marketplace 22
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace 23]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 23 {"position":"650,625","size":"100,100"}
+($render_bg:)\
+### Marketplace 23
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace 24]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 24 {"position":"650,500","size":"100,100"}
+($render_bg:)\
+### Marketplace 24
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace 25]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 25 {"position":"650,375","size":"100,100"}
+($render_bg:)\
+### Marketplace 25
+
+//25 rooms down. You feel like you're almost there.//
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace 26]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 26 {"position":"650,250","size":"100,100"}
+($render_bg:)\
+### Marketplace 26
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace 27]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 27 {"position":"650,125","size":"100,100"}
+($render_bg:)\
+### Marketplace 27
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace 28]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 28 {"position":"775,125","size":"100,100"}
+($render_bg:)\
+### Marketplace 28
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace 29]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 29 {"position":"775,250","size":"100,100"}
+($render_bg:)\
+### Marketplace 29
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace 30]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 3 {"position":"275,500","size":"100,100"}
+($render_bg:)\
+### Marketplace 3
+
+//Three rooms down. How many more to go?//
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace 4]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 30 {"position":"775,375","size":"100,100"}
+($render_bg:)\
+### Marketplace 30
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace 31]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 31 {"position":"775,500","size":"100,100"}
+($render_bg:)\
+### Marketplace 31
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Checkout]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 4 {"position":"275,625","size":"100,100"}
+($render_bg:)\
+### Marketplace 4
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace 5]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 5 {"position":"275,750","size":"100,100"}
+($render_bg:)\
+### Marketplace 5
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace 6]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 6 {"position":"275,875","size":"100,100"}
+($render_bg:)\
+### Marketplace 6
+
+//You really hope you can escape and see the light of day again.//
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace 7]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 7 {"position":"400,875","size":"100,100"}
+($render_bg:)\
+### Marketplace 7
+
+Which way should you go?
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace 8]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 8 {"position":"400,750","size":"100,100"}
+($render_bg:)\
+### Marketplace 8
+
+//Who designed IKEA to be such a maze?//
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace 9]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace 9 {"position":"400,625","size":"100,100"}
+($render_bg:)\
+### Marketplace 9
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace Restart]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace 10]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Marketplace Restart {"position":"100,500","size":"100,100"}
+($render_bg:)\
+You continue onward but you suddenly start to feel woozy. You black out.
+
+[[> Continue->Marketplace Start]]
+
+
+:: Marketplace Start {"position":"275,125","size":"100,100"}
+($render_bg:)\
+### Marketplace Start
+
+{(if:visits is 1)[You enter the MARKETPLACE. What lies before you seems to be a giant confusing maze. You recall that you have a map of the marketplace in your catalog]
+(if:visits > 1)[You awake back at the start of the MARKETPLACE maze. You recall that you have a map of the marketplace in your CATALOG.]
+(if:visits > 2)[<br><br>Blindly going through the maze doesn't seem to be working. Maybe you can call for help somehow?]}
+
+Which way should you go?
+
+<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>[[Go NORTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[[Go WEST->Marketplace Restart]]</td>
+        <td class="image-cell">
+           <img src="images/compass_inverted.png" alt="Compass">
+        </td>
+        <td>[[Go EAST->Marketplace 1]]</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[[Go SOUTH->Marketplace Restart]]</td>
+        <td></td>
+    </tr>
+</table>
+
+
+:: Restaurant & Cafe {"position":"1225,275","size":"100,100"}
+{
+($render_bg:)
+(set: $restaurant_look_around_text to "You look around. It's weirdly empty in here today, not a single bickering couple or <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.theglobeandmail.com/news/toronto/stylish-but-illegal-monkey-found-roaming-toronto-ikea/article6140276/\">stylish but illegal monkey</a> in sight. There's a $item_format[food counter], but all the menu display screens are dark. You might have to figure out the menu some other way. You also see a $item_format[cash register].\
+<br>
+To the $direction_format[SOUTH] you see a door marked $location_format[SHOWROOM].")
+(set: $restaurant_examine_food_counter_click_text to "|examine_food_counter>[> Examine $item_format[food counter]]")
+(set: $restaurant_examine_cash_register_click_text to "|examine_cash_register>[> Examine $item_format[cash register]]")
+(set: $restaurant_examine_food_counter_text to "You examine the $item_format[food counter]. Tentatively, you reach out and pluck a single Swedish meatball from the perfectly stacked pile. It reinvigorates your spirits, but it doesn't get you any closer to escaping.
+{
+<tw-consecutive-br data-raw></tw-consecutive-br>
+(link-repeat: \"> Eat another meatball\")[\
+  (set: $restaurant_meatballs_eaten to it + 1)
+  (rerun: ?meatballs_eaten_text)\
+  (if: $restaurant_meatballs_eaten > 5)[
+    (replace: ?meatballs_eaten_text)[You've eaten (print: $restaurant_meatballs_eaten) meatballs. (//This is not a puzzle//)]
+  ]
+]\
+<br>
+|meatballs_eaten_text>[You've eaten (print: $restaurant_meatballs_eaten) meatball(if: $restaurant_meatballs_eaten > 1)[s].]\
+}")
+(set: $restaurant_examine_cash_register_text to "{You examine the $item_format[cash register]. It's one of those newer ones that needs an alphanumeric password to open.
+<br>
+(if: $restaurant_cash_register_opened)[\
+  $restaurant_cash_register_already_open_text
+]\
+(else:)[\
+  (input: bind _guess, \"X=\")
+  (link-repeat: \"> Enter password\")[
+    (if: (uppercase: (str-replaced: \" \", \"\", _guess)) is $restaurant_cash_register_answer)[
+      (replace: ?cash_register_guess_result)[$restaurant_cash_register_open_correct_text]
+      (set: $restaurant_cash_register_opened to true)
+    ]
+    (else:)[
+      (replace: ?cash_register_guess_result)[$restaurant_cash_register_open_incorrect_text]
+    ]
+  ]
+  <br>
+  |cash_register_guess_result>[]
+]\}")
+(set: $restaurant_cash_register_already_open_text to "The cash register is open. You already have the $item_format[showroom key].")\
+(set: $restaurant_cash_register_open_correct_text to "Success! The cash register opens and you find an old key. Etched into it is the word $location_format[SHOWROOM]. You take the $item_format[showroom key].")
+(set: $restaurant_cash_register_open_incorrect_text to "The $item_format[cash register] screen flashes \"Incorrect Password\".")\
+
+### Restaurant & Cafe
+
+(if:visits > 1)[You enter the $location_format[RESTAURANT & CAFE].]
+(else:)[Figuring that some food might help jog your memory (or at least tide you over until you find your way out), you enter the $location_format[RESTAURANT & CAFE].]
+
+<tw-consecutive-br data-raw></tw-consecutive-br>
+
+(if: $restaurant_looked_around)[\
+  > Look around
+  <br>
+  $restaurant_look_around_text
+  <br>
+]\
+(else:)[\
+  |look_around>[> Look around]
+]\
+<br>
+
+(if: $restaurant_examined_food_counter)[\
+  > Examine $item_format[food counter]
+  <br>
+  $restaurant_examine_food_counter_text
+  <br>
+]\
+(else-if: $restaurant_looked_around)[\
+  $restaurant_examine_food_counter_click_text
+]\
+(else:)[\
+  |examine_food_counter_click>[]
+]\
+<br>
+
+(if: $restaurant_examined_cash_register)[\
+  > Examine $item_format[cash register]
+  <br>
+  $restaurant_examine_cash_register_text
+]\
+(else-if: $restaurant_looked_around)[\
+  $restaurant_examine_cash_register_click_text
+]\
+(else:)[\
+  |examine_cash_register_click>[]
+]\
+
+\(set: $restaurant_west_text to "[[Go to LOBBY->Lobby]]")
+\(set: $restaurant_south_text to "(if:(history: where its name contains \"Living Room\")'s length >= 1)[[[Go to LIVING ROOM->Living Room]]](else:)[[[Go to SHOW ROOM->Showroom]]]")
+\($compass: "", "$restaurant_west_text", "", "(if:$restaurant_looked_around)[$restaurant_south_text](else:)|go_south>[]")
+
+(click-append:?look_around)+(t8n:'dissolve')[
+  <br>
+  $restaurant_look_around_text
+  (set: $restaurant_looked_around to true)
+  (replace: ?go_south)[$restaurant_south_text]
+  (replace: ?examine_food_counter_click)[$restaurant_examine_food_counter_click_text]
+  (replace: ?examine_cash_register_click)[$restaurant_examine_cash_register_click_text]
+  <br>
+]
+(click-append:?examine_food_counter)+(t8n:'dissolve')[
+  $restaurant_examine_food_counter_text
+  (set: $restaurant_examined_food_counter to true)\
+]
+(click-append:?examine_cash_register)+(t8n:'dissolve')[
+  $restaurant_examine_cash_register_text
+  (set: $restaurant_examined_cash_register to true)\
+]
+}
+
+
+:: Shortcut {"position":"1450,800","size":"100,100"}
+{
+($render_bg:)
+
+### Shortcut
+
+You enter the $location_format[SHORTCUT]. It's a narrow hallway connecting from the $location_format[WARDROBE & STORAGE] area to the $location_format[LIVING ROOM] area to the $direction_format[NORTH]. As you walk through, you notice a Keurig coffee machine. Sweet!
+
+<tw-consecutive-br data-raw></tw-consecutive-br>
+
+[//Find your nearest co-worker to grab a coffee hint//]
+
+<br>
+
+[[> Continue NORTH to LIVING ROOM->Living Room]]
+
+}
+
+
+:: Showroom {"position":"1225,425","size":"100,100"}
+{
+($render_bg:)
+### Showroom
+
+You go $direction_format[SOUTH] to the $location_format[SHOWROOM]. There's a door in your way.
+
+<tw-consecutive-br data-raw></tw-consecutive-br>
+
+(if: $restaurant_cash_register_opened)[
+  You have the $item_format[showroom key].
+  <tw-consecutive-br data-raw></tw-consecutive-br>
+  |use_showroom_key>[> Use $item_format[showroom key]]
+]
+(else:)[
+  You reach for the doorknob. Drats! The door is locked. You see a keyhole on the doorknob.
+  <tw-consecutive-br data-raw></tw-consecutive-br>
+  [[> Back->Restaurant & Cafe]]
+]
+
+(click-append:?use_showroom_key)+(t8n:'dissolve')[
+  <tw-consecutive-br data-raw></tw-consecutive-br>
+  You use the $item_format[showroom key] on the door. The key fits perfectly and you slowly twist the doorknob. The door opens...
+  <tw-consecutive-br data-raw></tw-consecutive-br>
+  [[> Enter SHOWROOM->Living Room]]
+]
+}
+
+
+:: Stairs {"position":"1125,800","size":"100,100"}
+($render_bg:)\
+### Stairs to MARKETPLACE
+
+You go $direction_format[WEST] to the $location_format[STAIRS].
+
+You see a door labeled "STAIRS TO $location_format[MARKETPLACE]" just ahead of you. A small sign reads "Only those bearing the four arcane $relic_format[IKEA relics] may pass".
+
+{
+<!-- Some stuff for debugging
+(input: bind _input, "X==")
+(link-repeat: "> Add to inventory")[
+(set: $inventory to it + (a: _input))
+]
+-->
+
+(if: $inventory's length >= 4)[
+You present ($print_inventory:). The door hums faintly, as if recalling an instruction manual. Something inside clicks into place. The lock releases. You may proceed.
+<br>
+[[> Enter the MARKETPLACE->Marketplace Start]]
+]
+(else-if: $inventory's length > 0)[
+You present ($print_inventory:). Unfortunately, you're still missing some relics. The door doesn't budge.
+<br>
+[[> Back->Childrens]]
+]
+(else:)[
+You tug on the door, but it doesn't budge.
+<br>
+[[> Back->Childrens]]
+]
+}
+
+
+:: Stats {"position":"925,1125","size":"100,100"}
+{
+($render_bg:)
+### Stats
+
+''Your Stats''
+<ul>
+<li>You ate $restaurant_meatballs_eaten meatball(if: $restaurant_meatballs_eaten is not 1)[s]</li>
+<li>You took $bedroom_naps_taken nap(if: $bedroom_naps_taken is not 1)[s]</li>
+(if: $workspaces_played_minesweeper)[
+  <li>You played 1 game of minesweeper on the computer</li>
+]
+(set: _max_visit_room to "")
+(set: _max_visit_room_count to 0)
+(for: each _room, ...$valid_room_stats_array)[
+  (if: (count: (history:), _room) > _max_visit_room_count)[
+    (set: _max_visit_room to _room)
+    (set: _max_visit_room_count to (count: (history:), _room))
+  ]
+  <!-- <li>You visited _room (count: (history:), _room) times</li> -->
+]
+<li>Your most visited room is _max_visit_room, which you visited _max_visit_room_count times</li>
+</ul>
+
+### Credits
+<ul>
+<li>''Editors In Chief'': Amy Liu, Raymond Wu</li>
+<li>''Puzzle Authors'': Amy Liu, Raymond Wu</li>
+<li>''Story'': Amy Liu, Raymond Wu</li>
+<li>''Art and Design'': Amy Liu, Raymond Wu</li>
+<li>''Factchecking'': Amy Liu, Raymond Wu</li>
+<li>''Tech'': Amy Liu, Raymond Wu</li>
+<li>''Logistics'': Amy Liu, Raymond Wu</li>
+<li>''Testsolving'': Amy Liu, Raymond Wu</li>
+<li>''Additional testsolving support'': Catherine Wu</li>
+<li>''Logistics'': Amy Liu, Raymond Wu</li>
+<li>''Catering'': Amy Liu, Raymond Wu, and IKEA</li>
+</ul>
+
+Not affiliated with IKEA in any way.
+}
+
+
+:: Storage {"position":"1450,950","size":"100,100"}
+{
+($render_bg:)
+(set: $storage_look_around_text to "You look around. There's a wardrobe that's definitely bigger on the inside and enough storage cubes to organize your every mortal possession. You also notice a $item_format[big yellow button] on the north wall. <tw-consecutive-br data-raw></tw-consecutive-br> If you listen closely, you can hear a really faint $item_format[ticking sound].")
+(set: $shortcut_unlock_click_text to "|unlock_shortcut>[> Push the $item_format[big yellow button]]")
+(set: $shortcut_investigate_ticking_click_text to "|investigate_ticking>[> Investigate the $item_format[ticking sound]]")
+(set: $shortcut_unlock_text to "You push the big yellow button and open a $location_format[SHORTCUT] back to the $location_format[LIVING ROOM].")
+(set: $storage_bomb_defused_text to "You've successfully defused the $item_format[bomb] and acquired the $allen_wrench_text.")
+(set: $storage_found_bomb_text to "Oh no—that ticking sound you heard is actually a $item_format[bomb]! Find your nearest IKEA co-worker to learn how you can defuse this $item_format[bomb].
+
+  What do you do next?
+  {
+  (input: bind _guess, \"X=\")
+  (link-repeat: \"> Try\")[
+    (if: $storage_bomb_answers contains (uppercase: (str-replaced: \" \", \"\", _guess)))[
+      (replace: ?bomb_guess_result)[$storage_bomb_correct_text]
+      (set: $storage_bomb_defused to true)
+      (set: $inventory to it + (a: $allen_wrench_text))
+    ]
+    (else:)[
+      (replace: ?bomb_guess_result)[$storage_bomb_incorrect_text]
+    ]
+  ]
+  }
+  |bomb_guess_result>[]")
+(set: $storage_bomb_correct_text to "After successfully defusing the bomb, a coworker suggests $answer_format[UNBOXING] it. You carefully dismantle the cardboard exterior and the bomb suddenly opens up. You peer inside and find the $allen_wrench_text.")
+(set: $storage_bomb_incorrect_text to "That doesn't seem right. Luckily nothing bad seemed to happen, but time is still ticking down...")
+}\
+### Wardrobe & Storage
+
+You enter the $location_format[WARDROBE & STORAGE] area.
+
+(if: $storage_looked_around)[\
+  > Look around
+  $storage_look_around_text\
+]\
+(else:)[\
+  |look_around>[> Look around]\
+]
+(if:(history: where its name contains "Shortcut")'s length >= 1)[\
+  <tw-consecutive-br data-raw></tw-consecutive-br>\
+  The $location_format[SHORTCUT] has been unlocked already. `[`//Grab a coffee hint from a coworker if you haven't already.//`]`\
+]\
+(else-if: $storage_shortcut_unlocked)[\
+  <tw-consecutive-br data-raw></tw-consecutive-br>\
+  > Push the $item_format[big yellow button]
+  $shortcut_unlock_text
+]\
+(else-if: $storage_looked_around)[\
+  <tw-consecutive-br data-raw></tw-consecutive-br>\
+  $shortcut_unlock_click_text\
+]\
+(if: $storage_bomb_defused)[\
+  <tw-consecutive-br data-raw></tw-consecutive-br>\
+  $storage_bomb_defused_text\
+]\
+(else-if: $storage_investigated_ticking)[\
+  <tw-consecutive-br data-raw></tw-consecutive-br>\
+  > Investigate the $item_format[ticking sound]
+  $storage_found_bomb_text
+]\
+(else-if: $storage_looked_around)[\
+  <tw-consecutive-br data-raw></tw-consecutive-br>\
+  $shortcut_investigate_ticking_click_text\
+]\
+{
+
+(set: $storage_north_text to "(if:(history: where its name contains \"Shortcut\")'s length >= 1)[[[Go to LIVING ROOM->Living Room]]](else-if: $storage_shortcut_unlocked)[[[Go to SHORTCUT->Shortcut]]](else:)[|compass_shortcut>[]]")
+(set: $storage_west_text to "[[Go to CHILDREN->Childrens]]")
+(set: $storage_east_text to "[[Go to BEDROOM->Bedroom]]")
+($compass: "$storage_north_text", "$storage_west_text", "$storage_east_text", "")
+}
+{
+(click-append:?look_around)+(t8n:'dissolve')[
+  <br>
+  $storage_look_around_text
+  <tw-consecutive-br data-raw></tw-consecutive-br>
+  $shortcut_unlock_click_text
+  <br>
+  $shortcut_investigate_ticking_click_text
+  (set: $storage_looked_around to true)\
+]
+(click-append:?unlock_shortcut)+(t8n:'dissolve')[
+  $shortcut_unlock_text\
+  (set: $storage_shortcut_unlocked to true)\
+  (replace: ?compass-shortcut)[[[Go to SHORTCUT->Shortcut]]]\
+  <br>\
+]
+(click-append:?investigate_ticking)+(t8n:'dissolve')[
+  $storage_found_bomb_text\
+  (set: $storage_investigated_ticking to true)\
+]
+}
+
+
+:: Welcome {"position":"1075,125","size":"100,100"}
+### Welcome to IKEA
+{
+<!-- Background and font colors -->
+(set: $darkMode to true)
+(set: $render_bg to (macro: [\
+  (output:)[\
+    (if: $darkMode)[\
+      <script>document.querySelectorAll('tw-story')[0].classList.add('dark-mode');</script>\
+    ]\
+    (else:)[\
+      <script>document.querySelectorAll('tw-story')[0].classList.add('light-mode');</script>\
+    ]\
+  ]\
+]))\
+($render_bg:)\
+
+<!-- Text formatting and colors -->
+(set: $item_format to (text-color: #51e1ff))
+(set: $location_format to (text-color: #ff7d7d))
+(set: $direction_format to (text-style: "bold"))
+(set: $answer_format to (font:'Courier New')+(text-color:#8a94fc)+(text-style:"bold"))
+(set: $relic_format to (text-color:#fdcd5a))
+
+<!-- Compass formatting -->
+(set: $compass to (macro: str-type _north, str-type _west, str-type _east, str-type _south, [
+  (output:)[<table class="compass-table">
+    <tr>
+        <td></td>
+        <td>_north</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>_west</td>
+        <td class="image-cell">
+        (if: $darkMode is true)[<img src="images/compass_inverted.png" alt="Compass">]\
+        (else:)[<img src="images/compass.png" alt="Compass">]\
+        </td>
+        <td>_east</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>_south</td>
+        <td></td>
+    </tr>
+</table>]
+]))
+
+<!-- Lobby variables -->
+(set: $lobby_looked_around to false)
+(set: $lobby_examined_catalog to false)
+(set: $lobby_examined_pencil to false)
+(set: $lobby_examined_compass to false)
+
+<!-- Restaurant variables -->
+(set: $restaurant_looked_around to false)
+(set: $restaurant_examined_food_counter to false)
+(set: $restaurant_examined_cash_register to false)
+(set: $restaurant_cash_register_answer to "BASIL")
+(set: $restaurant_cash_register_opened to false)
+(set: $restaurant_meatballs_eaten to 1)
+
+<!-- Living Room variables -->
+(set: $living_room_looked_around to false)
+(set: $living_room_examined_plaque to false)
+(set: $living_room_examined_extra_pieces to false)
+(set: $living_room_chair_answer to "MANUALASSEMBLY")
+(set: $living_room_chair_assembled to false)
+
+<!-- Workspaces variables -->
+(set: $workspaces_looked_around to false)
+(set: $workspaces_examined_map to false)
+(set: $workspaces_examined_computer to false)
+(set: $workspaces_number_pins to 10)
+(set: $workspaces_played_minesweeper to false)
+(set: $workspaces_checked_recycling to false)
+(set: $workspaces_push_pin_answer to "DUBLIN")
+(set: $workspaces_push_pin_placed to false)
+
+<!-- Kitchen variables -->
+(set: $kitchen_looked_around to false)
+(set: $kitchen_examined_refrigerator to false)
+(set: $kitchen_refrigerator_unlocked to false)
+(set: $kitchen_refrigerator_unlocked_seen to false)
+
+<!-- Dining variables -->
+(set: $dining_looked_around to false)
+(set: $dining_examined_bar_cart to false)
+(set: $dining_examined_safe to false)
+(set: $dining_safe_answer to "1958")
+(set: $dining_safe_unlocked to false)
+
+<!-- Bathroom variables -->
+(set: $bathroom_looked_around to false)
+(set: $bathroom_examined_help_desk to false)
+(set: $bathroom_real_world_computer_password to "KREATIV")
+
+<!-- Bedroom variables -->
+(set: $bedroom_looked_around to false)
+(set: $bedroom_examined_dresser to false)
+(set: $bedroom_naps_taken to 0)
+
+<!-- Storage variables -->
+(set: $storage_looked_around to false)
+(set: $storage_investigated_ticking to false)
+(set: $storage_bomb_defused to false)
+(set: $storage_bomb_answers to (a: "UNBOXING"))
+(set: $storage_shortcut_unlocked to false)
+
+<!-- Children's variables -->
+(set: $childrens_looked_around to false)
+(set: $childrens_search_clicked to false)
+(set: $childrens_search_answer to "BUNKBED")
+
+<!-- Marketplace variables -->
+(set: $marketplace_maze_solved to false)
+
+<!-- Visit stats variables -->
+(set: $valid_room_stats_array to (a: "Lobby", "Restaurant & Cafe", "Living Room", "Workspaces", "Kitchen", "Dining", "Bathroom", "Bedroom", "Storage", "Childrens"))
+
+<!-- IKEA relic variables -->
+(set: $inventory to (a:))
+(set: $allen_wrench to false)
+(set: $wooden_peg to false)
+(set: $cam_lock to false)
+(set: $measuring_tape to false)
+(set: $allen_wrench_text to "$relic_format[ALLEN WRENCH OF DESTINY]")
+(set: $wooden_peg_text to "$relic_format[TINY WOODEN PEG OF FORTITUDE]")
+(set: $cam_lock_text to "$relic_format[CAM LOCK OF ALIGNMENT]")
+(set: $measuring_tape_text to "$relic_format[MEASURING TAPE OF REVELATION]")
+(set: $print_inventory to (macro: [(output:)[{\
+(if: $inventory's length is 0)[\
+    nothing\
+]\
+(else-if: $inventory's length is 1)[\
+    the (print: (trimmed: $inventory's 1st))\
+]\
+(else-if: $inventory's length is 2)[\
+    the (print: $inventory's 1st) and the (print: $inventory's last)\
+]\
+(else:)[\
+    (set: _first_part to (subarray: $inventory, 1, $inventory's length - 1))\
+    the (print: (joined: ", the ", ..._first_part)), and the (print: $inventory's last)\
+]\
+}]]))
+}
+
+[[> Wake up->Lobby]]
+<!--[[> Skip to Restaurant->Restaurant & Cafe]]
+[[> Skip to Living Room->Living Room]]
+[[> Skip to Workspaces->Workspaces]]
+[[> Skip to Kitchen->Kitchen]]
+[[> Skip to Dining->Dining]]
+[[> Skip to Bathroom->Bathroom]]
+[[> Skip to Bedroom->Bedroom]]
+[[> Skip to Wardrobe & Storage->Storage]]
+[[> Skip to Shortcut->Shortcut]]
+[[> Skip to Childrens->Childrens]]
+[[> Skip to Stairs->Stairs]]
+[[> Skip to Marketplace->Marketplace Start]]
+[[> Skip to Checkout->Checkout]]
+[[> Skip to Escape!->Escape!]]
+[[> Skip to Stats->Stats]] -->
+
+
+:: Workspaces {"position":"1450,500","size":"100,100"}
+($render_bg:)\
+### Workspaces
+
+You enter the $location_format[WORKSPACES] area.
+
+(if: $workspaces_looked_around)[> Look around
+$workspaces_look_around_text
+]
+\(else:)[|look_around>[> Look around]]
+\(if: $workspaces_push_pin_placed)[<br>> Examine $item_format[world map]
+$workspaces_push_pin_placed_text
+]
+\(else-if: $workspaces_examined_map)[<br>> Examine $item_format[world map]
+$workspaces_examine_map_text
+]
+\(else-if: $workspaces_looked_around)[$workspaces_examine_map_click_text]
+\(else:)[|examine_map_click>[]]
+\(if: $workspaces_examined_computer)[<br>> Examine $item_format[computer]
+$workspaces_examine_computer_text
+]
+\(else-if: $workspaces_looked_around)[$workspaces_examine_computer_click_text]
+\(else:)[|examine_computer_click>[]]
+
+\(set: $workspaces_east_text to "[[Go to KITCHEN->Kitchen]]")
+\(set: $workspaces_south_text to "[[Go to LIVING ROOM->Living Room]]")
+\($compass: "", "", "$workspaces_east_text", "$workspaces_south_text")
+
+\(set: $workspaces_look_around_text to "You look around. You try out 76 different ergonomic chairs and your spine feels more aligned already. On the wall is a large $item_format[world map]. You also see one $item_format[computer] whose monitor emits a glowing rectangle of light.")
+\(set: $workspaces_examine_map_click_text to "<br>|examine_map>[> Examine $item_format[world map]]")
+\(set: $workspaces_examine_computer_click_text to "<br>|examine_computer>[> Examine $item_format[computer]]")
+\(set: $workspaces_examine_map_text to "{You examine the $item_format[world map]. Looks like a normal map of the world made out of paper. Seems like it's been hung up over a corkboard. Below it is a box of $workspaces_number_pins $item_format[push pins] and a hastily scribbled note:
+\"Where in the world can the secret IKEA treasure be?\".
+<br>
+Where do you want to put the $item_format[push pin]?
+(input: bind _guess, \"X=\")
+(link-repeat: \"> Place\")[
+  (if: (uppercase: (str-replaced: \" \", \"\", _guess)) is $workspaces_push_pin_answer)[
+    (rerun: ?push_pin_magic)
+    (replace: ?push_pin_guess_result)[$workspaces_push_pin_correct_text]
+    (set: $workspaces_push_pin_placed to true)
+    (set: $inventory to it + (a: $cam_lock_text))
+  ]
+  (else:)[
+    (if: $workspaces_number_pins > 0)[
+      (set: $workspaces_number_pins to it - 1)
+    ]
+    (rerun: ?push_pin_magic)
+    (replace: ?push_pin_guess_result)[$workspaces_push_pin_incorrect_text]
+  ]
+]
+<br>
+|push_pin_magic>[(if: $workspaces_number_pins <= 0)[You ran out of push pins. You are now magically manifesting push pins from thin air. Weirder things have happened in IKEA. ]]
+|push_pin_guess_result>[]
+}")
+\(set: $workspaces_push_pin_placed_text to "You've placed a push pin on $answer_format[DUBLIN] and acquired the $cam_lock_text.")
+\(set: $workspaces_push_pin_correct_text to "You stick a push pin on $answer_format[DUBLIN] on the map. You hear a //*kathunk*// nearby and spot a secret door open behind a picture frame. You peer inside and find an IKEA relic—the $cam_lock_text.")
+\(set: $workspaces_push_pin_incorrect_text to "You stick a push pin on $answer_format[(uppercase: (str-replaced: \" \", \"\", _guess))]. Nothing happens. You have $workspaces_number_pins $item_format[push pins] left.")
+\(set: $workspaces_examine_computer_text to "{You examine the $item_format[computer]. You see only two icons on the desktop - $item_format[Minesweeper] and the $item_format[recycling bin].
+(if: $workspaces_played_minesweeper)[
+  <br>
+  > Play $item_format[Minesweeper]
+  <br>
+  $workspaces_played_minesweeper_text
+]
+(else:)[
+  |play_minesweeper>[
+    <br>
+    > Play $item_format[Minesweeper]
+  ]
+]
+(if: $workspaces_checked_recycling)[
+  <br>
+  > Check $item_format[recycling bin]
+  <br>
+  $workspaces_checked_recycling_text
+]
+(else:)[
+  |check_recycling>[
+    <br>
+    > Check $item_format[recycling bin]
+  ]
+]}")
+\(set: $workspaces_played_minesweeper_text to "You play some $item_format[Minesweeper]. Nothing out of the ordinary happens. You should probably stop wasting your time playing $item_format[Minesweeper] and focus on escaping.")
+\(set: $workspaces_checked_recycling_text to "You check the $item_format[recycling bin]. There's nothing there.")
+
+\(click-append:?look_around)+(t8n:'dissolve')[
+$workspaces_look_around_text
+\(set: $workspaces_looked_around to true)
+\(replace: ?examine_map_click)[$workspaces_examine_map_click_text]
+\(replace: ?examine_computer_click)[$workspaces_examine_computer_click_text]
+]
+\(click-append:?examine_map)+(t8n:'dissolve')[
+$workspaces_examine_map_text
+\(set: $workspaces_examined_map to true)
+]
+\(click-append:?examine_computer)+(t8n:'dissolve')[
+$workspaces_examine_computer_text
+\(set: $workspaces_examined_computer to true)
+\]
+\(click-append:?play_minesweeper)+(t8n:'dissolve')[
+$workspaces_played_minesweeper_text
+\(set: $workspaces_played_minesweeper to true)
+\]
+\(click-append:?check_recycling)+(t8n:'dissolve')[
+$workspaces_checked_recycling_text
+\(set: $workspaces_checked_recycling to true)
+\]
+
+
+:: StoryStylesheet [stylesheet]
+/* Disable URL link highlighting */
+tw-sidebar {
+  display: none; 
+}
+
+.enchantment-link, tw-link {
+    color: #f9f9f9;
+}
+tw-link:hover, .enchantment-link:hover {
+    color: #f9f9f9;
+}
+.visited, .visited:hover {
+    color: #f9f9f9;
+}
+a, a:visited {
+    font-weight: bold;
+    color: #51e1ff;
+}
+
+.dark-mode {
+	background-color: #282c34;
+  	color: #f9f9f9;
+  
+}
+
+.light-mode {
+  background-color: #f9f9f9;
+  color: #282c34;
+  
+  .enchantment-link, tw-link {
+      color: #282c34;
+  }
+  tw-link:hover, .enchantment-link:hover {
+      color: #282c34;
+  }
+  a, a:visited {
+      font-weight: bold;
+      color: #099bde;
+  }
+  .visited, .visited:hover {
+    color: #282c34;
+  }
+}
+
+/* Format tables to have square cells */
+table {
+  border-collapse: collapse; /* Merges borders of adjacent cells */
+  max-width: 300px; /* Set a specific width for the table */
+  max-height: 300px; /* Set an equal height to help make cells square */
+}
+td {
+  border: none; /* Adds a visible border to each cell */
+  text-align: center; /* Centers content horizontally */
+  vertical-align: middle; /* Centers content vertically */
+  width: 100px; /* Equal width for 3 columns */
+  height: 100px; /* Equal height for 3 rows */
+  line-height: 1em;
+}
+tw-story {
+  font-size: 1.2em;
+  line-height: 1.3em;
+}
+.compass-table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%; /* Set a width less than 100% */
+  table-layout: fixed;
+  font-size: 0.7em;
+}
+.image-cell img {
+  width: 100%;  /* Image takes up 100% of the cell's width */
+  height: auto; /* Height adjusts automatically to maintain aspect ratio */
+  display: block; /* Helps remove mysterious gaps at the bottom of the image */
+}
+
+/* Include styling for the living room plaque. */
+.plaque {
+  width: 80%;
+  margin: auto;
+  padding: 3% 8%;
+  background: linear-gradient(0deg, #c9a24d, #e3c36f);
+  border: 4px solid #8b6b2e;
+  border-radius: 12px;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.3),
+    0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.plaque blockquote {
+  margin: 0;
+  line-height: 1.5;
+  color: #3a2a0a;
+}
+
+.plaque .author {
+  margin-top: 5%;
+  margin-left: 10%;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  color: #4a360f;
+}
+table.plaque_table {
+  margin: auto; /* center table on page */
+  border-collapse: collapse;
+}
+td.plaque_table {
+  text-align: center;
+  padding: 8px 16px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  color: #3a2a0a;
+}
+
+/* Include styling for the bathroom help desk post it note. */
+.postit {
+  width: clamp(14rem, 60vw, 22rem);
+  min-height: clamp(12rem, 50vw, 20rem);
+  margin: 1.5em auto;
+  background: #fff7a8;
+  padding: 1.5em;
+  box-shadow:
+    0 0.6em 0.8em rgba(0,0,0,0.15),
+    0 1.2em 2em rgba(0,0,0,0.08);
+  transform: rotate(-2deg);
+  border-radius: 0.2em;
+  position: relative;
+  color: #000000
+}
+.postit h3 {
+  margin: 0 0 0.6em 0;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+.postit p {
+  margin: 0;
+  font-family: "Bradley Hand", "Segoe Print", cursive;
+  font-size: 0.7em;
+  line-height: 1.4;
+}
+
+/* Dresser drawer in the bedroom */
+.dresser-drawer {
+  /* Layout & sizing (mobile-first) */
+  max-width: 90vw;
+  padding: clamp(1rem, 4vw, 2rem);
+  margin: 1rem auto;
+
+  /* Wood texture */
+  background:
+    /* Dark grain lines rotated ~60deg */
+    repeating-linear-gradient(
+      60deg,
+      rgba(0, 0, 0, 0.06) 0px,
+      rgba(0, 0, 0, 0.06) 1px,
+      transparent 2px,
+      transparent 7px
+    ),
+    /* Light grain variation rotated ~60deg */
+    repeating-linear-gradient(
+      60deg,
+      rgba(255, 255, 255, 0.04) 0px,
+      rgba(255, 255, 255, 0.04) 2px,
+      transparent 3px,
+      transparent 11px
+    ),
+    /* Base wood color */
+    linear-gradient(
+      135deg,
+      #7a5536,
+      #6b4a30 40%,
+      #8a6342
+    );
+
+  border-radius: 0.5rem;
+
+  /* Ink text styling */
+  color: #fff;
+  font-family: "Bradley Hand", "Segoe Print", cursive;
+  font-size: clamp(1.1rem, 4.5vw, 1.6rem);
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+
+  /* Handwritten imperfection */
+  transform: rotate(-1.2deg);
+  text-shadow:
+    0.6px 0.6px 0 #00000044,
+    -0.4px 0.4px 0 #00000022;
+
+  /* Depth & age */
+  filter: contrast(1.04) saturate(0.9);
+  box-shadow:
+    inset 0 0 14px #00000055,
+    inset 0 0 3px #00000088,
+    0 2px 6px #00000044;
+}
