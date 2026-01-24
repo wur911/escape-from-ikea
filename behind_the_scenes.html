@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,13 +23,29 @@
             min-height: 100vh;
         }
 
+        h1 {
+            font-family: "IKEASans-Bold", Arial, Helvetica, sans-serif;
+        }
+
+        h2 {
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 500px;
+            display: block;
+            margin: auto;
+        }
+
         .container {
             max-width: 800px;
             width: 80%;
             background: #ffffff;
             border-radius: 16px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-            padding: 60px 120px;
+            padding: 2rem 3rem;
             text-align: left;
         }
 
@@ -36,7 +53,7 @@
             background: #0057AD; /* IKEA blue */
             padding: 10px 10px;
             border-radius: 6px;
-            width: 45%;
+            max-width: 360px;
             margin: 0 auto;
         }
     
@@ -53,6 +70,16 @@
             font-family: "IKEASans-Bold", Arial, Helvetica, sans-serif;
             font-size: 36px;
             line-height: 1;
+        }
+
+        .two-item-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .two-item {
+            max-width: 45%;
+            display: unset;
         }
     </style>
 </head>
@@ -76,34 +103,301 @@
     <!-- Part 1: Story and Puzzle Designs -->
     <h1>Story and Puzzle Design</h1>
     <p>
-        TODO
+        Amy has had the idea of creating an IKEA themed escape room for quite some time. Whenever we’ve gone to IKEA, we’ve always noted how labyrinthian it is (it even has shortcuts!).
     </p>
-    <img src="images/TODO" alt="todo">
+    <p>
+        Sometime in late December 2025, when we were in San Diego, we decided to finally execute on this project. The first main idea that we knew we wanted to include in the hunt was having a chair that was constructed from extra pieces. So we knew that we would have to at least design part of the escape room around puzzles that would have “spare parts” which could be fed into the chair construction. Given the limited room in our house, the idea of having some parts of the escape be via a text-based RPG also became a central focus.
+    </p>
+    <p>
+        Our other general principles in designing the hunt were in rough order of importance:
+    </p>
+    <ol>
+        <li>Be accessible enough for newcomers to be able to escape within a reasonable time limit (and to hopefully inspire our friends to do more puzzle hunts and escape rooms).</li>
+        <li>Have a very flat unlock structure so that 10-15 people could all be engaged in something and not feel like they were just watching others solve things.</li>
+        <li>Straddle the line between escape room style puzzles and puzzlehunt style puzzles but lean more towards the former. Meaning more interactive elements and little to no reliance on external sources/the internet.</li>
+    </ol>
+    <p>
+        The final unlock structure of the escape room didn’t actually get formulated until about a week before. The below shows the rough design:
+    </p>
+    <img src="images/Lucidchart.png" alt="Lucidchart diagram for hunt structure">
+    <p>
+        Some notable structural changes:
+    </p>
+    <ul>
+        <li>
+            The text-based RPG idea started out as a single puzzle, then became the capstone puzzle when we thought that the hunt would have only one round, and finally evolved into this overarching framing for the entire story that became interlinked with the real world puzzles. We really liked the structure that we eventually settled on, where some RPG elements received answers from the real world, some hinted to or unlocked a real world interaction, and still others were completely for fun.
+        </li>
+        <li>
+            The chair construction originally unlocked one of the IKEA relics, but we felt like solving it took an outsized amount of time as compared to the other relics, since you needed to finish up to 6 feeder puzzles <i>and</i> actually put the chair together. Our first thought was to upgrade it to be a “super relic” which could be used in place of any other relic and only require 3 out of the 4 for escape. However, we are self-indulgent and decided to force people to do all of the puzzles we put together so instead we made the chair a separate escape requirement.
+        </li>
+    </ul>
 
+    <h2>Inspiration</h2>
+    <p>
+        When creating these puzzles, we wanted the solving process to evoke some of the core actions and essence of the IKEA experience such as: following pictographic instruction manuals, especially under duress, as well as measuring, stacking, assembling, and other construction-related tasks.
+    </p>
+    <p>
+        Some of the puzzles were directly inspired by IKEA items. For example, the MÅLA cardboard town is an actual IKEA product and when we saw it, we knew that it was something that we could create a puzzle around.
+    </p>
+    <p>
+        Other puzzles only found their connection to IKEA after the fact. We had a vague idea to incorporate temperature sensitive ink and ask people to either heat or cool an object to reveal a hidden message. It was only after committing to the concept and running many tests on different solutions of lemon juice and baking soda in our oven that we found the <a href="https://www.dandad.org/work/d-ad-awards-archive/ikea-cook-this-page" target="_blank" rel="noopener noreferrer">IKEA Cook this Page</a> campaign, which was the perfect framing for why one might need to bake a piece of paper.
+    </p>
+    <p>
+        Lastly, some credits for puzzles which were heavily inspired by or mostly ripped off from other sources:
+    </p>
+    <ul>
+        <li>Secret Sauce is adapted from a <a href="https://puzzledpint.org/archive-puzzles/puzzles-april_2011/" target="_blank" rel="noopener noreferrer">Puzzled Pint April 2011</a> puzzle of the same name.</li>
+        <li>Flatpack Pack Up was originally inspired by Some Assembly Required from <a href="https://puzzledpint.org/archive-puzzles/march-2022/" target="_blank" rel="noopener noreferrer">Puzzled Pint March 2022</a> but quickly diverged. After the puzzle was written, we learned that IKEA has their own <a href="https://ikeamuseum.com/en/explore/the-story-of-ikea/flatpacks/" target="_blank" rel="noopener noreferrer">Flatpack Challenge</a> game, where you try to stack as many rectangular blocks as densely as possible.</li>
+        <li>SPRÄNGA (the bomb) was an obvious tribute to the game <a href="https://keeptalkinggame.com/" target="_blank" rel="noopener noreferrer">Keep Talking and Nobody Explodes</a>.</li>
+        <li>The maze escape sequence using the “IKEA yellow path” in the catalog is from the video game <a href="https://store.steampowered.com/app/553420/TUNIC/" rel="noopener noreferrer">Tunic</a>.</li>
+    </ul>
+
+    <h2>FÄLLSTOL (The Chair)</h2>
+    <p>
+        Construction puzzles are the bane of Raymond’s existence so naturally he decided to create it. A lot of inspiration was taken from <a href="https://2025.teammatehunt.com/puzzles/botany" target="_blank" rel="noopener noreferrer">Botany from Teammate 2025</a> which was also a metapuzzle that involved taking letters written onto strips of paper and folding them. We had no constraints for the inputs (especially since they were going to be “extra pieces” from feeder puzzles) so we started by constructing a chair.
+    </p>
+    <p>
+        The main constraints we had were:
+    </p>
+    <ol>
+        <li>The constructed results should obvious be a chair at first glance</li>
+        <li>The answer had to use some letters from all component strips - unlike a traditional puzzle hunt, we wanted the chair to only be solvable after all pieces were acquired and assembled</li>
+        <li>When constructed out of cardstock, the chair should be able to stand on its own</li>
+    </ol>
+
+    <img src="images/chair-prototype-v1.JPG" alt="First prototype of folding chair puzzle comprised of paper strips folded and taped together into a chair">
+
+    <p>
+        After prototyping a chair construction that used 6 strips of paper, we wanted to come up with an appropriate answer. The main goal was to have an answer on the chair that was fairly straightforward to read (from the top corner of the chair’s backrest to one of the legs). Given the size of the chair (4x4 backrest, 4x3 seat, and four 1x3 legs), we wanted a 13 or 14 letter answer. With the help of <a href="https://onelook.com/" target="_blank" rel="noopener noreferrer">Onelook</a>, we found an answer we loved - MANUAL ASSEMBLY.
+    </p>
+
+    <img src="images/chair-strips.JPG" alt="Deconstructed strips of paper for folding chair puzzle">
+
+
+    <p>
+        Next came the tricky part of tweaking the size and placement of each piece so that we could construct the input answers. We debated whether there would be letters on the squares that were covered up or folded over, and eventually settled on simplifying the solving experience by having every square have a letter and for any overlapping squares in the construction to always have the same letter.
+    </p>
+
+    <img src="images/chair-constraints.png" alt="Deconstructed strips of paper for folding chair puzzle">
+
+    <p>
+        We chose the name FÄLLSTOL since it means “folding chair” in Swedish, a fitting name for the origami construction puzzle.
+    </p>
+
+ 
     <!-- Part 2: Art and Assembly -->
     <h1>Art and Assembly</h1>
     <p>
-        TODO
+        One of our favorite aspects of escape rooms beyond just the thrill of solving puzzles is their ability to transport you to an alternate world where anything is possible. A large part of that immersion is building art and props that are believable to the setting, allowing for that magical moment where you realize that something which looks mundane is actually a puzzle or clue in disguise. IKEA has such a playful and vibrant visual language and we (mostly Amy) were extremely excited to get to design puzzle components and IRL room decor in their style.
     </p>
+
+    <img src="images/physical-assets.JPG" alt="pile of physical escape from IKEA puzzles">
+
+    <h2>The Catalog</h2>
+
+    <p>
+        When we were ideating on a puzzle that would involve looking up IKEA furniture names (this eventually became Reykjavik Eatery), we were close to scrapping the concept because having to manually identify items in IKEA’s massive list of products sounded supremely unfun. As an offhand comment, one of us suggested that we could just make our own mini IKEA catalog and show only the things we cared about. And thus the idea was born. 
+    </p>
+    <p>
+        The iconic IKEA catalog (sadly discontinued in 2021) was an annual publication showcasing their products in glorious glossy full color print. When designing our own catalog, we referenced the <a href="https://ikeamuseum.com/en/explore/ikea-catalogue/" target="_blank" rel="noopener noreferrer">archive</a> of the last 70+ years of catalogs for inspiration on the layout. A few examples, including the 2019 cover that our catalog is based off of:
+    </p>
+
+    <img src="images/ikea-catalogs.jpg" alt="5 sample IKEA catalog covers">
+
+    <p>
+        It was an interesting challenge to hide multiple puzzles inside the pages whilst still making it look believably like a real magazine. In particular, we tried to strike a balance between creating an aesthetically beautiful layout and not including too much fluff to wade through or accidentally introducing red herrings. The IKEA yellow path running through each page was built simultaneously with the overall page design by placing the more constrained paths into the grid first, such as the showroom map, and then linking them up together with simpler path pieces on the remaining pages.
+    </p>
+    <p>
+        Once everything was designed, we manually rearranged the half pages into page order for booklet printing<sup id="ref-1"><a href="#note-1">[1]</a></sup>. At the last minute while we were getting ready to print, we unexpectedly had to manifest designs for two more pages because we forgot that everything needed to be printed double sided and we had an odd number of front/back sides.
+    </p>
+    <p>
+        All of the designs were laid out using Sketch, a now mostly defunct prototyping tool that’s similar to Figma. The final design file for all of the assets we made has over eighty artboards(!)
+    </p>
+
+    <img src="images/artboards.png" alt="all sketch design file artboards for escape from IKEA">
+
+    <p>
+        For typesetting, we learned that IKEA has their own custom font; it’s called <a href="https://www.ikea.com/ph/en/this-is-ikea/about-us/the-ikea-logo-history-and-design-pub55d85f50/" target="_blank" rel="noopener noreferrer">IKEA Sans</a>, designed by Robin Nicholas. Sadly it isn’t available for public use, but it’s pretty close to Futura and this <a href="https://www.onlinewebfonts.com/package/IKEA_Sans" target="_blank" rel="noopener noreferrer">knockoff IKEA Sans</a>.
+    </p>
+
+    <h2>The Showroom</h2>
+
+    <p>
+        Another half-joke-that-became-a-reality was turning our guest bedroom into an IKEA showroom. Hilariously, almost all of the furniture in there is actually from IKEA so we had fun designing furniture tags for all of our IKEA pieces, as well as other directional signage such as the store’s welcome and goodbye signs.
+    </p>
+    <p>
+        We even did some reconnaissance in our local IKEA to make sure that the decor was lore accurate:
+    </p>
+
+    <div class="two-item-container">
+        <img src="images/malm-tag-real.JPG" alt="real malm tag from IKEA" class="two-item">
+        <img src="images/malm-tag-fake.JPG" alt="our recreated malm tag" class="two-item">
+    </div>
+
+    <h2>Measure of Success</h2>
+
+    <p>
+        Aside from the catalog, this puzzle had by far the most convoluted and elaborate physical construction to bring the eventual vision to life. One of the early puzzle concepts that was pitched was having something that requires measuring with those paper IKEA rulers, but this ended up being one of the last puzzles written. Eventually, we came up with the idea of having some fake stats about IKEA and creating a bar chart where you needed to measure the length of the bars.
+    </p>
+
+    <p>
+        After the puzzle was drafted, we realized that the longest bar would be a whopping 25 inches, corresponding to Y as the 25th letter of the alphabet. Of course, we could always tape together three pieces of paper but how cool would it be if the bar chart was three dimensional?? This led to a whole series of unforeseen issues like:
+    </p>
+    <ul>
+        <li>Deciding to glue together 1 inch wooden cubes instead of getting a saw to cut wood pieces to size, but the cubes we got were <i>slightly</i> shy of 1 inch.</li>
+        <li>Realizing that constructing the bars from 1 inch cubes would defeat the purpose of using the ruler since you could just count the cubes...</li>
+        <li>Deciding to fix the above issue by covering each bar with a paper pattern to hide the number of cubes, but realizing the patterns we designed and fully printed out were too small. <i>sigh</i></li>
+    </ul>
+
+    <img src="images/measure-nets.JPG" alt="patterns used to cover the blocks for Measures of Success">
+
+    <p>
+        Honestly the whole construction was a bit of a disaster but we persisted due to having already sunk a lot of time into this concept and eventually got a workable end product.
+    </p>
+
+    <h2>Overlay Puzzle</h2>
+
+    <p>
+        The overlay puzzle required generating an <a href="https://en.wikipedia.org/wiki/Ambigram" target="_blank" rel="noopener noreferrer">ambigram</a>. We used this <a href="https://thedressedmolerat.github.io/ambigenerator/" target="_blank" rel="noopener noreferrer">nifty tool</a> and then edited the result by hand to prioritize legibility of the “rightside up” orientation. A fun little easter egg: each of the construction puzzles was labeled with a hammer and wrench icon. You may have noticed that for the overlay puzzle, the icon was also split between the two pages, with one half showing only the hammer and the other side showing only the wrench.
+    </p>
+
+    <h2>Everything Else</h2>
+
+    <p>
+        Along the way, there was a ton of art-related scope creep as we kept coming up with more silly ideas, like a replica of the giant cinnamon bun sign with the “*not actual size” disclaimer<sup id="ref-2"><a href="#note-2">[2]</a></sup>, hiding some intentional red herrings a.k.a. Swedish Fish, and even dressing up as IKEA coworkers, which involved a Goodwill trip for yellow shirts and creating DIY employee nametags. We considered a multitude of nitpick details that were likely to go unnoticed, such as making sure all of the Swedish vowel sounds<sup id="ref-3"><a href="#note-3">[3]</a></sup> that we added were phonetically plausible.
+    </p>
+    <p>
+        Side note: if you visit the IKEA website frequently for research purposes, every one of your targeted ads for the next few weeks will be an IKEA ad.
+    </p>
+
 
     <!-- Part 3: Tech -->
     <h1>Tech</h1>
     <p>
-        TODO
+        All of the code and tech assets can be found in this <a href="https://github.com/wur911/escape-from-ikea" target="_blank" rel="noopener noreferrer">Github repo</a>.
+    </p>
+
+    <h2>Welcome Video</h2>
+    <p>
+        The video segments were shot using Amy’s iPhone 14 and edited using <a href="https://support.apple.com/imovie" target="_blank" rel="noopener noreferrer">iMovie</a>.
+    </p>
+
+    <h2>Text-based RPG</h2>
+    <p>
+        We originally tossed around the idea of coding up our own text-based RPG (potentially setting up a server to support sessions to save your spot, multiplayer interactions like syncing actions across multiple people, etc). But we realized this was far too much for something that had to be developed in ~3 weeks.
+    </p>
+    <p>
+        We found <a href="https://twinery.org/" target="_blank" rel="noopener noreferrer">Twine</a>, an open-source tool for extending stories with branching narratives via conditional logic, multimedia like images and videos, and anything else HTML and Javascript could do. Twine comes with a built-in online editor UI and you can export Twine directly as HTML.
+    </p>
+
+    <img src="images/twine.png" alt="UI editor for twinery.org">
+
+    <p>
+        Twine offers several story formats - basically programming languages for how your logic gets implemented and converted to HTML. The default is <a href="https://twine2.neocities.org/" target="_blank" rel="noopener noreferrer">Harlowe</a>, which is fairly lightweight and doesn’t require knowledge of HTML, CSS, or Javascript. Looking back, <a href="https://www.motoslave.net/sugarcube/2/" target="_blank" rel="noopener noreferrer">Sugarcube</a> or <a href="https://videlais.github.io/snowman/" target="_blank" rel="noopener noreferrer">Snowman</a> might have been better options to leverage our software background.
+    </p>
+    <p>
+        Given that this was our first foray into Twine, not everything was super polished. In particular, we struggled with some subtle issues in how Twine handles contiguous line break elements, which was causing some jittering when clicking links. After inspecting the HTML and adding some breakpoints in the DOM, we realized that the issue was caused by a mysterious interaction between Twine’s transition animation implementation and the interactive elements within the text that was being animated in.
+    </p>
+    <p>
+        Rather than, say, simply removing the transition animations, we wanted to try and fix the issue. After a lot more debugging in Twine’s not-particularly-ergonomic UI, we still don’t really understand why this problem was happening but were able to pinpoint the problematic CSS which Twine was applying. Thus, the “fix” was to export the final HTML file and then manually delete the relevant parts of the Twine script that were programmatically applying the CSS classes.
+    </p>
+
+    <h2>Måla Audio Tour</h2>
+    <p>
+        The audio tour idea came around since we lacked an auditory puzzle<sup id="ref-4"><a href="#note-4">[4]</a></sup>. The audio voiceovers were recorded using the <a href="https://apps.apple.com/us/app/easy-voice-recorder/id1222784166" target="_blank" rel="noopener noreferrer">Easy Voice Recorder</a> app on Raymond’s iPhone 16. Other free audio came from <a href="https://freesound.org/" target="_blank" rel="noopener noreferrer">freesound</a> and <a href="https://www.zapsplat.com/" target="_blank" rel="noopener noreferrer">Zapsplat</a>. The mixing was done in <a href="https://www.audacityteam.org/" target="_blank" rel="noopener noreferrer">Audacity</a>.
+    </p>
+
+    <h2>Customer Service Line</h2>
+    <p>
+        The phone number you call is a Google Voice number, and we uploaded a custom voicemail message which we recorded by putting the text into a <a href="https://www.readspeaker.com/languages-voices/swedish/" target="_blank" rel="noopener noreferrer">text-to-speech tool</a> or <a href="https://translate.google.com/" target="_blank" rel="noopener noreferrer">Google Translate</a> for the Spanish part. Incidentally, this was produced before we started looking into audio editing software so the parts were stitched together on the fly by playing each audio source in order and hitting record.
+    </p>
+
+    <h2>3D Furniture Visualization</h2>
+    <p>
+        Of course, these were made using the actual IKEA room planning tools. Through the process of building these, we learned that there are actually three separate room designers: <a href="https://kitchen.planner.ikea.com/us/en/" target="_blank" rel="noopener noreferrer">Kitchen Planner</a>, <a href="https://www.ikea.com/us/en/planners/bathroom-planner/" target="_blank" rel="noopener noreferrer">Bathroom Planner</a>, and <a href="https://www.ikea.com/us/en/home-design/" target="_blank" rel="noopener noreferrer">IKEA Kreativ</a>. While each tool has its own quirks, we found that by far the worst one was Bathroom Planner, which generates a new link each time you save changes, and sometimes wouldn’t even save at all due to an inexplicable error “the sofa could not be loaded”<sup id="ref-5"><a href="#note-5">[5]</a></sup>.
+    </p>
+    <p>
+        As an aside, perhaps you saw the somewhat questionable tandem toilet layout in the bathroom. There was some debate amongst room designers as to whether it would be preferable to have the toilets positioned side by side as you saw them, or alternatively in this knee-to-knee arrangement:
+    </p>
+
+    <div class="two-item-container">
+        <img src="images/toilet-option-a.png" alt="two IKEA toilets side by side" class="two-item">
+        <img src="images/toilet-option-b.png" alt="two IKEA toilets knee to knee" class="two-item">
+    </div>
+
+    <p>
+        The jury’s still out on this one, and we welcome any input you may have on this important matter.
+    </p>
+
+    <h2>Everything Else</h2>
+    <p>
+        The other tech bits like the timer web page, the welcome page, and this page were primarily vibe coded using ChatGPT/Gemini. While we avoided using GenAI for most other tasks in the making of this escape room (<a href="https://onelook.com/" target="_blank" rel="noopener noreferrer">Onelook</a> and human ingenuity are much better at designing puzzles and designing around answer constraints, all art and design bits were handmade - see above, and story elements came up from our brainstorming), we had no qualms leveraging it for coding.
+    </p>
+    <p>
+        As an example, we tried to get ChatGPT to help come up with a set of words for Flatpack Pack Up (the Jenga puzzle), but even after spending a long time tweaking the prompt, the results were questionable at best:
+    </p>
+
+    <img src="images/questionable-chatgpt.png" alt="questionable puzzle suggestion from ChatGPT" style="max-height: 280px;">
+
+    <p>
+        Does anyone know what a pigeonpea is?
     </p>
 
     <!-- Conclusion -->
     <h1>Conclusion</h1>
     <p>
-        TODO
+        Overall, we had a really fun time putting this together. Both of us have participated in a lot of puzzlehunts and escape rooms, and have dabbled in creating simple, one-off puzzles for each other, but have never attempted anything of this scale before. The whole writing and development process was like what we assume the Disney imagineers feel like when they’re building a new ride, and the whole time we were picturing how all of you would react to whatever we were coming up with.
+    </p>
+    <p>
+        One thing that made the design process so successful and fulfilling is that we learned both of us are willing to fully commit to the bit in order to create a small moment of delight. There were many instances where one of us had a funny idea and then spent several hours making it happen for probably a few seconds of payoff<sup id="ref-6"><a href="#note-6">[6]</a></sup>. This may sound like pretty bad ROI, but it reminds us of this great quote from Teller (of the magician duo Penn and Teller), “Sometimes magic is just someone spending more time than anyone else might reasonably expect.” We hope that we succeeded in injecting a bit of joy and magic into your experience today, whether it was from a satisfying “aha” moment or finding something that surprised you and defied your expectations.
+    </p>
+    <p>
+        As for what’s next, we’re already toying with the idea of running another experience like this... stay tuned!
     </p>
 
     <!-- Credits -->
     <h1>Credits</h1>
-    <p>
-        TODO
-    </p>
+    <ul>
+        <li>Editors In Chief: Amy Liu, Raymond Wu</li>
+        <li>Puzzle Authors: Amy Liu, Raymond Wu</li>
+        <li>Story: Amy Liu, Raymond Wu</li>
+        <li>Art and Design: Amy Liu, Raymond Wu</li>
+        <li>Factchecking: Amy Liu, Raymond Wu</li>
+        <li>Tech: Amy Liu, Raymond Wu</li>
+        <li>Logistics: Amy Liu, Raymond Wu</li>
+        <li>Testsolving: Amy Liu, Raymond Wu</li>
+        <li>Additional testsolving support: Catherine Wu</li>
+        <li>Logistics: Amy Liu, Raymond Wu</li>
+        <li>Catering: Amy Liu, Raymond Wu, and IKEA</li>
+    </ul>
+
+    <h1>Appendix</h1>
+    <ul>
+        <li><a href="https://youtu.be/yreb57rfnKE" target="_blank" rel="noopener noreferrer">Welcome video</a></li>
+        <li>
+            <a href="https://wur911.github.io/escape-from-ikea/">Text-based RPG</a>
+            <ul>
+                <li>Restaurant (cash register): BASIL</li>
+                <li>Dining (bar cart safe): 1958</li>
+                <li>Children's: BUNKBED</li>
+                <li>Workspaces (world map): DUBLIN</li>
+                <li>Wardrobe (bomb): UNBOXING</li>
+                <li>Living room (extra pieces): MANUALASSEMBLY</li>
+                <li>Marketplace escape sequence: ENES WSEN ESES WSWS ESES WNWN ENWS ESWS</li>
+            </ul>
+        </li>
+        <li><a href="https://wur911.github.io/escape-from-ikea/audio_tour">Måla audio tour</a></li>
+    </ul>
     
+    <h2>Notes</h2>
+    <ol>
+      <li id="note-1">By “booklet printing”, we’re referring to how the pages should be printed front/back such that they read correctly when folded into a booklet. Some software such as Adobe InDesign will do this automagically for you, but instead we calculated the layout manually by folding the corresponding number of blank papers, labeling the page numbers, and then unfolding each sheet to see which page numbers should be placed adjacent to each other. <a href="#ref-1" title="Return to text">&#8617;</a></li>
+      <li id="note-2">Every time we see this sign, it makes us chuckle and wonder what scenario had to have occurred with a customer getting angry that their $1 cinnamon roll wasn’t literally 10 feet in diameter in order to prompt IKEA to add this disclaimer. <a href="#ref-2" title="Return to text">&#8617;</a></li>
+      <li id="note-3">Swedish uses three additional vowels on top of the basic Latin alphabet: å (pronounced like a long "o" as in "door"), ä (pronounced like the 'e' in "bed" or the 'a' in "cat,"), and ö (pronounced like the 'i' in "bird" or 'u' in "fur"). We learned that we’ve been pronouncing Blåhaj incorrectly this whole time! <a href="#ref-3" title="Return to text">&#8617;</a></li>
+      <li id="note-4">Since the Måla audio tour relies on hearing, Secret Sauce uses taste/smell, SPRÄNGA uses touch, and most (all?) puzzles use sight, we managed to cover all five senses! <a href="#ref-4" title="Return to text">&#8617;</a></li>
+      <li id="note-5">You cannot, in fact, add a sofa to your bathroom design. <a href="#ref-5" title="Return to text">&#8617;</a></li>
+      <li id="note-6">Haha wouldn’t it be funny if there was a light switch in the RPG and all it does is switch the website into light mode? <a href="#ref-6" title="Return to text">&#8617;</a></li>
+    </ol>
 </div>
 
 </body>
